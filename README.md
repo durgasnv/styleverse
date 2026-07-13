@@ -1,9 +1,5 @@
 # StyleVerse
 
-# Theme
-
-## Myntra Hackathon 2026
-
 ### Theme 3: Fashion is Identity
 
 > **Become the Fashion Destination for the Next Generation**
