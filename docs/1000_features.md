@@ -229,33 +229,8 @@ Examples:
 
 ---
 
-# 8. Avatar Closet 🧍 *(Gen Alpha)*
 
-### Problem
-Gen Alpha prefers interactive and personalized digital experiences.
-
-### Solution
-Users create a customizable avatar and preview outfits before purchasing.
-
-Features:
-- Body type selection
-- Skin tone selection
-- Outfit preview
-- Save favorite looks
-
-### Benefits
-- Interactive shopping
-- Better visualization
-- Increased experimentation
-
-### Tech Stack
-- React
-- SVG / Canvas
-- MongoDB
-
----
-
-# 9. Community Remix 🔥
+# 8. Community Remix 🔥
 
 ### Problem
 Users can currently only like or save community outfits.
