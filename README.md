@@ -1,9 +1,11 @@
 # StyleVerse
+
 # Theme
 
 ## Myntra Hackathon 2026
 
 ### Theme 3: Fashion is Identity
+
 > **Become the Fashion Destination for the Next Generation**
 
 The challenge focuses on reimagining Myntra as more than an e-commerce platform. The goal is to create experiences where fashion is **discovered, expressed, shared, and personalized**, especially for **Gen Z** and **Gen Alpha** users.
@@ -24,34 +26,42 @@ This theme is divided into three focus areas:
 
 ---
 
-## Our Approach
+# Our Approach
 
-Our solution transforms Myntra into a **social fashion ecosystem** built around identity and community rather than just shopping.
+StyleVerse transforms Myntra into a **social fashion ecosystem** where users don't just shop—they **discover trends, create outfits, collaborate with communities, participate in challenges, and express their fashion identity.**
+
+Rather than replacing the existing Myntra experience, StyleVerse extends it with community-driven fashion discovery and AI-assisted styling.
 
 | Theme Requirement | Our Features |
 |-------------------|--------------|
-| Fashion as Self-Expression | Collections, Outfit Builder, AI Outfit Evolution, Outfit Chemistry |
-| Creator Economy | Fashion Circles, Community Remix, Fashion Challenges |
-| Building for Gen Alpha | Avatar Closet, AI Fashion Mentor |
+| **Fashion as Self-Expression** | Style Hubs, Style Canvas, AI Outfit Evolution, Outfit Chemistry |
+| **Creator Economy** | Fashion Circles, Community Remix, Fashion Challenges |
+| **Building for Gen Alpha** | Avatar Closet, AI Fashion Mentor |
 
-## Why We Chose This Theme
+---
+
+# Why We Chose This Theme
 
 Today's shopping journey usually ends after a purchase.
 
-Users discover inspiration on Instagram or Pinterest, discuss fashion in WhatsApp groups, and finally purchase on Myntra. These experiences are fragmented across multiple platforms.
+Users discover fashion inspiration on platforms like Instagram and Pinterest, discuss outfits in WhatsApp groups, and finally purchase products on Myntra. These experiences are fragmented across multiple platforms.
 
-Our goal is to bring inspiration, collaboration, AI-powered styling, and community engagement directly into the Myntra ecosystem, making it a destination users visit even when they are not actively shopping.
+Our goal is to bring **fashion discovery, collaboration, AI-powered styling, and community engagement** directly into the Myntra ecosystem, making it a destination users return to even when they are not actively shopping.
 
-## Feature Mapping
+---
+
+# Feature Mapping
 
 | Feature | Self Expression | Creator Economy | Gen Alpha |
 |----------|:---------------:|:---------------:|:---------:|
-| Collections | ✅ | | |
-| Outfit Builder | ✅ | | ✅ |
+| Style Hubs | ✅ | ✅ | |
+| Fashion Circles | ✅ | ✅ | |
+| Style Canvas | ✅ | | ✅ |
 | AI Outfit Evolution | ✅ | | |
 | Outfit Chemistry | ✅ | | |
-| Fashion Circles | ✅ | ✅ | |
 | Community Remix | ✅ | ✅ | |
 | Fashion Challenges | ✅ | ✅ | |
 | AI Fashion Mentor | | | ✅ |
 | Avatar Closet | ✅ | | ✅ |
+
+---
