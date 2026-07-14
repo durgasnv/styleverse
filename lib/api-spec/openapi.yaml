@@ -10,6 +10,12 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: products
+    description: Catalog product operations
+  - name: hubs
+    description: Style hub operations
+  - name: challenges
+    description: Fashion challenge operations
 paths:
   /healthz:
     get:
@@ -24,6 +30,89 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /products:
+    get:
+      operationId: listProducts
+      tags: [products]
+      summary: List products
+      description: Returns every product in the catalog
+      responses:
+        "200":
+          description: Products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+  /products/{id}:
+    get:
+      operationId: getProduct
+      tags: [products]
+      summary: Get a product by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Product
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "404":
+          description: Not found
+  /hubs:
+    get:
+      operationId: listHubs
+      tags: [hubs]
+      summary: List style hubs
+      responses:
+        "200":
+          description: Style hubs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/StyleHub"
+  /hubs/{id}:
+    get:
+      operationId: getHub
+      tags: [hubs]
+      summary: Get a style hub by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Style hub
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StyleHub"
+        "404":
+          description: Not found
+  /challenges:
+    get:
+      operationId: listChallenges
+      tags: [challenges]
+      summary: List fashion challenges
+      responses:
+        "200":
+          description: Challenges
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Challenge"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +122,158 @@ components:
           type: string
       required:
         - status
-
+    ProductSize:
+      type: object
+      properties:
+        label:
+          type: string
+        inStock:
+          type: boolean
+      required: [label, inStock]
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        brand:
+          type: string
+        category:
+          type: string
+          enum: [Men, Women, Kids, Footwear, Beauty, Accessories, "Home & Living"]
+        subcategory:
+          type: string
+        price:
+          type: number
+        mrp:
+          type: number
+        discountPercent:
+          type: number
+        rating:
+          type: number
+        reviewCount:
+          type: number
+        images:
+          type: array
+          items:
+            type: string
+        colors:
+          type: array
+          items:
+            type: string
+        sizes:
+          type: array
+          items:
+            $ref: "#/components/schemas/ProductSize"
+        occasionTags:
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+        deliveryEstimate:
+          type: string
+      required:
+        - id
+        - name
+        - brand
+        - category
+        - subcategory
+        - price
+        - mrp
+        - discountPercent
+        - rating
+        - reviewCount
+        - images
+        - colors
+        - sizes
+        - occasionTags
+        - description
+        - deliveryEstimate
+    HubCreator:
+      type: object
+      properties:
+        name:
+          type: string
+        avatar:
+          type: string
+      required: [name, avatar]
+    StyleHub:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        aestheticTag:
+          type: string
+        description:
+          type: string
+        coverImage:
+          type: string
+        baseViewerCount:
+          type: number
+        memberCount:
+          type: number
+        trendingOutfitIds:
+          type: array
+          items:
+            type: string
+        weeklyChallenge:
+          type: string
+        topCreators:
+          type: array
+          items:
+            $ref: "#/components/schemas/HubCreator"
+      required:
+        - id
+        - name
+        - aestheticTag
+        - description
+        - coverImage
+        - baseViewerCount
+        - memberCount
+        - trendingOutfitIds
+        - weeklyChallenge
+        - topCreators
+    ChallengeEntry:
+      type: object
+      properties:
+        id:
+          type: string
+        outfitId:
+          type: string
+        productIds:
+          type: array
+          items:
+            type: string
+        creatorName:
+          type: string
+        baseVoteCount:
+          type: number
+      required: [id, productIds, creatorName, baseVoteCount]
+    Challenge:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        prizeText:
+          type: string
+        endsAt:
+          type: string
+        entries:
+          type: array
+          items:
+            $ref: "#/components/schemas/ChallengeEntry"
+      required:
+        - id
+        - title
+        - description
+        - prizeText
+        - endsAt
+        - entries
