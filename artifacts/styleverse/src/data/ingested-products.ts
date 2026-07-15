@@ -104,8 +104,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "price": 2485,
     "mrp": 4440,
     "discountPercent": 44,
-    "rating": 3.5,
-    "reviewCount": -197,
+    "rating": 3.9,
+    "reviewCount": 347,
     "images": [
       "/img/y2k-dianna-baggy-jeans.png"
     ],
@@ -486,8 +486,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "price": 777,
     "mrp": 1250,
     "discountPercent": 38,
-    "rating": 3.8,
-    "reviewCount": -300,
+    "rating": 4.2,
+    "reviewCount": 244,
     "images": [
       "/img/y2k-oversized-graphic-v-neck-jersey.png"
     ],
@@ -578,8 +578,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "price": 1045,
     "mrp": 1580,
     "discountPercent": 34,
-    "rating": 3.9,
-    "reviewCount": -312,
+    "rating": 4.3,
+    "reviewCount": 232,
     "images": [
       "/img/y2k-rose-washed-bag-jeans.png"
     ],
@@ -700,8 +700,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "price": 1137,
     "mrp": 2370,
     "discountPercent": 52,
-    "rating": 3.3,
-    "reviewCount": -174,
+    "rating": 4.4,
+    "reviewCount": 370,
     "images": [
       "/img/y2k-vintage-washed-denim-shorts.png"
     ],
@@ -776,8 +776,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "price": 2144,
     "mrp": 3760,
     "discountPercent": 43,
-    "rating": 3.8,
-    "reviewCount": -162,
+    "rating": 4.2,
+    "reviewCount": 382,
     "images": [
       "/img/y2k-leilani-washed-jeans.png"
     ],
@@ -822,8 +822,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "price": 867,
     "mrp": 1490,
     "discountPercent": 42,
-    "rating": 3.3,
-    "reviewCount": -282,
+    "rating": 4.4,
+    "reviewCount": 262,
     "images": [
       "/img/k-fashion-bow-detail-puff-blouse.png"
     ],
@@ -868,8 +868,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "price": 781,
     "mrp": 1390,
     "discountPercent": 44,
-    "rating": 3.7,
-    "reviewCount": -156,
+    "rating": 4.1,
+    "reviewCount": 388,
     "images": [
       "/img/k-fashion-checked-halter-neck-peplum-top.png"
     ],
@@ -960,8 +960,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "price": 1124,
     "mrp": 1840,
     "discountPercent": 39,
-    "rating": 3.8,
-    "reviewCount": -252,
+    "rating": 4.2,
+    "reviewCount": 292,
     "images": [
       "/img/k-fashion-light-pink-top.png"
     ],
@@ -1006,8 +1006,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "price": 1926,
     "mrp": 3780,
     "discountPercent": 49,
-    "rating": 3.4,
-    "reviewCount": -289,
+    "rating": 4.5,
+    "reviewCount": 255,
     "images": [
       "/img/k-fashion-miri-low-rise-straight-jeans.png"
     ],
@@ -1052,8 +1052,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "price": 2262,
     "mrp": 4270,
     "discountPercent": 47,
-    "rating": 3.4,
-    "reviewCount": -253,
+    "rating": 4.5,
+    "reviewCount": 291,
     "images": [
       "/img/k-fashion-olynn-low-rise-distressed-flared-jeans.png"
     ],
@@ -1144,8 +1144,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "price": 1058,
     "mrp": 2070,
     "discountPercent": 49,
-    "rating": 3.5,
-    "reviewCount": -192,
+    "rating": 3.9,
+    "reviewCount": 352,
     "images": [
       "/img/k-fashion-women-extended-sleeves-top.png"
     ],
@@ -1190,8 +1190,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "price": 674,
     "mrp": 1180,
     "discountPercent": 43,
-    "rating": 3.4,
-    "reviewCount": -217,
+    "rating": 4.5,
+    "reviewCount": 327,
     "images": [
       "/img/k-fashion-women-solid-round-neck-bow-detailed-top.png"
     ],
@@ -1230,16 +1230,16 @@ export const INGESTED_PRODUCTS: Product[] = [
   {
     "id": "p-bohemian-amelie-driftwood-charm-boho-top",
     "name": "Amelie Driftwood Charm Boho Top",
-    "brand": "ONLY",
+    "brand": "PULL&BEAR",
     "category": "Women",
     "subcategory": "Tops",
-    "price": 642,
-    "mrp": 960,
-    "discountPercent": 33,
-    "rating": 4.5,
-    "reviewCount": 274,
+    "price": 777,
+    "mrp": 1490,
+    "discountPercent": 48,
+    "rating": 4.4,
+    "reviewCount": 153,
     "images": [
-      "/img/boho-amelie-driftwood-charm-boho-top.png"
+      "/img/bohemian-amelie-driftwood-charm-boho-top.png"
     ],
     "colors": [
       "neutral"
@@ -1276,16 +1276,16 @@ export const INGESTED_PRODUCTS: Product[] = [
   {
     "id": "p-bohemian-artificial-beaded-boho-rattan-wooden-square-drop-earrings",
     "name": "Artificial Beaded Boho Rattan Wooden Square Drop Earrings",
-    "brand": "H&M",
+    "brand": "FOREVER 21",
     "category": "Accessories",
     "subcategory": "Jewellery",
-    "price": 629,
-    "mrp": 950,
-    "discountPercent": 34,
-    "rating": 4.5,
-    "reviewCount": 215,
+    "price": 864,
+    "mrp": 1920,
+    "discountPercent": 55,
+    "rating": 4.3,
+    "reviewCount": 179,
     "images": [
-      "/img/boho-artificial-beaded-boho-rattan-wooden-square-drop-earrings.png"
+      "/img/bohemian-artificial-beaded-boho-rattan-wooden-square-drop-earrings.png"
     ],
     "colors": [
       "neutral"
@@ -1306,16 +1306,16 @@ export const INGESTED_PRODUCTS: Product[] = [
   {
     "id": "p-bohemian-blue-white-linen-printed-jumpsuit",
     "name": "Blue & White Linen Printed Jumpsuit",
-    "brand": "VERO MODA",
+    "brand": "ZARA",
     "category": "Women",
     "subcategory": "Jumpsuits",
-    "price": 553,
-    "mrp": 950,
-    "discountPercent": 42,
-    "rating": 3.7,
-    "reviewCount": -207,
+    "price": 1000,
+    "mrp": 1890,
+    "discountPercent": 47,
+    "rating": 4,
+    "reviewCount": 314,
     "images": [
-      "/img/boho-blue-white-linen-printed-jumpsuit.png"
+      "/img/bohemian-blue-white-linen-printed-jumpsuit.png"
     ],
     "colors": [
       "white",
@@ -1353,16 +1353,16 @@ export const INGESTED_PRODUCTS: Product[] = [
   {
     "id": "p-bohemian-bohemian-knotted-top",
     "name": "Bohemian Knotted Top",
-    "brand": "STREET STYLE STORE",
+    "brand": "URBAN OUTFITTERS",
     "category": "Women",
     "subcategory": "Tops",
-    "price": 668,
-    "mrp": 1260,
-    "discountPercent": 47,
-    "rating": 4.3,
-    "reviewCount": 283,
+    "price": 725,
+    "mrp": 1450,
+    "discountPercent": 50,
+    "rating": 4.1,
+    "reviewCount": 290,
     "images": [
-      "/img/boho-bohemian-knotted-top.png"
+      "/img/bohemian-bohemian-knotted-top.png"
     ],
     "colors": [
       "neutral"
@@ -1399,16 +1399,16 @@ export const INGESTED_PRODUCTS: Product[] = [
   {
     "id": "p-bohemian-extended-sleeves-bohemian-peplum-top",
     "name": "Extended Sleeves Bohemian Peplum Top",
-    "brand": "BERSHKA",
+    "brand": "H&M",
     "category": "Women",
     "subcategory": "Tops",
-    "price": 1296,
-    "mrp": 2540,
-    "discountPercent": 49,
-    "rating": 4.1,
-    "reviewCount": 391,
+    "price": 929,
+    "mrp": 1860,
+    "discountPercent": 50,
+    "rating": 4.4,
+    "reviewCount": 62,
     "images": [
-      "/img/boho-extended-sleeves-bohemian-peplum-top.png"
+      "/img/bohemian-extended-sleeves-bohemian-peplum-top.png"
     ],
     "colors": [
       "neutral"
@@ -1445,16 +1445,16 @@ export const INGESTED_PRODUCTS: Product[] = [
   {
     "id": "p-bohemian-geometrical-shaped-drop-earrings",
     "name": "Geometrical Shaped Drop Earrings",
-    "brand": "BERSHKA",
+    "brand": "H&M",
     "category": "Accessories",
     "subcategory": "Jewellery",
-    "price": 606,
-    "mrp": 1030,
-    "discountPercent": 41,
-    "rating": 3.8,
-    "reviewCount": -254,
+    "price": 719,
+    "mrp": 1200,
+    "discountPercent": 40,
+    "rating": 4.2,
+    "reviewCount": 290,
     "images": [
-      "/img/boho-geometrical-shaped-drop-earrings.png"
+      "/img/bohemian-geometrical-shaped-drop-earrings.png"
     ],
     "colors": [
       "neutral"
@@ -1475,16 +1475,16 @@ export const INGESTED_PRODUCTS: Product[] = [
   {
     "id": "p-bohemian-girls-floral-print-fringed-bohemian-cotton-crop-top",
     "name": "Girls Floral Print Fringed Bohemian Cotton Crop Top",
-    "brand": "H&M",
+    "brand": "STREET STYLE STORE",
     "category": "Women",
     "subcategory": "Tops",
-    "price": 539,
-    "mrp": 790,
-    "discountPercent": 32,
-    "rating": 3.9,
-    "reviewCount": 185,
+    "price": 978,
+    "mrp": 1850,
+    "discountPercent": 47,
+    "rating": 4.3,
+    "reviewCount": 170,
     "images": [
-      "/img/boho-girls-floral-print-fringed-bohemian-cotton-crop-top.png"
+      "/img/bohemian-girls-floral-print-fringed-bohemian-cotton-crop-top.png"
     ],
     "colors": [
       "neutral"
@@ -1521,16 +1521,16 @@ export const INGESTED_PRODUCTS: Product[] = [
   {
     "id": "p-bohemian-print-boho-cotton-top",
     "name": "Print Boho Cotton Top",
-    "brand": "STREET STYLE STORE",
+    "brand": "URBAN OUTFITTERS",
     "category": "Women",
     "subcategory": "Tops",
-    "price": 598,
-    "mrp": 950,
-    "discountPercent": 37,
-    "rating": 3.6,
-    "reviewCount": -227,
+    "price": 925,
+    "mrp": 1400,
+    "discountPercent": 34,
+    "rating": 4.1,
+    "reviewCount": 279,
     "images": [
-      "/img/boho-print-boho-cotton-top.png"
+      "/img/bohemian-print-boho-cotton-top.png"
     ],
     "colors": [
       "neutral"
@@ -1567,16 +1567,16 @@ export const INGESTED_PRODUCTS: Product[] = [
   {
     "id": "p-bohemian-ruffle-tank-top",
     "name": "Ruffle Tank Top",
-    "brand": "FOREVER 21",
+    "brand": "URBAN OUTFITTERS",
     "category": "Women",
     "subcategory": "Tops",
-    "price": 944,
+    "price": 775,
     "mrp": 1550,
-    "discountPercent": 39,
-    "rating": 3.8,
-    "reviewCount": -88,
+    "discountPercent": 50,
+    "rating": 3.9,
+    "reviewCount": 159,
     "images": [
-      "/img/boho-ruffle-tank-top.png"
+      "/img/bohemian-ruffle-tank-top.png"
     ],
     "colors": [
       "neutral"

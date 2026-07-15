@@ -7,7 +7,7 @@
 //   pnpm --filter @workspace/scripts run ingest-photos [sourceDir]
 //
 // sourceDir defaults to /mnt/c/Users/durga/Downloads and must contain one
-// subfolder per style (e.g. y2k/, boho/, k-fashion/), each holding one image
+// subfolder per style (e.g. y2k/, bohemian/, k-fashion/), each holding one image
 // file per product, named after the product (e.g. "Mini Heart Hair Clip.png").
 //
 // Rerunnable: add a new style folder later (e.g. streetwear/, minimalist/)
@@ -67,7 +67,7 @@ const STYLE_CONFIGS: StyleConfig[] = [
   { folder: "streetwear", aestheticTag: "streetwear", displayName: "Streetwear Central" },
   { folder: "minimalist", aestheticTag: "minimalist", displayName: "Minimalist Edit" },
   {
-    folder: "boho",
+    folder: "bohemian",
     aestheticTag: "bohemian",
     displayName: "Bohemian Bazaar",
     newHub: {
@@ -188,8 +188,8 @@ function buildProduct(
     price: basePrice,
     mrp,
     discountPercent,
-    rating: Math.round((3.9 + ((h >> 3) % 7) / 10) * 10) / 10,
-    reviewCount: 40 + ((h >> 6) % 360),
+    rating: Math.round((3.9 + ((h >>> 3) % 7) / 10) * 10) / 10,
+    reviewCount: 40 + ((h >>> 6) % 360),
     images: [destImagePath],
     colors: guessColors(name),
     sizes: guessSizes(category),
