@@ -58,7 +58,7 @@ const loadState = (): AppState => {
   try {
     const saved = localStorage.getItem('styleverse_state');
     if (saved) {
-      const parsed = JSON.parse(saved);
+      const parsed = JSON.parse(saved) as Partial<AppState>;
       // Merge with defaults so fields added in later builds (e.g. a new
       // AppState key) don't crash reads/writes against older persisted state.
       stateCache = {

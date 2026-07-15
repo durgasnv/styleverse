@@ -9,7 +9,7 @@ import { Slider } from '@/components/ui/slider';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { Filter, SlidersHorizontal, ChevronDown } from 'lucide-react';
+import { Filter, SlidersHorizontal, ChevronDown, Search as SearchIcon } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Spinner } from '@/components/ui/spinner';
 
@@ -222,7 +222,7 @@ export default function Search() {
           ) : (
             <div className="flex flex-col items-center justify-center py-20 text-center">
               <div className="w-40 h-40 bg-gray-100 rounded-full flex items-center justify-center mb-6">
-                <Search className="h-16 w-16 text-gray-300" />
+                <SearchIcon className="h-16 w-16 text-gray-300" />
               </div>
               <h2 className="font-heading font-bold text-2xl mb-2 text-[#282C3F]">We couldn't find any matches!</h2>
               <p className="text-gray-500 max-w-md">Please check the spelling or try searching for something else</p>
