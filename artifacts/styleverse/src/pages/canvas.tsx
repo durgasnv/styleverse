@@ -1,8 +1,8 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import type { Product } from '../data/mock-data';
 import { useProducts } from '../hooks/use-catalog';
 import { useStore } from '../hooks/use-store';
-import { useLocation } from 'wouter';
+import { useLocation, useSearch } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Trash2, CheckCircle, Wand2, Search, SlidersHorizontal, ShoppingBag } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -19,6 +19,7 @@ interface CanvasItem {
 export default function Canvas() {
   const { saveLook, addToBag } = useStore();
   const [, setLocation] = useLocation();
+  const search = useSearch();
   const { toast } = useToast();
   const { products: allProducts } = useProducts();
 
@@ -29,6 +30,29 @@ export default function Canvas() {
   const canvasRef = useRef<HTMLDivElement>(null);
   const [draggedItem, setDraggedItem] = useState<{id: string, isFromCatalog: boolean} | null>(null);
   const [highestZ, setHighestZ] = useState(1);
+
+  // "Open in Canvas" from the product page links here with ?add=<productId> —
+  // pick it up once products have loaded and drop it onto the canvas.
+  const appliedAddParam = useRef<string | null>(null);
+  useEffect(() => {
+    const addId = new URLSearchParams(search).get('add');
+    if (!addId || addId === appliedAddParam.current || allProducts.length === 0) return;
+
+    const product = allProducts.find(p => p.id === addId);
+    if (!product) return;
+
+    appliedAddParam.current = addId;
+    setHighestZ(z => {
+      setItems(prev => [...prev, {
+        id: `canvas_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
+        product,
+        x: 60,
+        y: 60,
+        z: z + 1,
+      }]);
+      return z + 1;
+    });
+  }, [search, allProducts]);
 
   const categories = ['All', ...Array.from(new Set(allProducts.map(p => p.category)))];
 

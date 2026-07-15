@@ -175,7 +175,7 @@ export default function ProductDetail() {
                     <FolderHeart className="h-4 w-4 mr-1" /> Save
                   </Button>
                 </SaveToCollectionDialog>
-                <Button size="sm" className="h-8 bg-[#282C3F] hover:bg-black" onClick={() => setLocation('/canvas')}>
+                <Button size="sm" className="h-8 bg-[#282C3F] hover:bg-black" onClick={() => setLocation(`/canvas?add=${product.id}`)}>
                   Open in Canvas
                 </Button>
               </div>
