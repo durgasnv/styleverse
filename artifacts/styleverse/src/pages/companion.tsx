@@ -4,13 +4,16 @@ import { useStore } from '../hooks/use-store';
 import { Button } from '@/components/ui/button';
 import { Sparkles, ArrowRight, Wand2, Search, SlidersHorizontal, CheckCircle } from 'lucide-react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Spinner } from '@/components/ui/spinner';
 
 export default function Companion() {
   const [, setLocation] = useLocation();
   const searchParams = new URLSearchParams(window.location.search);
   const lookId = searchParams.get('lookId');
+  // Canvas's "Ask Companion" links here with ?items=<id,id,...> for a draft
+  // that hasn't been saved as a look yet — take priority over lookId/dummy fallback.
+  const itemsParam = searchParams.get('items');
   const { state, updatePrefs } = useStore();
   const { products: allProducts, isLoading } = useProducts();
 
@@ -19,13 +22,20 @@ export default function Companion() {
   const [skinTone, setSkinTone] = useState(state.prefs.skinTone);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [showResults, setShowResults] = useState(true);
+  const [mentorTip, setMentorTip] = useState<string | null>(null);
+  const [mentorTipLoading, setMentorTipLoading] = useState(false);
+  const [mentorTipError, setMentorTipError] = useState<string | null>(null);
 
-  // If no look is provided, we can either prompt them to select one or just use a dummy one for the demo
-  const look = lookId ? state.myLooks.find(l => l.id === lookId) : state.myLooks[0];
+  // If no look/items are provided, we can either prompt them to select one or just use a dummy one for the demo
+  const look = lookId ? state.myLooks.find(l => l.id === lookId) : (!itemsParam ? state.myLooks[0] : undefined);
 
-  const products = look
+  const products = itemsParam
+    ? itemsParam.split(',').filter(Boolean).map(id => allProducts.find(p => p.id === id)).filter(Boolean) as typeof allProducts
+    : look
     ? look.productIds.map(id => allProducts.find(p => p.id === id)).filter(Boolean) as typeof allProducts
     : [];
+
+  const lookName = look?.name ?? 'Your Canvas Look';
 
   const handleAnalyze = () => {
     updatePrefs({ mood, weather, skinTone });
@@ -36,6 +46,45 @@ export default function Companion() {
       setShowResults(true);
     }, 1500);
   };
+
+  useEffect(() => {
+    if (products.length === 0) return;
+
+    const controller = new AbortController();
+    setMentorTipLoading(true);
+    setMentorTipError(null);
+
+    fetch('/api/companion/mentor-tip', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      signal: controller.signal,
+      body: JSON.stringify({
+        items: products.map(p => ({
+          name: p.name,
+          brand: p.brand,
+          category: p.category,
+          colors: p.colors,
+          occasionTags: p.occasionTags,
+        })),
+        mood,
+        weather,
+        skinTone,
+      }),
+    })
+      .then(async (res) => {
+        if (!res.ok) throw new Error((await res.json().catch(() => null))?.error || `Request failed (${res.status})`);
+        return res.json();
+      })
+      .then((data: { tip: string }) => setMentorTip(data.tip))
+      .catch((err) => {
+        if (err.name === 'AbortError') return;
+        setMentorTipError(err.message || 'Could not reach the style mentor.');
+      })
+      .finally(() => setMentorTipLoading(false));
+
+    return () => controller.abort();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [products.map(p => p.id).join(','), mood, weather, skinTone]);
 
   // Deterministic fake scoring algorithm based on categories and selections
   const analysisData = useMemo(() => {
@@ -90,7 +139,7 @@ export default function Companion() {
     return <div className="flex justify-center py-16"><Spinner className="size-8" /></div>;
   }
 
-  if (!look || products.length === 0) {
+  if (products.length === 0) {
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center text-center px-4">
         <div className="w-24 h-24 bg-gradient-to-br from-purple-100 to-indigo-100 rounded-full flex items-center justify-center mb-6">
@@ -116,7 +165,7 @@ export default function Companion() {
           <h1 className="font-heading font-black text-3xl md:text-4xl mb-2 flex items-center gap-3">
             <Wand2 className="h-8 w-8 text-indigo-300" /> Style Companion
           </h1>
-          <p className="text-indigo-200">Analyzing: <span className="font-bold text-white">{look.name}</span></p>
+          <p className="text-indigo-200">Analyzing: <span className="font-bold text-white">{lookName}</span></p>
         </div>
       </div>
 
@@ -238,6 +287,20 @@ export default function Companion() {
                   </h3>
                   
                   <div className="space-y-4">
+                    <div className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-4 rounded flex items-start gap-3">
+                      <div className="bg-white/20 w-8 h-8 rounded-full flex items-center justify-center shrink-0"><Sparkles className="h-4 w-4" /></div>
+                      <div className="flex-1">
+                        <p className="text-sm font-bold">Mentor Tip</p>
+                        {mentorTipLoading ? (
+                          <p className="text-xs text-indigo-100 mt-1 flex items-center gap-2"><Spinner className="size-3" /> Your style mentor is thinking...</p>
+                        ) : mentorTipError ? (
+                          <p className="text-xs text-indigo-100 mt-1">Couldn't reach the style mentor right now ({mentorTipError}).</p>
+                        ) : mentorTip ? (
+                          <p className="text-xs text-indigo-100 mt-1">{mentorTip}</p>
+                        ) : null}
+                      </div>
+                    </div>
+
                     {analysisData.missing && (
                       <div className="bg-white p-4 rounded border border-indigo-100 flex items-start gap-3">
                         <div className="bg-indigo-100 text-indigo-600 w-8 h-8 rounded-full flex items-center justify-center shrink-0 font-bold">1</div>
