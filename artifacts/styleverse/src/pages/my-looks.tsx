@@ -2,13 +2,37 @@ import { useStore } from '../hooks/use-store';
 import { useProducts } from '../hooks/use-catalog';
 import { Link, useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
-import { Wand2, Trash2, SlidersHorizontal, Image as ImageIcon } from 'lucide-react';
+import { Wand2, Trash2, SlidersHorizontal, Image as ImageIcon, Share2 } from 'lucide-react';
 import { format } from 'date-fns';
+import { useState } from 'react';
+import { createVotingRoom } from '../lib/voting-api';
+import { useVoterId } from '../hooks/use-voter-id';
+import { useToast } from '@/hooks/use-toast';
 
 export default function MyLooks() {
   const { state, removeLook } = useStore();
   const { products: allProducts } = useProducts();
   const [, setLocation] = useLocation();
+  const { toast } = useToast();
+  const voterId = useVoterId();
+  const [sharingLookId, setSharingLookId] = useState<string | null>(null);
+
+  const handleShareForVoting = async (look: typeof state.myLooks[number]) => {
+    setSharingLookId(look.id);
+    try {
+      const room = await createVotingRoom({
+        productIds: look.productIds,
+        outfitId: look.id,
+        creatorLabel: look.name,
+        creatorVoterId: voterId,
+      });
+      setLocation(`/vote/${room.id}`);
+    } catch (err) {
+      toast({ title: 'Could not create voting room', description: (err as Error).message, variant: 'destructive' });
+    } finally {
+      setSharingLookId(null);
+    }
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -69,12 +93,21 @@ export default function MyLooks() {
                   </div>
                   <p className="text-xs text-gray-500 font-mono mb-4">{format(new Date(look.createdAt), 'MMM d, yyyy')}</p>
                   
-                  <div className="mt-auto pt-4 border-t grid grid-cols-2 gap-2">
+                  <div className="mt-auto pt-4 border-t grid grid-cols-3 gap-2">
                     <Button variant="outline" size="sm" className="w-full text-xs font-bold" onClick={() => setLocation(`/companion?lookId=${look.id}`)}>
                       <Wand2 className="w-3 h-3 mr-1 text-indigo-500" /> AI Score
                     </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="w-full text-xs font-bold border-indigo-200 text-indigo-600"
+                      disabled={sharingLookId === look.id}
+                      onClick={() => handleShareForVoting(look)}
+                    >
+                      <Share2 className="w-3 h-3 mr-1" /> {sharingLookId === look.id ? '...' : 'Vote'}
+                    </Button>
                     <Button size="sm" className="w-full text-xs font-bold bg-[#FF3F6C] hover:bg-[#d93059] text-white">
-                      Submit <span className="hidden sm:inline ml-1">to Challenge</span>
+                      Submit
                     </Button>
                   </div>
                 </div>

@@ -4,9 +4,11 @@ import { useProducts } from '../hooks/use-catalog';
 import { useStore } from '../hooks/use-store';
 import { useLocation, useSearch } from 'wouter';
 import { Button } from '@/components/ui/button';
-import { Trash2, CheckCircle, Wand2, Search, SlidersHorizontal, ShoppingBag } from 'lucide-react';
+import { Trash2, CheckCircle, Wand2, Search, SlidersHorizontal, ShoppingBag, Share2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
+import { createVotingRoom } from '../lib/voting-api';
+import { useVoterId } from '../hooks/use-voter-id';
 
 interface CanvasItem {
   id: string; // unique ID for this instance on canvas
@@ -22,6 +24,7 @@ export default function Canvas() {
   const search = useSearch();
   const { toast } = useToast();
   const { products: allProducts } = useProducts();
+  const voterId = useVoterId();
 
   const [items, setItems] = useState<CanvasItem[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -30,6 +33,7 @@ export default function Canvas() {
   const canvasRef = useRef<HTMLDivElement>(null);
   const [draggedItem, setDraggedItem] = useState<{id: string, isFromCatalog: boolean} | null>(null);
   const [highestZ, setHighestZ] = useState(1);
+  const [isSharing, setIsSharing] = useState(false);
 
   // "Open in Canvas" from the product page links here with ?add=<productId> —
   // pick it up once products have loaded and drop it onto the canvas.
@@ -164,6 +168,23 @@ export default function Canvas() {
     setLocation(`/companion?items=${uniqueProductIds.join(',')}`);
   };
 
+  const shareForVoting = async () => {
+    if (items.length === 0) {
+      toast({ title: "Canvas is empty", description: "Add some items before sharing for votes.", variant: "destructive" });
+      return;
+    }
+    const uniqueProductIds = Array.from(new Set(items.map(i => i.product.id)));
+    setIsSharing(true);
+    try {
+      const room = await createVotingRoom({ productIds: uniqueProductIds, creatorVoterId: voterId });
+      setLocation(`/vote/${room.id}`);
+    } catch (err) {
+      toast({ title: "Could not create voting room", description: (err as Error).message, variant: "destructive" });
+    } finally {
+      setIsSharing(false);
+    }
+  };
+
   const addAllToBag = () => {
     if (items.length === 0) return;
     
@@ -197,6 +218,9 @@ export default function Canvas() {
           </Button>
           <Button variant="outline" size="sm" onClick={handleSaveLook} disabled={items.length === 0} className="border-[#FF3F6C] text-[#FF3F6C] hover:bg-pink-50">
             <CheckCircle className="w-4 h-4 mr-2" /> Save Look
+          </Button>
+          <Button variant="outline" size="sm" onClick={shareForVoting} disabled={items.length === 0 || isSharing} className="border-indigo-200 text-indigo-600 hidden sm:flex">
+            <Share2 className="w-4 h-4 mr-2" /> {isSharing ? 'Sharing...' : 'Share for Voting'}
           </Button>
           <Button size="sm" onClick={checkWithCompanion} disabled={items.length === 0} className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white border-none">
             <Wand2 className="w-4 h-4 mr-2" /> Ask Companion
