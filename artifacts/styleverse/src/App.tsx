@@ -18,6 +18,7 @@ import Challenges from './pages/challenges';
 import Collections from './pages/collections';
 import MyLooks from './pages/my-looks';
 import Profile from './pages/profile';
+import VoteRoom from './pages/vote-room';
 
 const queryClient = new QueryClient();
 
@@ -40,6 +41,7 @@ function Router() {
           <Route path="/collections" component={Collections} />
           <Route path="/my-looks" component={MyLooks} />
           <Route path="/profile" component={Profile} />
+          <Route path="/vote/:roomId" component={VoteRoom} />
           <Route component={NotFound} />
         </Switch>
       </main>
