@@ -19,3 +19,4 @@ export function connectDB(): Promise<typeof mongoose> {
 export * from "./models/product";
 export * from "./models/hub";
 export * from "./models/challenge";
+export * from "./models/voting-room";

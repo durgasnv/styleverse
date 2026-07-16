@@ -1,5 +1,7 @@
+import http from "node:http";
 import { connectDB } from "@workspace/db";
 import app from "./app";
+import { attachSocketServer } from "./lib/socket";
 import { logger } from "./lib/logger";
 
 const rawPort = process.env["PORT"];
@@ -19,7 +21,10 @@ if (Number.isNaN(port) || port <= 0) {
 await connectDB();
 logger.info("Connected to MongoDB");
 
-app.listen(port, (err) => {
+const httpServer = http.createServer(app);
+attachSocketServer(httpServer);
+
+httpServer.listen(port, (err?: Error) => {
   if (err) {
     logger.error({ err }, "Error listening on port");
     process.exit(1);
