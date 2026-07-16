@@ -1,6 +1,8 @@
 import { useLocation } from 'wouter';
 import { useProducts } from '../hooks/use-catalog';
 import { useStore } from '../hooks/use-store';
+import { useLooks } from '../hooks/use-looks';
+import { useIdentity } from '../hooks/use-identity';
 import { Button } from '@/components/ui/button';
 import { Sparkles, ArrowRight, Wand2, Search, SlidersHorizontal, CheckCircle } from 'lucide-react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
@@ -16,6 +18,8 @@ export default function Companion() {
   const itemsParam = searchParams.get('items');
   const { state, updatePrefs } = useStore();
   const { products: allProducts, isLoading } = useProducts();
+  const identity = useIdentity();
+  const { looks, isLoading: looksLoading } = useLooks(identity?.userId);
 
   const [mood, setMood] = useState(state.prefs.mood);
   const [weather, setWeather] = useState(state.prefs.weather);
@@ -27,7 +31,7 @@ export default function Companion() {
   const [mentorTipError, setMentorTipError] = useState<string | null>(null);
 
   // If no look/items are provided, we can either prompt them to select one or just use a dummy one for the demo
-  const look = lookId ? state.myLooks.find(l => l.id === lookId) : (!itemsParam ? state.myLooks[0] : undefined);
+  const look = lookId ? looks.find(l => l.id === lookId) : (!itemsParam ? looks[0] : undefined);
 
   const products = itemsParam
     ? itemsParam.split(',').filter(Boolean).map(id => allProducts.find(p => p.id === id)).filter(Boolean) as typeof allProducts
@@ -135,7 +139,7 @@ export default function Companion() {
     };
   }, [products, mood, weather, skinTone]);
 
-  if (isLoading) {
+  if (isLoading || looksLoading) {
     return <div className="flex justify-center py-16"><Spinner className="size-8" /></div>;
   }
 

@@ -20,3 +20,5 @@ export * from "./models/product";
 export * from "./models/hub";
 export * from "./models/challenge";
 export * from "./models/voting-room";
+export * from "./models/user";
+export * from "./models/look";

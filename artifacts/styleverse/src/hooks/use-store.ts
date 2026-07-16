@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Outfit } from '../data/mock-data';
 
 export interface BagItem {
   id: string;
@@ -25,7 +24,6 @@ export interface AppState {
   bag: BagItem[];
   wishlist: string[]; // product IDs
   collections: Collection[];
-  myLooks: Outfit[];
   prefs: UserPrefs;
   challengeVotes: Record<string, boolean>; // entryId -> voted
 }
@@ -37,7 +35,6 @@ const DEFAULT_STATE: AppState = {
     { id: 'col1', name: 'Wishlist', productIds: [], outfitIds: [] },
     { id: 'col2', name: 'Date Night', productIds: [], outfitIds: [] },
   ],
-  myLooks: [],
   prefs: {
     mood: 'confident',
     skinTone: 'medium',
@@ -140,24 +137,6 @@ export const useStore = () => {
     saveState({ ...current });
   }, []);
 
-  const saveLook = useCallback((outfit: Omit<Outfit, 'id' | 'createdAt'>) => {
-    const current = loadState();
-    const newLook: Outfit = {
-      ...outfit,
-      id: `look_${Date.now()}`,
-      createdAt: new Date().toISOString()
-    };
-    current.myLooks = [newLook, ...current.myLooks];
-    saveState({ ...current });
-    return newLook;
-  }, []);
-
-  const removeLook = useCallback((id: string) => {
-    const current = loadState();
-    current.myLooks = current.myLooks.filter(l => l.id !== id);
-    saveState({ ...current });
-  }, []);
-
   const updatePrefs = useCallback((prefs: Partial<UserPrefs>) => {
     const current = loadState();
     current.prefs = { ...current.prefs, ...prefs };
@@ -211,8 +190,6 @@ export const useStore = () => {
     removeBagItem,
     clearBag,
     toggleWishlist,
-    saveLook,
-    removeLook,
     updatePrefs,
     voteChallenge,
     toggleCollectionProduct,

@@ -8,7 +8,8 @@ import { Trash2, CheckCircle, Wand2, Search, SlidersHorizontal, ShoppingBag, Sha
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { createVotingRoom } from '../lib/voting-api';
-import { useVoterId } from '../hooks/use-voter-id';
+import { useIdentity } from '../hooks/use-identity';
+import { useSaveLook } from '../hooks/use-looks';
 
 interface CanvasItem {
   id: string; // unique ID for this instance on canvas
@@ -19,12 +20,13 @@ interface CanvasItem {
 }
 
 export default function Canvas() {
-  const { saveLook, addToBag } = useStore();
+  const { addToBag } = useStore();
   const [, setLocation] = useLocation();
   const search = useSearch();
   const { toast } = useToast();
   const { products: allProducts } = useProducts();
-  const voterId = useVoterId();
+  const identity = useIdentity();
+  const saveLook = useSaveLook(identity?.userId);
 
   const [items, setItems] = useState<CanvasItem[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -136,25 +138,26 @@ export default function Canvas() {
     setItems(items.filter(i => i.id !== id));
   };
 
-  const handleSaveLook = () => {
+  const handleSaveLook = async () => {
     if (items.length === 0) {
       toast({ title: "Canvas is empty", description: "Add some items before saving.", variant: "destructive" });
       return;
     }
-    
+    if (!identity) return;
+
     const uniqueProductIds = Array.from(new Set(items.map(i => i.product.id)));
     const lookName = `Look ${new Date().toLocaleDateString()}`;
-    
-    saveLook({
-      name: lookName,
-      productIds: uniqueProductIds
-    });
-    
-    toast({
-      title: "Look Saved!",
-      description: "You can find this in My Looks.",
-      action: <Button variant="outline" size="sm" onClick={() => setLocation('/my-looks')}>View</Button>
-    });
+
+    try {
+      await saveLook.mutateAsync({ name: lookName, productIds: uniqueProductIds });
+      toast({
+        title: "Look Saved!",
+        description: "You can find this in My Looks.",
+        action: <Button variant="outline" size="sm" onClick={() => setLocation('/my-looks')}>View</Button>
+      });
+    } catch (err) {
+      toast({ title: "Could not save look", description: (err as Error).message, variant: "destructive" });
+    }
   };
 
   const checkWithCompanion = () => {
@@ -173,10 +176,11 @@ export default function Canvas() {
       toast({ title: "Canvas is empty", description: "Add some items before sharing for votes.", variant: "destructive" });
       return;
     }
+    if (!identity) return;
     const uniqueProductIds = Array.from(new Set(items.map(i => i.product.id)));
     setIsSharing(true);
     try {
-      const room = await createVotingRoom({ productIds: uniqueProductIds, creatorVoterId: voterId });
+      const room = await createVotingRoom({ productIds: uniqueProductIds, creatorVoterId: identity.userId });
       setLocation(`/vote/${room.id}`);
     } catch (err) {
       toast({ title: "Could not create voting room", description: (err as Error).message, variant: "destructive" });
@@ -216,8 +220,8 @@ export default function Canvas() {
           <Button variant="outline" size="sm" onClick={addAllToBag} disabled={items.length === 0} className="border-gray-300 hidden md:flex">
             <ShoppingBag className="w-4 h-4 mr-2" /> Shop All
           </Button>
-          <Button variant="outline" size="sm" onClick={handleSaveLook} disabled={items.length === 0} className="border-[#FF3F6C] text-[#FF3F6C] hover:bg-pink-50">
-            <CheckCircle className="w-4 h-4 mr-2" /> Save Look
+          <Button variant="outline" size="sm" onClick={handleSaveLook} disabled={items.length === 0 || saveLook.isPending} className="border-[#FF3F6C] text-[#FF3F6C] hover:bg-pink-50">
+            <CheckCircle className="w-4 h-4 mr-2" /> {saveLook.isPending ? 'Saving...' : 'Save Look'}
           </Button>
           <Button variant="outline" size="sm" onClick={shareForVoting} disabled={items.length === 0 || isSharing} className="border-indigo-200 text-indigo-600 hidden sm:flex">
             <Share2 className="w-4 h-4 mr-2" /> {isSharing ? 'Sharing...' : 'Share for Voting'}
