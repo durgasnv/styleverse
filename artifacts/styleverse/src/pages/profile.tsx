@@ -1,9 +1,11 @@
 import { useStore } from '../hooks/use-store';
+import { useIdentity } from '../hooks/use-identity';
 import { Button } from '@/components/ui/button';
 import { User, Settings, CreditCard, Package, LogOut, ShieldAlert } from 'lucide-react';
 
 export default function Profile() {
   const { state, resetState } = useStore();
+  const identity = useIdentity();
 
   const handleReset = () => {
     if (confirm("Are you sure? This will delete your bag, wishlist, and all saved data.")) {
@@ -27,8 +29,8 @@ export default function Profile() {
                 <User className="h-8 w-8 text-gray-400" />
               </div>
               <div>
-                <h2 className="font-bold text-[#282C3F]">StyleVerse User</h2>
-                <p className="text-xs text-gray-500">user@example.com</p>
+                <h2 className="font-bold text-[#282C3F]">{identity?.username ?? 'StyleVerse User'}</h2>
+                <p className="text-xs text-gray-500">This name is shown when you save looks, vote, and share.</p>
               </div>
             </div>
             

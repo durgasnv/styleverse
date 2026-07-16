@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useRoute } from 'wouter';
 import { io, type Socket } from 'socket.io-client';
 import { useProducts } from '../hooks/use-catalog';
-import { useVoterId } from '../hooks/use-voter-id';
+import { useIdentity } from '../hooks/use-identity';
 import { fetchVotingRoom, type Reaction, type Tally, type VotingRoom } from '../lib/voting-api';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
@@ -17,7 +17,8 @@ const REACTIONS: { key: Reaction; emoji: string; label: string }[] = [
 export default function VoteRoom() {
   const [, params] = useRoute('/vote/:roomId');
   const roomId = params?.roomId;
-  const voterId = useVoterId();
+  const identity = useIdentity();
+  const userId = identity?.userId;
   const { products: allProducts, isLoading: productsLoading } = useProducts();
 
   const [room, setRoom] = useState<VotingRoom | null>(null);
@@ -33,12 +34,12 @@ export default function VoteRoom() {
   const socketRef = useRef<Socket | null>(null);
 
   useEffect(() => {
-    if (!roomId) return;
+    if (!roomId || !userId) return;
     let cancelled = false;
     setLoading(true);
     setNotFound(false);
 
-    fetchVotingRoom(roomId, voterId)
+    fetchVotingRoom(roomId, userId)
       .then((data) => {
         if (cancelled) return;
         setRoom(data.room);
@@ -57,7 +58,7 @@ export default function VoteRoom() {
     return () => {
       cancelled = true;
     };
-  }, [roomId, voterId]);
+  }, [roomId, userId]);
 
   useEffect(() => {
     if (!roomId) return;
@@ -81,9 +82,9 @@ export default function VoteRoom() {
   }, [roomId]);
 
   const castVote = (reaction: Reaction) => {
-    if (!roomId || isCreator) return;
+    if (!roomId || !userId || isCreator) return;
     setMyReaction(reaction);
-    socketRef.current?.emit('voting:cast', { roomId, voterId, reaction });
+    socketRef.current?.emit('voting:cast', { roomId, voterId: userId, reaction });
   };
 
   const copyLink = () => {

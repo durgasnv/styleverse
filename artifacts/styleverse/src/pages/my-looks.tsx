@@ -1,30 +1,34 @@
-import { useStore } from '../hooks/use-store';
 import { useProducts } from '../hooks/use-catalog';
-import { Link, useLocation } from 'wouter';
+import { useLooks, useDeleteLook } from '../hooks/use-looks';
+import { useIdentity } from '../hooks/use-identity';
+import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Wand2, Trash2, SlidersHorizontal, Image as ImageIcon, Share2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { useState } from 'react';
 import { createVotingRoom } from '../lib/voting-api';
-import { useVoterId } from '../hooks/use-voter-id';
+import type { Look } from '../lib/looks-api';
 import { useToast } from '@/hooks/use-toast';
+import { Spinner } from '@/components/ui/spinner';
 
 export default function MyLooks() {
-  const { state, removeLook } = useStore();
+  const identity = useIdentity();
+  const { looks, isLoading } = useLooks(identity?.userId);
+  const deleteLook = useDeleteLook(identity?.userId);
   const { products: allProducts } = useProducts();
   const [, setLocation] = useLocation();
   const { toast } = useToast();
-  const voterId = useVoterId();
   const [sharingLookId, setSharingLookId] = useState<string | null>(null);
 
-  const handleShareForVoting = async (look: typeof state.myLooks[number]) => {
+  const handleShareForVoting = async (look: Look) => {
+    if (!identity) return;
     setSharingLookId(look.id);
     try {
       const room = await createVotingRoom({
         productIds: look.productIds,
         outfitId: look.id,
         creatorLabel: look.name,
-        creatorVoterId: voterId,
+        creatorVoterId: identity.userId,
       });
       setLocation(`/vote/${room.id}`);
     } catch (err) {
@@ -46,7 +50,9 @@ export default function MyLooks() {
         </Button>
       </div>
 
-      {state.myLooks.length === 0 ? (
+      {isLoading ? (
+        <div className="flex justify-center py-16"><Spinner className="size-8" /></div>
+      ) : looks.length === 0 ? (
         <div className="text-center py-20 bg-gray-50 rounded-xl border border-dashed">
           <ImageIcon className="h-16 w-16 text-gray-300 mx-auto mb-4" />
           <h2 className="font-bold text-xl text-[#282C3F] mb-2">No looks designed yet</h2>
@@ -55,16 +61,16 @@ export default function MyLooks() {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {state.myLooks.map(look => {
+          {looks.map(look => {
             const products = look.productIds.map(id => allProducts.find(p => p.id === id)).filter(Boolean) as typeof allProducts;
-            
+
             return (
               <div key={look.id} className="bg-white border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group flex flex-col">
                 <div className="aspect-square bg-gray-100 p-4 relative flex items-center justify-center bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]">
                   <div className="relative w-full h-full max-w-[200px] mx-auto flex items-center justify-center">
                     {products.slice(0, 3).map((p, i) => (
-                      <div 
-                        key={i} 
+                      <div
+                        key={i}
                         className="absolute bg-white p-1 shadow-md border border-gray-200 transition-transform group-hover:scale-105"
                         style={{
                           width: '45%',
@@ -83,16 +89,16 @@ export default function MyLooks() {
                     )}
                   </div>
                 </div>
-                
+
                 <div className="p-4 flex-1 flex flex-col">
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="font-bold text-[#282C3F] truncate flex-1">{look.name}</h3>
-                    <button onClick={() => removeLook(look.id)} className="text-gray-400 hover:text-red-500 ml-2">
+                    <button onClick={() => deleteLook.mutate(look.id)} className="text-gray-400 hover:text-red-500 ml-2">
                       <Trash2 className="h-4 w-4" />
                     </button>
                   </div>
                   <p className="text-xs text-gray-500 font-mono mb-4">{format(new Date(look.createdAt), 'MMM d, yyyy')}</p>
-                  
+
                   <div className="mt-auto pt-4 border-t grid grid-cols-3 gap-2">
                     <Button variant="outline" size="sm" className="w-full text-xs font-bold" onClick={() => setLocation(`/companion?lookId=${look.id}`)}>
                       <Wand2 className="w-3 h-3 mr-1 text-indigo-500" /> AI Score

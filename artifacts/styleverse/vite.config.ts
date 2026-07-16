@@ -72,6 +72,13 @@ export default defineConfig({
     fs: {
       strict: true,
     },
+    // On WSL/Windows-mounted drives (e.g. /mnt/c/...), native filesystem
+    // change events often don't propagate to chokidar, so HMR silently stops
+    // picking up edits. Polling is slightly more CPU-heavy but always works.
+    watch: {
+      usePolling: true,
+      interval: 300,
+    },
     // Replit's application router stitches /api (api-server) and / (this app) together
     // in production. Locally there's no such router, so proxy /api to api-server directly.
     proxy: {

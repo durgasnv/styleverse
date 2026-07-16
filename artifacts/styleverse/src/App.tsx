@@ -5,6 +5,7 @@ import NotFound from '@/pages/not-found';
 import { Route, Switch, Router as WouterRouter } from 'wouter';
 
 import { Navbar } from './components/Navbar';
+import { IdentityGate } from './components/IdentityGate';
 import Home from './pages/home';
 import Search from './pages/search';
 import ProductDetail from './pages/product';
@@ -69,6 +70,7 @@ function App() {
         <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
           <Router />
         </WouterRouter>
+        <IdentityGate />
         <Toaster />
       </TooltipProvider>
     </QueryClientProvider>
