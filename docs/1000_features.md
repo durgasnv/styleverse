@@ -2,7 +2,7 @@
 
 ## Overview
 
-Our solution transforms Myntra from a shopping platform into a **social fashion ecosystem** where users don't just buy clothes—they discover, create, collaborate, and express their fashion identity.
+Our solution transforms Myntra from a shopping platform into a **social fashion ecosystem** where users don't just buy clothes—they discover, create, get personalized AI guidance, and express their fashion identity.
 
 ---
 
@@ -28,7 +28,6 @@ Each hub contains:
 - 🏆 Weekly challenge
 - ⭐ Top creators
 - 💬 Community discussions
-- 🔄 Outfit remixes
 - 🛍️ Shop Complete Look
 
 Unlike Myntra's existing curated collections, these hubs are **community-driven and constantly evolving**.
@@ -45,40 +44,7 @@ Unlike Myntra's existing curated collections, these hubs are **community-driven 
 
 ---
 
-# 2. Fashion Circles 👥
-
-### Problem
-Fashion discussions usually happen outside Myntra on WhatsApp, Instagram, or Discord.
-
-### Solution
-Private and public communities where users can share **only Myntra outfit links**, discuss styling, and collaborate.
-
-Examples:
-- College Friends
-- Office Team
-- Fashion Club
-- NIT Hyderabad
-- Hyderabad Fashion
-
-Users can:
-- Share outfit links
-- Comment
-- Vote
-- Plan outfits together
-
-### Benefits
-- Keeps discussions inside Myntra
-- Encourages collaborative shopping
-- Increases user engagement
-
-### Tech Stack
-- React
-- Express.js
-- MongoDB
-
----
-
-# 3. Fashion Challenges 🏆
+# 2. Fashion Challenges 🏆
 
 ### Problem
 Users rarely engage with the app after completing a purchase.
@@ -112,7 +78,7 @@ Users:
 
 ---
 
-# 4. Style Canvas 🎨
+# 3. Style Canvas 🎨
 
 ### Problem
 Users have to imagine how products look together.
@@ -125,8 +91,8 @@ Users can:
 - Create outfits
 - Save
 - Share
-- Publish to Fashion Circles
 - Submit to Challenges
+- Send straight to the AI Style Companion for a compatibility check
 
 ### Benefits
 - Interactive shopping
@@ -141,43 +107,18 @@ Users can:
 
 ---
 
-# 5. AI Outfit Evolution 🤖
+# 4. AI Style Companion 🤖
 
 ### Problem
-Users often don't know whether their outfit combinations work well.
+Users don't know whether their outfit combinations work well, why they work, or how to improve them — and they get no continuous, personalized guidance, only one-off tips.
 
 ### Solution
-Users provide Myntra outfit links.
+One persistent AI companion that follows the user across the app, instead of three disconnected AI tools. It:
 
-AI suggests:
-- Better combinations
-- Same-budget alternatives
-- Premium alternatives
-- Matching accessories
-
-### Benefits
-- Better purchase confidence
-- Cross-selling
-- Personalized styling
-
-### Tech Stack
-- OpenRouter
-- Express.js
-- MongoDB
-
----
-
-# 6. Outfit Chemistry ⭐
-
-### Problem
-Users don't know whether an outfit is balanced.
-
-### Solution
-Generate an AI compatibility score based on:
-- Color Harmony
-- Style Consistency
-- Occasion Match
-- Budget Compatibility
+- **Scores compatibility** — Color Harmony, Style Consistency, Occasion Match, Budget Compatibility
+- **Suggests improvements** — better combinations, same-budget alternatives, premium alternatives, matching accessories
+- **Teaches styling** — explains *why* something works (color theory, layering, occasion suitability)
+- **Learns the user's taste** over time so advice gets more personal with every outfit reviewed
 
 Example:
 
@@ -185,94 +126,55 @@ Example:
 Overall Score : 92/100
 
 ✔ Color Harmony
-
 ✔ Occasion Match
-
 ✔ Style Consistency
-
 ✔ Budget Friendly
+
+💡 Mentor tip: The teal top and beige trousers work because they're
+   analogous on the color wheel — try a gold accessory to warm it up.
 ```
 
 ### Benefits
-- Personalized outfit feedback
-- Better styling decisions
-- Increased confidence
+- One relationship, not three separate tools — feels like a personal stylist
+- Personalized, evolving styling guidance
+- Better purchase confidence
+- Cross-selling through grounded suggestions
 
 ### Tech Stack
 - OpenRouter
 - Express.js
+- MongoDB (stores companion memory/preferences per user)
 
 ---
 
-# 7. AI Fashion Mentor 🎓 *(Gen Alpha)*
+# 5. Saved Collections 📌
 
 ### Problem
-Gen Alpha users know what's trending but not why certain outfits work.
+Users can currently only like an outfit — there's no way to organize things they've saved for later, the way Instagram lets you sort saves into named collections.
 
 ### Solution
-Instead of only recommending products, AI teaches styling.
+Instagram-style **Saved Collections**. Users save any outfit or product with one tap and organize saves into custom collections.
 
 Examples:
-- Why colors match
-- Layering techniques
-- Occasion suitability
-- Fashion principles
+- Wedding Looks
+- Casual Fits
+- Wishlist
+- Date Night
+
+Features:
+- Save/unsave with one tap from anywhere (Hub, Canvas, Challenge, PDP)
+- Create and name custom collections
+- Move a saved item between collections
+- Private by default
+- Quick access from Profile
 
 ### Benefits
-- Educational
-- Builds styling confidence
-- Long-term engagement
-
-### Tech Stack
-- OpenRouter
-- Express.js
-
----
-
-
-# 8. Community Remix 🔥
-
-### Problem
-Users can currently only like or save community outfits.
-
-### Solution
-Allow users to remix community outfits.
-
-Flow:
-
-```
-Original Outfit
-
-↓
-
-Remix
-
-↓
-
-Open Style Canvas
-
-↓
-
-Modify Outfit
-
-↓
-
-Publish Remix
-
-↓
-
-Community Votes
-```
-
-### Benefits
-- Continuous engagement
-- More outfit variations
-- Product discovery
-- Community creativity
+- Turns passive browsing into organized inspiration boards
+- Increases return visits (users come back to their collections)
+- Familiar, zero-learning-curve UX (mirrors Instagram)
 
 ### Tech Stack
 - React
-- React DnD
 - Express.js
 - MongoDB
 
@@ -287,19 +189,13 @@ Browse Style Hub
 Discover Trending Outfit
         │
         ▼
-Join Fashion Circle
-        │
-        ▼
-Remix Outfit
+Save to Collection
         │
         ▼
 Style Canvas
         │
         ▼
-AI Outfit Evolution
-        │
-        ▼
-Outfit Chemistry
+AI Style Companion (score + suggestions + styling tips)
         │
         ▼
 Submit to Fashion Challenge
@@ -317,8 +213,8 @@ Shop Complete Look
 
 | Theme Requirement | Features |
 |-------------------|----------|
-| **Fashion as Self-Expression** | Style Hubs, Style Canvas, AI Outfit Evolution, Outfit Chemistry |
-| **Creator Economy** | Fashion Circles, Community Remix, Fashion Challenges |
-| **Building for Gen Alpha** | Avatar Closet, AI Fashion Mentor |
+| **Fashion as Self-Expression** | Style Hubs, Style Canvas, AI Style Companion |
+| **Creator Economy** | Style Hubs, Fashion Challenges |
+| **Building for Gen Alpha** | AI Style Companion, Saved Collections |
 
 ---

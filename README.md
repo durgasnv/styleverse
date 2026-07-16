@@ -1,5 +1,7 @@
 # StyleVerse
 
+# Theme
+
 ### Theme 3: Fashion is Identity
 
 > **Become the Fashion Destination for the Next Generation**
@@ -24,15 +26,15 @@ This theme is divided into three focus areas:
 
 # Our Approach
 
-StyleVerse transforms Myntra into a **social fashion ecosystem** where users don't just shop—they **discover trends, create outfits, collaborate with communities, participate in challenges, and express their fashion identity.**
+StyleVerse transforms Myntra into a **social fashion ecosystem** where users don't just shop—they **discover trends, create outfits, get guided by a personal AI style companion, participate in challenges, and express their fashion identity.**
 
 Rather than replacing the existing Myntra experience, StyleVerse extends it with community-driven fashion discovery and AI-assisted styling.
 
 | Theme Requirement | Our Features |
 |-------------------|--------------|
-| **Fashion as Self-Expression** | Style Hubs, Style Canvas, AI Outfit Evolution, Outfit Chemistry |
-| **Creator Economy** | Fashion Circles, Community Remix, Fashion Challenges |
-| **Building for Gen Alpha** | Avatar Closet, AI Fashion Mentor |
+| **Fashion as Self-Expression** | Style Hubs, Style Canvas, AI Style Companion |
+| **Creator Economy** | Style Hubs, Fashion Challenges |
+| **Building for Gen Alpha** | AI Style Companion, Saved Collections |
 
 ---
 
@@ -51,13 +53,9 @@ Our goal is to bring **fashion discovery, collaboration, AI-powered styling, and
 | Feature | Self Expression | Creator Economy | Gen Alpha |
 |----------|:---------------:|:---------------:|:---------:|
 | Style Hubs | ✅ | ✅ | |
-| Fashion Circles | ✅ | ✅ | |
 | Style Canvas | ✅ | | ✅ |
-| AI Outfit Evolution | ✅ | | |
-| Outfit Chemistry | ✅ | | |
-| Community Remix | ✅ | ✅ | |
+| AI Style Companion | ✅ | | ✅ |
 | Fashion Challenges | ✅ | ✅ | |
-| AI Fashion Mentor | | | ✅ |
-| Avatar Closet | ✅ | | ✅ |
+| Saved Collections | ✅ | | ✅ |
 
 ---
