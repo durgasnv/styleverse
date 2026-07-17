@@ -9,8 +9,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "brand": "ZARA",
     "category": "Women",
     "subcategory": "Tops",
-    "price": 1120,
-    "mrp": 1780,
+    "price": 770,
+    "mrp": 1220,
     "discountPercent": 37,
     "rating": 4.2,
     "reviewCount": 331,
@@ -55,8 +55,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "brand": "MANGO",
     "category": "Women",
     "subcategory": "Sweaters",
-    "price": 851,
-    "mrp": 1420,
+    "price": 501,
+    "mrp": 840,
     "discountPercent": 40,
     "rating": 4.4,
     "reviewCount": 76,
@@ -101,8 +101,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "brand": "URBAN OUTFITTERS",
     "category": "Women",
     "subcategory": "Jeans",
-    "price": 2485,
-    "mrp": 4440,
+    "price": 485,
+    "mrp": 870,
     "discountPercent": 44,
     "rating": 3.9,
     "reviewCount": 347,
@@ -147,8 +147,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "brand": "FOREVER 21",
     "category": "Women",
     "subcategory": "Sweaters",
-    "price": 1284,
-    "mrp": 1980,
+    "price": 1034,
+    "mrp": 1590,
     "discountPercent": 35,
     "rating": 4.4,
     "reviewCount": 325,
@@ -223,8 +223,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "brand": "PULL&BEAR",
     "category": "Women",
     "subcategory": "Sweaters",
-    "price": 837,
-    "mrp": 1670,
+    "price": 487,
+    "mrp": 970,
     "discountPercent": 50,
     "rating": 4.2,
     "reviewCount": 117,
@@ -269,8 +269,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "brand": "FOREVER 21",
     "category": "Women",
     "subcategory": "Sweaters",
-    "price": 1164,
-    "mrp": 2280,
+    "price": 614,
+    "mrp": 1200,
     "discountPercent": 49,
     "rating": 4.4,
     "reviewCount": 386,
@@ -315,8 +315,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "brand": "ONLY",
     "category": "Women",
     "subcategory": "Jeans",
-    "price": 1382,
-    "mrp": 2130,
+    "price": 682,
+    "mrp": 1050,
     "discountPercent": 35,
     "rating": 3.9,
     "reviewCount": 93,
@@ -361,8 +361,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "brand": "VERO MODA",
     "category": "Women",
     "subcategory": "Tops",
-    "price": 1063,
-    "mrp": 2310,
+    "price": 913,
+    "mrp": 1980,
     "discountPercent": 54,
     "rating": 3.9,
     "reviewCount": 222,
@@ -407,8 +407,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "brand": "MANGO",
     "category": "Women",
     "subcategory": "Tops",
-    "price": 551,
-    "mrp": 920,
+    "price": 901,
+    "mrp": 1500,
     "discountPercent": 40,
     "rating": 4.1,
     "reviewCount": 306,
@@ -453,8 +453,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "brand": "FOREVER 21",
     "category": "Accessories",
     "subcategory": "Hair Accessories",
-    "price": 814,
-    "mrp": 1180,
+    "price": 614,
+    "mrp": 890,
     "discountPercent": 31,
     "rating": 4,
     "reviewCount": 301,
@@ -483,8 +483,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "brand": "PULL&BEAR",
     "category": "Women",
     "subcategory": "Tops",
-    "price": 777,
-    "mrp": 1250,
+    "price": 827,
+    "mrp": 1330,
     "discountPercent": 38,
     "rating": 4.2,
     "reviewCount": 244,
@@ -529,8 +529,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "brand": "ONLY",
     "category": "Women",
     "subcategory": "Tops",
-    "price": 552,
-    "mrp": 1130,
+    "price": 502,
+    "mrp": 1020,
     "discountPercent": 51,
     "rating": 4,
     "reviewCount": 205,
@@ -575,8 +575,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "brand": "URBAN OUTFITTERS",
     "category": "Women",
     "subcategory": "Jeans",
-    "price": 1045,
-    "mrp": 1580,
+    "price": 545,
+    "mrp": 830,
     "discountPercent": 34,
     "rating": 4.3,
     "reviewCount": 232,
@@ -621,8 +621,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "brand": "H&M",
     "category": "Accessories",
     "subcategory": "Belts",
-    "price": 799,
-    "mrp": 1540,
+    "price": 299,
+    "mrp": 580,
     "discountPercent": 48,
     "rating": 4.5,
     "reviewCount": 79,
@@ -651,8 +651,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "brand": "URBAN OUTFITTERS",
     "category": "Women",
     "subcategory": "Trousers",
-    "price": 2205,
-    "mrp": 3940,
+    "price": 805,
+    "mrp": 1440,
     "discountPercent": 44,
     "rating": 4,
     "reviewCount": 220,
@@ -697,8 +697,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "brand": "PULL&BEAR",
     "category": "Women",
     "subcategory": "Shorts",
-    "price": 1137,
-    "mrp": 2370,
+    "price": 787,
+    "mrp": 1640,
     "discountPercent": 52,
     "rating": 4.4,
     "reviewCount": 370,
@@ -743,8 +743,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "brand": "BERSHKA",
     "category": "Accessories",
     "subcategory": "Hair Accessories",
-    "price": 856,
-    "mrp": 1680,
+    "price": 456,
+    "mrp": 890,
     "discountPercent": 49,
     "rating": 4.2,
     "reviewCount": 132,
@@ -773,8 +773,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "brand": "FOREVER 21",
     "category": "Women",
     "subcategory": "Jeans",
-    "price": 2144,
-    "mrp": 3760,
+    "price": 844,
+    "mrp": 1480,
     "discountPercent": 43,
     "rating": 4.2,
     "reviewCount": 382,
@@ -819,8 +819,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "brand": "PULL&BEAR",
     "category": "Women",
     "subcategory": "Tops",
-    "price": 867,
-    "mrp": 1490,
+    "price": 417,
+    "mrp": 720,
     "discountPercent": 42,
     "rating": 4.4,
     "reviewCount": 262,
@@ -865,8 +865,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "brand": "MANGO",
     "category": "Women",
     "subcategory": "Tops",
-    "price": 781,
-    "mrp": 1390,
+    "price": 731,
+    "mrp": 1310,
     "discountPercent": 44,
     "rating": 4.1,
     "reviewCount": 388,
@@ -911,8 +911,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "brand": "URBAN OUTFITTERS",
     "category": "Women",
     "subcategory": "Sweaters",
-    "price": 1415,
-    "mrp": 2830,
+    "price": 465,
+    "mrp": 930,
     "discountPercent": 50,
     "rating": 3.9,
     "reviewCount": 97,
@@ -957,8 +957,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "brand": "FOREVER 21",
     "category": "Women",
     "subcategory": "Tops",
-    "price": 1124,
-    "mrp": 1840,
+    "price": 374,
+    "mrp": 610,
     "discountPercent": 39,
     "rating": 4.2,
     "reviewCount": 292,
@@ -1003,8 +1003,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "brand": "BERSHKA",
     "category": "Women",
     "subcategory": "Jeans",
-    "price": 1926,
-    "mrp": 3780,
+    "price": 426,
+    "mrp": 840,
     "discountPercent": 49,
     "rating": 4.5,
     "reviewCount": 255,
@@ -1049,8 +1049,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "brand": "ONLY",
     "category": "Women",
     "subcategory": "Jeans",
-    "price": 2262,
-    "mrp": 4270,
+    "price": 562,
+    "mrp": 1060,
     "discountPercent": 47,
     "rating": 4.5,
     "reviewCount": 291,
@@ -1095,8 +1095,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "brand": "H&M",
     "category": "Women",
     "subcategory": "Tops",
-    "price": 1279,
-    "mrp": 1940,
+    "price": 729,
+    "mrp": 1100,
     "discountPercent": 34,
     "rating": 4.4,
     "reviewCount": 193,
@@ -1141,8 +1141,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "brand": "STREET STYLE STORE",
     "category": "Women",
     "subcategory": "Tops",
-    "price": 1058,
-    "mrp": 2070,
+    "price": 608,
+    "mrp": 1190,
     "discountPercent": 49,
     "rating": 3.9,
     "reviewCount": 352,
@@ -1187,8 +1187,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "brand": "FOREVER 21",
     "category": "Women",
     "subcategory": "Tops",
-    "price": 674,
-    "mrp": 1180,
+    "price": 824,
+    "mrp": 1450,
     "discountPercent": 43,
     "rating": 4.5,
     "reviewCount": 327,
@@ -1228,13 +1228,1819 @@ export const INGESTED_PRODUCTS: Product[] = [
     "deliveryEstimate": "2-4 business days"
   },
   {
+    "id": "p-acubi-army-print-pleated-skirt",
+    "name": "army print pleated skirt",
+    "brand": "MANGO",
+    "category": "Women",
+    "subcategory": "Skirts",
+    "price": 661,
+    "mrp": 970,
+    "discountPercent": 32,
+    "rating": 4.3,
+    "reviewCount": 97,
+    "images": [
+      "/img/acubi-army-print-pleated-skirt.jpg"
+    ],
+    "colors": [
+      "neutral"
+    ],
+    "sizes": [
+      {
+        "label": "XS",
+        "inStock": true
+      },
+      {
+        "label": "S",
+        "inStock": true
+      },
+      {
+        "label": "M",
+        "inStock": true
+      },
+      {
+        "label": "L",
+        "inStock": true
+      },
+      {
+        "label": "XL",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "acubi",
+      "casual"
+    ],
+    "description": "army print pleated skirt — a must-have piece for the Acubi aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-acubi-black-and-wite-mesh-shirt",
+    "name": "black and wite mesh shirt",
+    "brand": "PULL&BEAR",
+    "category": "Women",
+    "subcategory": "Tops",
+    "price": 1007,
+    "mrp": 1860,
+    "discountPercent": 46,
+    "rating": 4,
+    "reviewCount": 56,
+    "images": [
+      "/img/acubi-black-and-wite-mesh-shirt.jpg"
+    ],
+    "colors": [
+      "black"
+    ],
+    "sizes": [
+      {
+        "label": "XS",
+        "inStock": true
+      },
+      {
+        "label": "S",
+        "inStock": true
+      },
+      {
+        "label": "M",
+        "inStock": true
+      },
+      {
+        "label": "L",
+        "inStock": true
+      },
+      {
+        "label": "XL",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "acubi",
+      "casual"
+    ],
+    "description": "black and wite mesh shirt — a must-have piece for the Acubi aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-acubi-black-cap",
+    "name": "black cap",
+    "brand": "ZARA",
+    "category": "Women",
+    "subcategory": "Tops",
+    "price": 1010,
+    "mrp": 1660,
+    "discountPercent": 39,
+    "rating": 4.1,
+    "reviewCount": 51,
+    "images": [
+      "/img/acubi-black-cap.jpg"
+    ],
+    "colors": [
+      "black"
+    ],
+    "sizes": [
+      {
+        "label": "XS",
+        "inStock": true
+      },
+      {
+        "label": "S",
+        "inStock": true
+      },
+      {
+        "label": "M",
+        "inStock": true
+      },
+      {
+        "label": "L",
+        "inStock": true
+      },
+      {
+        "label": "XL",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "acubi",
+      "casual"
+    ],
+    "description": "black cap — a must-have piece for the Acubi aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-acubi-black-henley-top",
+    "name": "black henley top",
+    "brand": "ONLY",
+    "category": "Women",
+    "subcategory": "Tops",
+    "price": 442,
+    "mrp": 780,
+    "discountPercent": 43,
+    "rating": 4.3,
+    "reviewCount": 117,
+    "images": [
+      "/img/acubi-black-henley-top.jpg"
+    ],
+    "colors": [
+      "black"
+    ],
+    "sizes": [
+      {
+        "label": "XS",
+        "inStock": true
+      },
+      {
+        "label": "S",
+        "inStock": true
+      },
+      {
+        "label": "M",
+        "inStock": true
+      },
+      {
+        "label": "L",
+        "inStock": true
+      },
+      {
+        "label": "XL",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "acubi",
+      "casual"
+    ],
+    "description": "black henley top — a must-have piece for the Acubi aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-acubi-black-leather-boots",
+    "name": "black leather boots",
+    "brand": "BERSHKA",
+    "category": "Footwear",
+    "subcategory": "Footwear",
+    "price": 437,
+    "mrp": 790,
+    "discountPercent": 45,
+    "rating": 4.3,
+    "reviewCount": 197,
+    "images": [
+      "/img/acubi-black-leather-boots.jpg"
+    ],
+    "colors": [
+      "black"
+    ],
+    "sizes": [
+      {
+        "label": "6",
+        "inStock": true
+      },
+      {
+        "label": "7",
+        "inStock": true
+      },
+      {
+        "label": "8",
+        "inStock": true
+      },
+      {
+        "label": "9",
+        "inStock": true
+      },
+      {
+        "label": "10",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "acubi",
+      "casual"
+    ],
+    "description": "black leather boots — a must-have piece for the Acubi aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-acubi-black-leather-skirt",
+    "name": "black leather skirt",
+    "brand": "ONLY",
+    "category": "Women",
+    "subcategory": "Skirts",
+    "price": 752,
+    "mrp": 1600,
+    "discountPercent": 53,
+    "rating": 4,
+    "reviewCount": 194,
+    "images": [
+      "/img/acubi-black-leather-skirt.jpg"
+    ],
+    "colors": [
+      "black"
+    ],
+    "sizes": [
+      {
+        "label": "XS",
+        "inStock": true
+      },
+      {
+        "label": "S",
+        "inStock": true
+      },
+      {
+        "label": "M",
+        "inStock": true
+      },
+      {
+        "label": "L",
+        "inStock": true
+      },
+      {
+        "label": "XL",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "acubi",
+      "casual"
+    ],
+    "description": "black leather skirt — a must-have piece for the Acubi aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-acubi-black-sunglasses",
+    "name": "black sunglasses",
+    "brand": "ZARA",
+    "category": "Accessories",
+    "subcategory": "Accessories",
+    "price": 430,
+    "mrp": 780,
+    "discountPercent": 45,
+    "rating": 4,
+    "reviewCount": 317,
+    "images": [
+      "/img/acubi-black-sunglasses.jpg"
+    ],
+    "colors": [
+      "black"
+    ],
+    "sizes": [
+      {
+        "label": "One Size",
+        "inStock": true
+      }
+    ],
+    "occasionTags": [
+      "acubi",
+      "casual"
+    ],
+    "description": "black sunglasses — a must-have piece for the Acubi aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-acubi-cheetah-print-hat",
+    "name": "cheetah print hat",
+    "brand": "VERO MODA",
+    "category": "Accessories",
+    "subcategory": "Accessories",
+    "price": 793,
+    "mrp": 1170,
+    "discountPercent": 32,
+    "rating": 4.4,
+    "reviewCount": 261,
+    "images": [
+      "/img/acubi-cheetah-print-hat.jpg"
+    ],
+    "colors": [
+      "neutral"
+    ],
+    "sizes": [
+      {
+        "label": "One Size",
+        "inStock": true
+      }
+    ],
+    "occasionTags": [
+      "acubi",
+      "casual"
+    ],
+    "description": "cheetah print hat — a must-have piece for the Acubi aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-acubi-cropped-leather-jacket",
+    "name": "cropped leather jacket",
+    "brand": "VERO MODA",
+    "category": "Women",
+    "subcategory": "Tops",
+    "price": 943,
+    "mrp": 1750,
+    "discountPercent": 46,
+    "rating": 3.9,
+    "reviewCount": 127,
+    "images": [
+      "/img/acubi-cropped-leather-jacket.jpg"
+    ],
+    "colors": [
+      "neutral"
+    ],
+    "sizes": [
+      {
+        "label": "XS",
+        "inStock": true
+      },
+      {
+        "label": "S",
+        "inStock": true
+      },
+      {
+        "label": "M",
+        "inStock": true
+      },
+      {
+        "label": "L",
+        "inStock": true
+      },
+      {
+        "label": "XL",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "acubi",
+      "casual"
+    ],
+    "description": "cropped leather jacket — a must-have piece for the Acubi aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-acubi-dark-wash-baggy-jeans",
+    "name": "dark wash baggy jeans",
+    "brand": "URBAN OUTFITTERS",
+    "category": "Women",
+    "subcategory": "Jeans",
+    "price": 545,
+    "mrp": 1050,
+    "discountPercent": 48,
+    "rating": 3.9,
+    "reviewCount": 80,
+    "images": [
+      "/img/acubi-dark-wash-baggy-jeans.jpg"
+    ],
+    "colors": [
+      "neutral"
+    ],
+    "sizes": [
+      {
+        "label": "XS",
+        "inStock": true
+      },
+      {
+        "label": "S",
+        "inStock": true
+      },
+      {
+        "label": "M",
+        "inStock": true
+      },
+      {
+        "label": "L",
+        "inStock": true
+      },
+      {
+        "label": "XL",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "acubi",
+      "casual"
+    ],
+    "description": "dark wash baggy jeans — a must-have piece for the Acubi aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-acubi-green-full-sleeves-top",
+    "name": "green full sleeves top",
+    "brand": "H&M",
+    "category": "Women",
+    "subcategory": "Tops",
+    "price": 969,
+    "mrp": 1620,
+    "discountPercent": 40,
+    "rating": 3.9,
+    "reviewCount": 347,
+    "images": [
+      "/img/acubi-green-full-sleeves-top.jpg"
+    ],
+    "colors": [
+      "green"
+    ],
+    "sizes": [
+      {
+        "label": "XS",
+        "inStock": true
+      },
+      {
+        "label": "S",
+        "inStock": true
+      },
+      {
+        "label": "M",
+        "inStock": true
+      },
+      {
+        "label": "L",
+        "inStock": true
+      },
+      {
+        "label": "XL",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "acubi",
+      "casual"
+    ],
+    "description": "green full sleeves top — a must-have piece for the Acubi aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-acubi-grey-pleated-skirt",
+    "name": "grey pleated skirt",
+    "brand": "BERSHKA",
+    "category": "Women",
+    "subcategory": "Skirts",
+    "price": 766,
+    "mrp": 1220,
+    "discountPercent": 37,
+    "rating": 4.5,
+    "reviewCount": 56,
+    "images": [
+      "/img/acubi-grey-pleated-skirt.jpg"
+    ],
+    "colors": [
+      "grey"
+    ],
+    "sizes": [
+      {
+        "label": "XS",
+        "inStock": true
+      },
+      {
+        "label": "S",
+        "inStock": true
+      },
+      {
+        "label": "M",
+        "inStock": true
+      },
+      {
+        "label": "L",
+        "inStock": true
+      },
+      {
+        "label": "XL",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "acubi",
+      "casual"
+    ],
+    "description": "grey pleated skirt — a must-have piece for the Acubi aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-acubi-grey-star-beanie",
+    "name": "grey star beanie",
+    "brand": "ZARA",
+    "category": "Women",
+    "subcategory": "Tops",
+    "price": 790,
+    "mrp": 1760,
+    "discountPercent": 55,
+    "rating": 4.5,
+    "reviewCount": 231,
+    "images": [
+      "/img/acubi-grey-star-beanie.jpg"
+    ],
+    "colors": [
+      "grey"
+    ],
+    "sizes": [
+      {
+        "label": "XS",
+        "inStock": true
+      },
+      {
+        "label": "S",
+        "inStock": true
+      },
+      {
+        "label": "M",
+        "inStock": true
+      },
+      {
+        "label": "L",
+        "inStock": true
+      },
+      {
+        "label": "XL",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "acubi",
+      "casual"
+    ],
+    "description": "grey star beanie — a must-have piece for the Acubi aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-acubi-letterman-jacket",
+    "name": "letterman jacket",
+    "brand": "VERO MODA",
+    "category": "Women",
+    "subcategory": "Tops",
+    "price": 603,
+    "mrp": 890,
+    "discountPercent": 32,
+    "rating": 3.9,
+    "reviewCount": 377,
+    "images": [
+      "/img/acubi-letterman-jacket.jpg"
+    ],
+    "colors": [
+      "neutral"
+    ],
+    "sizes": [
+      {
+        "label": "XS",
+        "inStock": true
+      },
+      {
+        "label": "S",
+        "inStock": true
+      },
+      {
+        "label": "M",
+        "inStock": true
+      },
+      {
+        "label": "L",
+        "inStock": true
+      },
+      {
+        "label": "XL",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "acubi",
+      "casual"
+    ],
+    "description": "letterman jacket — a must-have piece for the Acubi aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-acubi-red-gingham-top",
+    "name": "red gingham top",
+    "brand": "FOREVER 21",
+    "category": "Women",
+    "subcategory": "Tops",
+    "price": 804,
+    "mrp": 1640,
+    "discountPercent": 51,
+    "rating": 3.9,
+    "reviewCount": 251,
+    "images": [
+      "/img/acubi-red-gingham-top.jpg"
+    ],
+    "colors": [
+      "red"
+    ],
+    "sizes": [
+      {
+        "label": "XS",
+        "inStock": true
+      },
+      {
+        "label": "S",
+        "inStock": true
+      },
+      {
+        "label": "M",
+        "inStock": true
+      },
+      {
+        "label": "L",
+        "inStock": true
+      },
+      {
+        "label": "XL",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "acubi",
+      "casual"
+    ],
+    "description": "red gingham top — a must-have piece for the Acubi aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-acubi-white-chunky-bag",
+    "name": "white chunky bag",
+    "brand": "STREET STYLE STORE",
+    "category": "Accessories",
+    "subcategory": "Bags",
+    "price": 798,
+    "mrp": 1630,
+    "discountPercent": 51,
+    "rating": 4.3,
+    "reviewCount": 397,
+    "images": [
+      "/img/acubi-white-chunky-bag.jpg"
+    ],
+    "colors": [
+      "white"
+    ],
+    "sizes": [
+      {
+        "label": "One Size",
+        "inStock": true
+      }
+    ],
+    "occasionTags": [
+      "acubi",
+      "casual"
+    ],
+    "description": "white chunky bag — a must-have piece for the Acubi aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-acubi-white-graphic-tee",
+    "name": "white graphic tee",
+    "brand": "FOREVER 21",
+    "category": "Women",
+    "subcategory": "Tops",
+    "price": 614,
+    "mrp": 970,
+    "discountPercent": 37,
+    "rating": 4,
+    "reviewCount": 120,
+    "images": [
+      "/img/acubi-white-graphic-tee.jpg"
+    ],
+    "colors": [
+      "white"
+    ],
+    "sizes": [
+      {
+        "label": "XS",
+        "inStock": true
+      },
+      {
+        "label": "S",
+        "inStock": true
+      },
+      {
+        "label": "M",
+        "inStock": true
+      },
+      {
+        "label": "L",
+        "inStock": true
+      },
+      {
+        "label": "XL",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "acubi",
+      "casual"
+    ],
+    "description": "white graphic tee — a must-have piece for the Acubi aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-acubi-white-heart-cardigan",
+    "name": "white heart cardigan",
+    "brand": "MANGO",
+    "category": "Women",
+    "subcategory": "Sweaters",
+    "price": 921,
+    "mrp": 1540,
+    "discountPercent": 40,
+    "rating": 4,
+    "reviewCount": 182,
+    "images": [
+      "/img/acubi-white-heart-cardigan.jpg"
+    ],
+    "colors": [
+      "white"
+    ],
+    "sizes": [
+      {
+        "label": "XS",
+        "inStock": true
+      },
+      {
+        "label": "S",
+        "inStock": true
+      },
+      {
+        "label": "M",
+        "inStock": true
+      },
+      {
+        "label": "L",
+        "inStock": true
+      },
+      {
+        "label": "XL",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "acubi",
+      "casual"
+    ],
+    "description": "white heart cardigan — a must-have piece for the Acubi aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-coquette-dainty-gold-bow-charm-bracelet",
+    "name": "Dainty Gold Bow Charm Bracelet",
+    "brand": "MANGO",
+    "category": "Women",
+    "subcategory": "Tops",
+    "price": 1041,
+    "mrp": 2080,
+    "discountPercent": 50,
+    "rating": 4.5,
+    "reviewCount": 149,
+    "images": [
+      "/img/coquette-dainty-gold-bow-charm-bracelet.jpg"
+    ],
+    "colors": [
+      "neutral"
+    ],
+    "sizes": [
+      {
+        "label": "XS",
+        "inStock": true
+      },
+      {
+        "label": "S",
+        "inStock": true
+      },
+      {
+        "label": "M",
+        "inStock": true
+      },
+      {
+        "label": "L",
+        "inStock": true
+      },
+      {
+        "label": "XL",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "coquette",
+      "casual"
+    ],
+    "description": "Dainty Gold Bow Charm Bracelet — a must-have piece for the Coquette aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-coquette-deep-v-neck-cross-wrap-crop-surplice-top",
+    "name": "Deep V Neck Cross Wrap Crop Surplice Top",
+    "brand": "FOREVER 21",
+    "category": "Women",
+    "subcategory": "Tops",
+    "price": 564,
+    "mrp": 870,
+    "discountPercent": 35,
+    "rating": 4.1,
+    "reviewCount": 122,
+    "images": [
+      "/img/coquette-deep-v-neck-cross-wrap-crop-surplice-top.jpg"
+    ],
+    "colors": [
+      "neutral"
+    ],
+    "sizes": [
+      {
+        "label": "XS",
+        "inStock": true
+      },
+      {
+        "label": "S",
+        "inStock": true
+      },
+      {
+        "label": "M",
+        "inStock": true
+      },
+      {
+        "label": "L",
+        "inStock": true
+      },
+      {
+        "label": "XL",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "coquette",
+      "casual"
+    ],
+    "description": "Deep V Neck Cross Wrap Crop Surplice Top — a must-have piece for the Coquette aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-coquette-dior-vintage-coquette-heels",
+    "name": "Dior vintage coquette heels",
+    "brand": "FOREVER 21",
+    "category": "Footwear",
+    "subcategory": "Footwear",
+    "price": 1075,
+    "mrp": 2030,
+    "discountPercent": 47,
+    "rating": 4.5,
+    "reviewCount": 209,
+    "images": [
+      "/img/coquette-dior-vintage-coquette-heels.jpg"
+    ],
+    "colors": [
+      "neutral"
+    ],
+    "sizes": [
+      {
+        "label": "6",
+        "inStock": true
+      },
+      {
+        "label": "7",
+        "inStock": true
+      },
+      {
+        "label": "8",
+        "inStock": true
+      },
+      {
+        "label": "9",
+        "inStock": true
+      },
+      {
+        "label": "10",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "coquette",
+      "casual"
+    ],
+    "description": "Dior vintage coquette heels — a must-have piece for the Coquette aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-coquette-floral-print-tie-front-ruched-sweetheart-neck-cap-sleeve-crop-blouse-top",
+    "name": "Floral Print Tie Front Ruched Sweetheart Neck Cap Sleeve Crop Blouse Top",
+    "brand": "FOREVER 21",
+    "category": "Women",
+    "subcategory": "Tops",
+    "price": 1014,
+    "mrp": 1470,
+    "discountPercent": 31,
+    "rating": 4.5,
+    "reviewCount": 319,
+    "images": [
+      "/img/coquette-floral-print-tie-front-ruched-sweetheart-neck-cap-sleeve-crop-blouse-top.jpg"
+    ],
+    "colors": [
+      "neutral"
+    ],
+    "sizes": [
+      {
+        "label": "XS",
+        "inStock": true
+      },
+      {
+        "label": "S",
+        "inStock": true
+      },
+      {
+        "label": "M",
+        "inStock": true
+      },
+      {
+        "label": "L",
+        "inStock": true
+      },
+      {
+        "label": "XL",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "coquette",
+      "casual"
+    ],
+    "description": "Floral Print Tie Front Ruched Sweetheart Neck Cap Sleeve Crop Blouse Top — a must-have piece for the Coquette aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-coquette-ruffle-hem-blue-jean-pleated-mini-skirt",
+    "name": "Ruffle Hem Blue Jean Pleated Mini Skirt",
+    "brand": "FOREVER 21",
+    "category": "Women",
+    "subcategory": "Skirts",
+    "price": 744,
+    "mrp": 1260,
+    "discountPercent": 41,
+    "rating": 3.9,
+    "reviewCount": 71,
+    "images": [
+      "/img/coquette-ruffle-hem-blue-jean-pleated-mini-skirt.jpg"
+    ],
+    "colors": [
+      "blue"
+    ],
+    "sizes": [
+      {
+        "label": "XS",
+        "inStock": true
+      },
+      {
+        "label": "S",
+        "inStock": true
+      },
+      {
+        "label": "M",
+        "inStock": true
+      },
+      {
+        "label": "L",
+        "inStock": true
+      },
+      {
+        "label": "XL",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "coquette",
+      "casual"
+    ],
+    "description": "Ruffle Hem Blue Jean Pleated Mini Skirt — a must-have piece for the Coquette aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-coquette-womens-floral-dress",
+    "name": "Womens Floral Dress",
+    "brand": "PULL&BEAR",
+    "category": "Women",
+    "subcategory": "Tops",
+    "price": 617,
+    "mrp": 1060,
+    "discountPercent": 42,
+    "rating": 4.4,
+    "reviewCount": 354,
+    "images": [
+      "/img/coquette-womens-floral-dress.jpg"
+    ],
+    "colors": [
+      "neutral"
+    ],
+    "sizes": [
+      {
+        "label": "XS",
+        "inStock": true
+      },
+      {
+        "label": "S",
+        "inStock": true
+      },
+      {
+        "label": "M",
+        "inStock": true
+      },
+      {
+        "label": "L",
+        "inStock": true
+      },
+      {
+        "label": "XL",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "coquette",
+      "casual"
+    ],
+    "description": "Womens Floral Dress — a must-have piece for the Coquette aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-coquette-blue-long-sleevy-cardigan-sweater",
+    "name": "blue long sleevy cardigan sweater",
+    "brand": "H&M",
+    "category": "Women",
+    "subcategory": "Sweaters",
+    "price": 709,
+    "mrp": 1140,
+    "discountPercent": 38,
+    "rating": 4.2,
+    "reviewCount": 114,
+    "images": [
+      "/img/coquette-blue-long-sleevy-cardigan-sweater.jpg"
+    ],
+    "colors": [
+      "blue"
+    ],
+    "sizes": [
+      {
+        "label": "XS",
+        "inStock": true
+      },
+      {
+        "label": "S",
+        "inStock": true
+      },
+      {
+        "label": "M",
+        "inStock": true
+      },
+      {
+        "label": "L",
+        "inStock": true
+      },
+      {
+        "label": "XL",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "coquette",
+      "casual"
+    ],
+    "description": "blue long sleevy cardigan sweater — a must-have piece for the Coquette aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-coquette-bow-earrings",
+    "name": "bow earrings",
+    "brand": "STREET STYLE STORE",
+    "category": "Accessories",
+    "subcategory": "Jewellery",
+    "price": 788,
+    "mrp": 1430,
+    "discountPercent": 45,
+    "rating": 4.4,
+    "reviewCount": 154,
+    "images": [
+      "/img/coquette-bow-earrings.jpg"
+    ],
+    "colors": [
+      "neutral"
+    ],
+    "sizes": [
+      {
+        "label": "One Size",
+        "inStock": true
+      }
+    ],
+    "occasionTags": [
+      "coquette",
+      "casual"
+    ],
+    "description": "bow earrings — a must-have piece for the Coquette aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-coquette-cherry-red-block-heels",
+    "name": "cherry red block heels",
+    "brand": "VERO MODA",
+    "category": "Footwear",
+    "subcategory": "Footwear",
+    "price": 764,
+    "mrp": 1590,
+    "discountPercent": 52,
+    "rating": 4.5,
+    "reviewCount": 229,
+    "images": [
+      "/img/coquette-cherry-red-block-heels.jpg"
+    ],
+    "colors": [
+      "red"
+    ],
+    "sizes": [
+      {
+        "label": "6",
+        "inStock": true
+      },
+      {
+        "label": "7",
+        "inStock": true
+      },
+      {
+        "label": "8",
+        "inStock": true
+      },
+      {
+        "label": "9",
+        "inStock": true
+      },
+      {
+        "label": "10",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "coquette",
+      "casual"
+    ],
+    "description": "cherry red block heels — a must-have piece for the Coquette aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-coquette-floral-headband",
+    "name": "floral headband",
+    "brand": "STREET STYLE STORE",
+    "category": "Women",
+    "subcategory": "Tops",
+    "price": 708,
+    "mrp": 1510,
+    "discountPercent": 53,
+    "rating": 4.1,
+    "reviewCount": 84,
+    "images": [
+      "/img/coquette-floral-headband.jpg"
+    ],
+    "colors": [
+      "neutral"
+    ],
+    "sizes": [
+      {
+        "label": "XS",
+        "inStock": true
+      },
+      {
+        "label": "S",
+        "inStock": true
+      },
+      {
+        "label": "M",
+        "inStock": true
+      },
+      {
+        "label": "L",
+        "inStock": true
+      },
+      {
+        "label": "XL",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "coquette",
+      "casual"
+    ],
+    "description": "floral headband — a must-have piece for the Coquette aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-coquette-heart-pearls-necklace",
+    "name": "heart pearls necklace",
+    "brand": "ONLY",
+    "category": "Accessories",
+    "subcategory": "Jewellery",
+    "price": 432,
+    "mrp": 850,
+    "discountPercent": 49,
+    "rating": 4.4,
+    "reviewCount": 289,
+    "images": [
+      "/img/coquette-heart-pearls-necklace.jpg"
+    ],
+    "colors": [
+      "neutral"
+    ],
+    "sizes": [
+      {
+        "label": "One Size",
+        "inStock": true
+      }
+    ],
+    "occasionTags": [
+      "coquette",
+      "casual"
+    ],
+    "description": "heart pearls necklace — a must-have piece for the Coquette aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-coquette-high-waist-leopard-swing-ruffle-frill-mini-skirt",
+    "name": "high waist leopard swing ruffle frill mini skirt",
+    "brand": "MANGO",
+    "category": "Women",
+    "subcategory": "Skirts",
+    "price": 421,
+    "mrp": 840,
+    "discountPercent": 50,
+    "rating": 4.4,
+    "reviewCount": 145,
+    "images": [
+      "/img/coquette-high-waist-leopard-swing-ruffle-frill-mini-skirt.jpg"
+    ],
+    "colors": [
+      "neutral"
+    ],
+    "sizes": [
+      {
+        "label": "XS",
+        "inStock": true
+      },
+      {
+        "label": "S",
+        "inStock": true
+      },
+      {
+        "label": "M",
+        "inStock": true
+      },
+      {
+        "label": "L",
+        "inStock": true
+      },
+      {
+        "label": "XL",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "coquette",
+      "casual"
+    ],
+    "description": "high waist leopard swing ruffle frill mini skirt — a must-have piece for the Coquette aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-coquette-summer-floral-cherry-cami-dress",
+    "name": "summer floral cherry cami dress",
+    "brand": "BERSHKA",
+    "category": "Women",
+    "subcategory": "Tops",
+    "price": 936,
+    "mrp": 2080,
+    "discountPercent": 55,
+    "rating": 4.2,
+    "reviewCount": 274,
+    "images": [
+      "/img/coquette-summer-floral-cherry-cami-dress.jpg"
+    ],
+    "colors": [
+      "neutral"
+    ],
+    "sizes": [
+      {
+        "label": "XS",
+        "inStock": true
+      },
+      {
+        "label": "S",
+        "inStock": true
+      },
+      {
+        "label": "M",
+        "inStock": true
+      },
+      {
+        "label": "L",
+        "inStock": true
+      },
+      {
+        "label": "XL",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "coquette",
+      "casual"
+    ],
+    "description": "summer floral cherry cami dress — a must-have piece for the Coquette aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-coquette-white-ballet-flats",
+    "name": "white ballet flats",
+    "brand": "ONLY",
+    "category": "Footwear",
+    "subcategory": "Footwear",
+    "price": 853,
+    "mrp": 1500,
+    "discountPercent": 43,
+    "rating": 4.2,
+    "reviewCount": 271,
+    "images": [
+      "/img/coquette-white-ballet-flats.jpg"
+    ],
+    "colors": [
+      "white"
+    ],
+    "sizes": [
+      {
+        "label": "6",
+        "inStock": true
+      },
+      {
+        "label": "7",
+        "inStock": true
+      },
+      {
+        "label": "8",
+        "inStock": true
+      },
+      {
+        "label": "9",
+        "inStock": true
+      },
+      {
+        "label": "10",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "coquette",
+      "casual"
+    ],
+    "description": "white ballet flats — a must-have piece for the Coquette aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-coquette-white-ruffle-mini-dress",
+    "name": "white ruffle mini dress",
+    "brand": "FOREVER 21",
+    "category": "Women",
+    "subcategory": "Tops",
+    "price": 634,
+    "mrp": 1150,
+    "discountPercent": 45,
+    "rating": 4.3,
+    "reviewCount": 192,
+    "images": [
+      "/img/coquette-white-ruffle-mini-dress.jpg"
+    ],
+    "colors": [
+      "white"
+    ],
+    "sizes": [
+      {
+        "label": "XS",
+        "inStock": true
+      },
+      {
+        "label": "S",
+        "inStock": true
+      },
+      {
+        "label": "M",
+        "inStock": true
+      },
+      {
+        "label": "L",
+        "inStock": true
+      },
+      {
+        "label": "XL",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "coquette",
+      "casual"
+    ],
+    "description": "white ruffle mini dress — a must-have piece for the Coquette aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-footwear-chunky-platform-sandals",
+    "name": "Chunky Platform Sandals",
+    "brand": "H&M",
+    "category": "Footwear",
+    "subcategory": "Footwear",
+    "price": 330,
+    "mrp": 550,
+    "discountPercent": 40,
+    "rating": 4.1,
+    "reviewCount": 272,
+    "images": [
+      "/img/footwear-chunky-platform-sandals.webp"
+    ],
+    "colors": [
+      "neutral"
+    ],
+    "sizes": [
+      {
+        "label": "6",
+        "inStock": true
+      },
+      {
+        "label": "7",
+        "inStock": true
+      },
+      {
+        "label": "8",
+        "inStock": true
+      },
+      {
+        "label": "9",
+        "inStock": true
+      },
+      {
+        "label": "10",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "footwear",
+      "casual"
+    ],
+    "description": "Chunky Platform Sandals — a must-have piece for the Footwear Essentials aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-footwear-earth-tone-sneakers",
+    "name": "Earth tone Sneakers",
+    "brand": "FOREVER 21",
+    "category": "Footwear",
+    "subcategory": "Footwear",
+    "price": 425,
+    "mrp": 900,
+    "discountPercent": 53,
+    "rating": 4.5,
+    "reviewCount": 69,
+    "images": [
+      "/img/footwear-earth-tone-sneakers.jpg"
+    ],
+    "colors": [
+      "neutral"
+    ],
+    "sizes": [
+      {
+        "label": "6",
+        "inStock": true
+      },
+      {
+        "label": "7",
+        "inStock": true
+      },
+      {
+        "label": "8",
+        "inStock": true
+      },
+      {
+        "label": "9",
+        "inStock": true
+      },
+      {
+        "label": "10",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "footwear",
+      "casual"
+    ],
+    "description": "Earth tone Sneakers — a must-have piece for the Footwear Essentials aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-footwear-heel-sandals",
+    "name": "Heel Sandals",
+    "brand": "BERSHKA",
+    "category": "Footwear",
+    "subcategory": "Footwear",
+    "price": 897,
+    "mrp": 1990,
+    "discountPercent": 55,
+    "rating": 4.1,
+    "reviewCount": 89,
+    "images": [
+      "/img/footwear-heel-sandals.webp"
+    ],
+    "colors": [
+      "neutral"
+    ],
+    "sizes": [
+      {
+        "label": "6",
+        "inStock": true
+      },
+      {
+        "label": "7",
+        "inStock": true
+      },
+      {
+        "label": "8",
+        "inStock": true
+      },
+      {
+        "label": "9",
+        "inStock": true
+      },
+      {
+        "label": "10",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "footwear",
+      "casual"
+    ],
+    "description": "Heel Sandals — a must-have piece for the Footwear Essentials aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-footwear-kick-off-sandal",
+    "name": "Kick Off Sandal",
+    "brand": "STREET STYLE STORE",
+    "category": "Footwear",
+    "subcategory": "Footwear",
+    "price": 889,
+    "mrp": 1680,
+    "discountPercent": 47,
+    "rating": 4.4,
+    "reviewCount": 276,
+    "images": [
+      "/img/footwear-kick-off-sandal.jpg"
+    ],
+    "colors": [
+      "neutral"
+    ],
+    "sizes": [
+      {
+        "label": "6",
+        "inStock": true
+      },
+      {
+        "label": "7",
+        "inStock": true
+      },
+      {
+        "label": "8",
+        "inStock": true
+      },
+      {
+        "label": "9",
+        "inStock": true
+      },
+      {
+        "label": "10",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "footwear",
+      "casual"
+    ],
+    "description": "Kick Off Sandal — a must-have piece for the Footwear Essentials aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-footwear-new-balance-5series30",
+    "name": "New Balance 5Series30",
+    "brand": "VERO MODA",
+    "category": "Women",
+    "subcategory": "Tops",
+    "price": 593,
+    "mrp": 1190,
+    "discountPercent": 50,
+    "rating": 4.5,
+    "reviewCount": 290,
+    "images": [
+      "/img/footwear-new-balance-5series30.jpg"
+    ],
+    "colors": [
+      "neutral"
+    ],
+    "sizes": [
+      {
+        "label": "XS",
+        "inStock": true
+      },
+      {
+        "label": "S",
+        "inStock": true
+      },
+      {
+        "label": "M",
+        "inStock": true
+      },
+      {
+        "label": "L",
+        "inStock": true
+      },
+      {
+        "label": "XL",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "footwear",
+      "casual"
+    ],
+    "description": "New Balance 5Series30 — a must-have piece for the Footwear Essentials aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-footwear-party-stiletto-pumps",
+    "name": "Party Stiletto Pumps",
+    "brand": "URBAN OUTFITTERS",
+    "category": "Women",
+    "subcategory": "Tops",
+    "price": 365,
+    "mrp": 790,
+    "discountPercent": 54,
+    "rating": 4.1,
+    "reviewCount": 216,
+    "images": [
+      "/img/footwear-party-stiletto-pumps.png"
+    ],
+    "colors": [
+      "neutral"
+    ],
+    "sizes": [
+      {
+        "label": "XS",
+        "inStock": true
+      },
+      {
+        "label": "S",
+        "inStock": true
+      },
+      {
+        "label": "M",
+        "inStock": true
+      },
+      {
+        "label": "L",
+        "inStock": true
+      },
+      {
+        "label": "XL",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "footwear",
+      "casual"
+    ],
+    "description": "Party Stiletto Pumps — a must-have piece for the Footwear Essentials aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-footwear-women-block-mary-janes-with-buckles",
+    "name": "Women Block Mary Janes with Buckles",
+    "brand": "BERSHKA",
+    "category": "Women",
+    "subcategory": "Tops",
+    "price": 576,
+    "mrp": 1130,
+    "discountPercent": 49,
+    "rating": 3.9,
+    "reviewCount": 143,
+    "images": [
+      "/img/footwear-women-block-mary-janes-with-buckles.png"
+    ],
+    "colors": [
+      "neutral"
+    ],
+    "sizes": [
+      {
+        "label": "XS",
+        "inStock": true
+      },
+      {
+        "label": "S",
+        "inStock": true
+      },
+      {
+        "label": "M",
+        "inStock": true
+      },
+      {
+        "label": "L",
+        "inStock": true
+      },
+      {
+        "label": "XL",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "footwear",
+      "casual"
+    ],
+    "description": "Women Block Mary Janes with Buckles — a must-have piece for the Footwear Essentials aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
+    "id": "p-footwear-wrinkled-faux-leather-midi-boots",
+    "name": "Wrinkled Faux Leather Midi Boots",
+    "brand": "PULL&BEAR",
+    "category": "Footwear",
+    "subcategory": "Footwear",
+    "price": 628,
+    "mrp": 1050,
+    "discountPercent": 40,
+    "rating": 4.1,
+    "reviewCount": 380,
+    "images": [
+      "/img/footwear-wrinkled-faux-leather-midi-boots.webp"
+    ],
+    "colors": [
+      "neutral"
+    ],
+    "sizes": [
+      {
+        "label": "6",
+        "inStock": true
+      },
+      {
+        "label": "7",
+        "inStock": true
+      },
+      {
+        "label": "8",
+        "inStock": true
+      },
+      {
+        "label": "9",
+        "inStock": true
+      },
+      {
+        "label": "10",
+        "inStock": false
+      }
+    ],
+    "occasionTags": [
+      "footwear",
+      "casual"
+    ],
+    "description": "Wrinkled Faux Leather Midi Boots — a must-have piece for the Footwear Essentials aesthetic. (auto-generated, review before demo)",
+    "deliveryEstimate": "2-4 business days"
+  },
+  {
     "id": "p-bohemian-amelie-driftwood-charm-boho-top",
     "name": "Amelie Driftwood Charm Boho Top",
     "brand": "PULL&BEAR",
     "category": "Women",
     "subcategory": "Tops",
-    "price": 777,
-    "mrp": 1490,
+    "price": 927,
+    "mrp": 1780,
     "discountPercent": 48,
     "rating": 4.4,
     "reviewCount": 153,
@@ -1279,8 +3085,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "brand": "FOREVER 21",
     "category": "Accessories",
     "subcategory": "Jewellery",
-    "price": 864,
-    "mrp": 1920,
+    "price": 664,
+    "mrp": 1480,
     "discountPercent": 55,
     "rating": 4.3,
     "reviewCount": 179,
@@ -1309,8 +3115,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "brand": "ZARA",
     "category": "Women",
     "subcategory": "Jumpsuits",
-    "price": 1000,
-    "mrp": 1890,
+    "price": 950,
+    "mrp": 1790,
     "discountPercent": 47,
     "rating": 4,
     "reviewCount": 314,
@@ -1356,8 +3162,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "brand": "URBAN OUTFITTERS",
     "category": "Women",
     "subcategory": "Tops",
-    "price": 725,
-    "mrp": 1450,
+    "price": 675,
+    "mrp": 1350,
     "discountPercent": 50,
     "rating": 4.1,
     "reviewCount": 290,
@@ -1402,8 +3208,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "brand": "H&M",
     "category": "Women",
     "subcategory": "Tops",
-    "price": 929,
-    "mrp": 1860,
+    "price": 479,
+    "mrp": 960,
     "discountPercent": 50,
     "rating": 4.4,
     "reviewCount": 62,
@@ -1448,8 +3254,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "brand": "H&M",
     "category": "Accessories",
     "subcategory": "Jewellery",
-    "price": 719,
-    "mrp": 1200,
+    "price": 419,
+    "mrp": 700,
     "discountPercent": 40,
     "rating": 4.2,
     "reviewCount": 290,
@@ -1478,8 +3284,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "brand": "STREET STYLE STORE",
     "category": "Women",
     "subcategory": "Tops",
-    "price": 978,
-    "mrp": 1850,
+    "price": 528,
+    "mrp": 1000,
     "discountPercent": 47,
     "rating": 4.3,
     "reviewCount": 170,
@@ -1524,8 +3330,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "brand": "URBAN OUTFITTERS",
     "category": "Women",
     "subcategory": "Tops",
-    "price": 925,
-    "mrp": 1400,
+    "price": 675,
+    "mrp": 1020,
     "discountPercent": 34,
     "rating": 4.1,
     "reviewCount": 279,
@@ -1570,8 +3376,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     "brand": "URBAN OUTFITTERS",
     "category": "Women",
     "subcategory": "Tops",
-    "price": 775,
-    "mrp": 1550,
+    "price": 1025,
+    "mrp": 2050,
     "discountPercent": 50,
     "rating": 3.9,
     "reviewCount": 159,

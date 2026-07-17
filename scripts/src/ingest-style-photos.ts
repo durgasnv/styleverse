@@ -66,6 +66,12 @@ const STYLE_CONFIGS: StyleConfig[] = [
   { folder: "k-fashion", aestheticTag: "k-fashion", displayName: "K-Fashion Pop" },
   { folder: "streetwear", aestheticTag: "streetwear", displayName: "Streetwear Central" },
   { folder: "minimalist", aestheticTag: "minimalist", displayName: "Minimalist Edit" },
+  { folder: "acubi", aestheticTag: "acubi", displayName: "Acubi" },
+  { folder: "coquette", aestheticTag: "coquette", displayName: "Coquette" },
+  // Footwear isn't tied to a specific aesthetic hub — these just add general
+  // footwear products to the catalog (classify() already detects Footwear
+  // category from the product name regardless of which folder it came from).
+  { folder: "footwear", aestheticTag: "footwear", displayName: "Footwear Essentials" },
   {
     folder: "bohemian",
     aestheticTag: "bohemian",
@@ -172,10 +178,10 @@ function buildProduct(
   const h = hashString(config.folder + ":" + name);
 
   const basePrice =
-    category === "Accessories" ? 299 + (h % 700) :
-    category === "Footwear" ? 1499 + (h % 2000) :
-    subcategory === "Jeans" || subcategory === "Trousers" ? 999 + (h % 1500) :
-    499 + (h % 1000);
+    category === "Accessories" ? 299 + (h % 500) :
+    category === "Footwear" ? 300 + (h % 800) :
+    subcategory === "Jeans" || subcategory === "Trousers" ? 399 + (h % 700) :
+    349 + (h % 700);
   const discountPercent = 30 + (h % 26);
   const mrp = Math.round(basePrice / (1 - discountPercent / 100) / 10) * 10;
 
