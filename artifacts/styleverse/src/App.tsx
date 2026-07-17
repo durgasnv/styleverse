@@ -2,9 +2,10 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import NotFound from '@/pages/not-found';
-import { Route, Switch, Router as WouterRouter } from 'wouter';
+import { Route, Switch, Router as WouterRouter, useLocation } from 'wouter';
 
 import { Navbar } from './components/Navbar';
+import { BackButton } from './components/BackButton';
 import { IdentityGate } from './components/IdentityGate';
 import Home from './pages/home';
 import Search from './pages/search';
@@ -24,9 +25,18 @@ import VoteRoom from './pages/vote-room';
 const queryClient = new QueryClient();
 
 function Router() {
+  const [location] = useLocation();
+
   return (
     <div className="flex flex-col min-h-[100dvh] bg-background text-foreground">
       <Navbar />
+      {location !== '/' && (
+        <div className="border-b bg-white">
+          <div className="container mx-auto px-4 py-2">
+            <BackButton />
+          </div>
+        </div>
+      )}
       <main className="flex-1 w-full">
         <Switch>
           <Route path="/" component={Home} />
