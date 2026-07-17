@@ -353,7 +353,7 @@ export default function Companion() {
                         <div>
                           <p className="text-sm font-bold text-[#282C3F]">Budget Check</p>
                           <p className="text-xs text-gray-600 mt-1 mb-2">The <span className="font-bold">{analysisData.priciest.brand} {analysisData.priciest.name}</span> takes up most of the budget (₹{analysisData.priciest.price}).</p>
-                          <Button variant="outline" size="sm" className="h-7 text-xs border-green-200 text-green-600">Find cheaper alternatives</Button>
+                          <Button variant="outline" size="sm" className="h-7 text-xs border-green-200 text-green-600">Find better alternatives</Button>
                         </div>
                       </div>
                     )}
