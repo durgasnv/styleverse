@@ -6,7 +6,7 @@ import { useIdentity } from '../hooks/use-identity';
 import { Button } from '@/components/ui/button';
 import { Sparkles, ArrowRight, Wand2, Search, SlidersHorizontal, CheckCircle } from 'lucide-react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 import { Spinner } from '@/components/ui/spinner';
 
 export default function Companion() {
@@ -29,6 +29,7 @@ export default function Companion() {
   const [mentorTip, setMentorTip] = useState<string | null>(null);
   const [mentorTipLoading, setMentorTipLoading] = useState(false);
   const [mentorTipError, setMentorTipError] = useState<string | null>(null);
+  const [mentorTipRetryToken, setMentorTipRetryToken] = useState(0);
 
   // If no look/items are provided, we can either prompt them to select one or just use a dummy one for the demo
   const look = lookId ? looks.find(l => l.id === lookId) : (!itemsParam ? looks[0] : undefined);
@@ -82,13 +83,15 @@ export default function Companion() {
       .then((data: { tip: string }) => setMentorTip(data.tip))
       .catch((err) => {
         if (err.name === 'AbortError') return;
-        setMentorTipError(err.message || 'Could not reach the style mentor.');
+        setMentorTipError(err.message || 'The style mentor is temporarily busy — please tap Retry in a moment.');
       })
       .finally(() => setMentorTipLoading(false));
 
     return () => controller.abort();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [products.map(p => p.id).join(','), mood, weather, skinTone]);
+  }, [products.map(p => p.id).join(','), mood, weather, skinTone, mentorTipRetryToken]);
+
+  const retryMentorTip = useCallback(() => setMentorTipRetryToken(t => t + 1), []);
 
   // Deterministic fake scoring algorithm based on categories and selections
   const analysisData = useMemo(() => {
@@ -298,7 +301,17 @@ export default function Companion() {
                         {mentorTipLoading ? (
                           <p className="text-xs text-indigo-100 mt-1 flex items-center gap-2"><Spinner className="size-3" /> Your style mentor is thinking...</p>
                         ) : mentorTipError ? (
-                          <p className="text-xs text-indigo-100 mt-1">Couldn't reach the style mentor right now ({mentorTipError}).</p>
+                          <div className="mt-1">
+                            <p className="text-xs text-indigo-100">{mentorTipError}</p>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="h-6 text-xs mt-2 bg-white/10 border-white/30 text-white hover:bg-white/20 hover:text-white"
+                              onClick={retryMentorTip}
+                            >
+                              Retry
+                            </Button>
+                          </div>
                         ) : mentorTip ? (
                           <p className="text-xs text-indigo-100 mt-1">{mentorTip}</p>
                         ) : null}

@@ -2,10 +2,18 @@ import { Router, type IRouter } from "express";
 
 const router: IRouter = Router();
 
-// Free-tier OpenRouter model — good enough for a short styling tip.
-// llama-3.3-70b/qwen3-next free tiers were upstream rate-limited in testing;
-// gemma-4-26b:free responded reliably. Swap here if that changes.
-const MENTOR_TIP_MODEL = "google/gemma-4-26b-a4b-it:free";
+// Free-tier OpenRouter models, tried in order. The free tier gets upstream
+// rate-limited unpredictably (different provider behind each model, and
+// which one is throttled changes day to day) — verified by direct testing,
+// so this is a fallback chain, not a single hardcoded model. On a 429 (or
+// any other failure) from one model, we immediately retry the next.
+const MENTOR_TIP_MODELS = [
+  "tencent/hy3:free",
+  "openai/gpt-oss-20b:free",
+  "nvidia/nemotron-3-nano-30b-a3b:free",
+  "google/gemma-4-26b-a4b-it:free",
+  "meta-llama/llama-3.3-70b-instruct:free",
+];
 
 interface MentorTipItem {
   name: string;
@@ -41,39 +49,48 @@ router.post("/companion/mentor-tip", async (req, res) => {
 
   const prompt = `You are a friendly, expert fashion stylist mentor. A user has put together this outfit: ${outfitDescription}. Their mood is "${mood}", the weather is "${weather}", and their skin tone context is "${skinTone}". In 2-3 sentences, give one specific, actionable styling tip that explains WHY it works (e.g. color theory, silhouette, proportion) — teach, don't just praise. Be concise and concrete.`;
 
-  try {
-    const openRouterResponse = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        model: MENTOR_TIP_MODEL,
-        max_tokens: 8192,
-        messages: [{ role: "user", content: prompt }],
-      }),
-    });
+  const failures: string[] = [];
 
-    if (!openRouterResponse.ok) {
-      const errText = await openRouterResponse.text();
-      res.status(502).json({ error: `OpenRouter request failed: ${openRouterResponse.status} ${errText}` });
+  for (const model of MENTOR_TIP_MODELS) {
+    try {
+      const openRouterResponse = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          model,
+          max_tokens: 8192,
+          messages: [{ role: "user", content: prompt }],
+        }),
+      });
+
+      if (!openRouterResponse.ok) {
+        failures.push(`${model}: ${openRouterResponse.status}`);
+        continue;
+      }
+
+      const data = (await openRouterResponse.json()) as {
+        choices?: { message?: { content?: string } }[];
+      };
+      const tip = data.choices?.[0]?.message?.content?.trim();
+      if (!tip) {
+        failures.push(`${model}: empty response`);
+        continue;
+      }
+
+      res.json({ tip });
       return;
+    } catch (err) {
+      failures.push(`${model}: ${(err as Error).message}`);
     }
-
-    const data = (await openRouterResponse.json()) as {
-      choices?: { message?: { content?: string } }[];
-    };
-    const tip = data.choices?.[0]?.message?.content?.trim();
-    if (!tip) {
-      res.status(502).json({ error: "OpenRouter returned no content" });
-      return;
-    }
-
-    res.json({ tip });
-  } catch (err) {
-    res.status(502).json({ error: `Failed to reach OpenRouter: ${(err as Error).message}` });
   }
+
+  res.status(503).json({
+    error: "The style mentor is temporarily busy — please tap Retry in a moment.",
+    details: failures.join("; "),
+  });
 });
 
 export default router;
