@@ -1323,10 +1323,10 @@ export const INGESTED_PRODUCTS: Product[] = [
     "id": "p-acubi-black-cap",
     "name": "black cap",
     "brand": "ZARA",
-    "category": "Women",
-    "subcategory": "Tops",
-    "price": 1010,
-    "mrp": 1660,
+    "category": "Accessories",
+    "subcategory": "Accessories",
+    "price": 460,
+    "mrp": 750,
     "discountPercent": 39,
     "rating": 4.1,
     "reviewCount": 51,
@@ -1338,24 +1338,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     ],
     "sizes": [
       {
-        "label": "XS",
+        "label": "One Size",
         "inStock": true
-      },
-      {
-        "label": "S",
-        "inStock": true
-      },
-      {
-        "label": "M",
-        "inStock": true
-      },
-      {
-        "label": "L",
-        "inStock": true
-      },
-      {
-        "label": "XL",
-        "inStock": false
       }
     ],
     "occasionTags": [
@@ -1568,7 +1552,7 @@ export const INGESTED_PRODUCTS: Product[] = [
     "name": "cropped leather jacket",
     "brand": "VERO MODA",
     "category": "Women",
-    "subcategory": "Tops",
+    "subcategory": "Jackets",
     "price": 943,
     "mrp": 1750,
     "discountPercent": 46,
@@ -1751,10 +1735,10 @@ export const INGESTED_PRODUCTS: Product[] = [
     "id": "p-acubi-grey-star-beanie",
     "name": "grey star beanie",
     "brand": "ZARA",
-    "category": "Women",
-    "subcategory": "Tops",
-    "price": 790,
-    "mrp": 1760,
+    "category": "Accessories",
+    "subcategory": "Accessories",
+    "price": 340,
+    "mrp": 760,
     "discountPercent": 55,
     "rating": 4.5,
     "reviewCount": 231,
@@ -1766,24 +1750,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     ],
     "sizes": [
       {
-        "label": "XS",
+        "label": "One Size",
         "inStock": true
-      },
-      {
-        "label": "S",
-        "inStock": true
-      },
-      {
-        "label": "M",
-        "inStock": true
-      },
-      {
-        "label": "L",
-        "inStock": true
-      },
-      {
-        "label": "XL",
-        "inStock": false
       }
     ],
     "occasionTags": [
@@ -1798,7 +1766,7 @@ export const INGESTED_PRODUCTS: Product[] = [
     "name": "letterman jacket",
     "brand": "VERO MODA",
     "category": "Women",
-    "subcategory": "Tops",
+    "subcategory": "Jackets",
     "price": 603,
     "mrp": 890,
     "discountPercent": 32,
@@ -2011,10 +1979,10 @@ export const INGESTED_PRODUCTS: Product[] = [
     "id": "p-coquette-dainty-gold-bow-charm-bracelet",
     "name": "Dainty Gold Bow Charm Bracelet",
     "brand": "MANGO",
-    "category": "Women",
-    "subcategory": "Tops",
-    "price": 1041,
-    "mrp": 2080,
+    "category": "Accessories",
+    "subcategory": "Jewellery",
+    "price": 791,
+    "mrp": 1580,
     "discountPercent": 50,
     "rating": 4.5,
     "reviewCount": 149,
@@ -2026,24 +1994,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     ],
     "sizes": [
       {
-        "label": "XS",
+        "label": "One Size",
         "inStock": true
-      },
-      {
-        "label": "S",
-        "inStock": true
-      },
-      {
-        "label": "M",
-        "inStock": true
-      },
-      {
-        "label": "L",
-        "inStock": true
-      },
-      {
-        "label": "XL",
-        "inStock": false
       }
     ],
     "occasionTags": [
@@ -2149,10 +2101,10 @@ export const INGESTED_PRODUCTS: Product[] = [
     "id": "p-coquette-floral-print-tie-front-ruched-sweetheart-neck-cap-sleeve-crop-blouse-top",
     "name": "Floral Print Tie Front Ruched Sweetheart Neck Cap Sleeve Crop Blouse Top",
     "brand": "FOREVER 21",
-    "category": "Women",
-    "subcategory": "Tops",
-    "price": 1014,
-    "mrp": 1470,
+    "category": "Accessories",
+    "subcategory": "Accessories",
+    "price": 564,
+    "mrp": 820,
     "discountPercent": 31,
     "rating": 4.5,
     "reviewCount": 319,
@@ -2164,24 +2116,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     ],
     "sizes": [
       {
-        "label": "XS",
+        "label": "One Size",
         "inStock": true
-      },
-      {
-        "label": "S",
-        "inStock": true
-      },
-      {
-        "label": "M",
-        "inStock": true
-      },
-      {
-        "label": "L",
-        "inStock": true
-      },
-      {
-        "label": "XL",
-        "inStock": false
       }
     ],
     "occasionTags": [
@@ -2242,7 +2178,7 @@ export const INGESTED_PRODUCTS: Product[] = [
     "name": "Womens Floral Dress",
     "brand": "PULL&BEAR",
     "category": "Women",
-    "subcategory": "Tops",
+    "subcategory": "Dresses",
     "price": 617,
     "mrp": 1060,
     "discountPercent": 42,
@@ -2409,10 +2345,10 @@ export const INGESTED_PRODUCTS: Product[] = [
     "id": "p-coquette-floral-headband",
     "name": "floral headband",
     "brand": "STREET STYLE STORE",
-    "category": "Women",
-    "subcategory": "Tops",
-    "price": 708,
-    "mrp": 1510,
+    "category": "Accessories",
+    "subcategory": "Accessories",
+    "price": 658,
+    "mrp": 1400,
     "discountPercent": 53,
     "rating": 4.1,
     "reviewCount": 84,
@@ -2424,24 +2360,8 @@ export const INGESTED_PRODUCTS: Product[] = [
     ],
     "sizes": [
       {
-        "label": "XS",
+        "label": "One Size",
         "inStock": true
-      },
-      {
-        "label": "S",
-        "inStock": true
-      },
-      {
-        "label": "M",
-        "inStock": true
-      },
-      {
-        "label": "L",
-        "inStock": true
-      },
-      {
-        "label": "XL",
-        "inStock": false
       }
     ],
     "occasionTags": [
@@ -2532,7 +2452,7 @@ export const INGESTED_PRODUCTS: Product[] = [
     "name": "summer floral cherry cami dress",
     "brand": "BERSHKA",
     "category": "Women",
-    "subcategory": "Tops",
+    "subcategory": "Dresses",
     "price": 936,
     "mrp": 2080,
     "discountPercent": 55,
@@ -2624,7 +2544,7 @@ export const INGESTED_PRODUCTS: Product[] = [
     "name": "white ruffle mini dress",
     "brand": "FOREVER 21",
     "category": "Women",
-    "subcategory": "Tops",
+    "subcategory": "Dresses",
     "price": 634,
     "mrp": 1150,
     "discountPercent": 45,
@@ -2853,10 +2773,10 @@ export const INGESTED_PRODUCTS: Product[] = [
     "id": "p-footwear-new-balance-5series30",
     "name": "New Balance 5Series30",
     "brand": "VERO MODA",
-    "category": "Women",
-    "subcategory": "Tops",
-    "price": 593,
-    "mrp": 1190,
+    "category": "Footwear",
+    "subcategory": "Footwear",
+    "price": 644,
+    "mrp": 1290,
     "discountPercent": 50,
     "rating": 4.5,
     "reviewCount": 290,
@@ -2868,23 +2788,23 @@ export const INGESTED_PRODUCTS: Product[] = [
     ],
     "sizes": [
       {
-        "label": "XS",
+        "label": "6",
         "inStock": true
       },
       {
-        "label": "S",
+        "label": "7",
         "inStock": true
       },
       {
-        "label": "M",
+        "label": "8",
         "inStock": true
       },
       {
-        "label": "L",
+        "label": "9",
         "inStock": true
       },
       {
-        "label": "XL",
+        "label": "10",
         "inStock": false
       }
     ],
@@ -2899,10 +2819,10 @@ export const INGESTED_PRODUCTS: Product[] = [
     "id": "p-footwear-party-stiletto-pumps",
     "name": "Party Stiletto Pumps",
     "brand": "URBAN OUTFITTERS",
-    "category": "Women",
-    "subcategory": "Tops",
-    "price": 365,
-    "mrp": 790,
+    "category": "Footwear",
+    "subcategory": "Footwear",
+    "price": 716,
+    "mrp": 1560,
     "discountPercent": 54,
     "rating": 4.1,
     "reviewCount": 216,
@@ -2914,23 +2834,23 @@ export const INGESTED_PRODUCTS: Product[] = [
     ],
     "sizes": [
       {
-        "label": "XS",
+        "label": "6",
         "inStock": true
       },
       {
-        "label": "S",
+        "label": "7",
         "inStock": true
       },
       {
-        "label": "M",
+        "label": "8",
         "inStock": true
       },
       {
-        "label": "L",
+        "label": "9",
         "inStock": true
       },
       {
-        "label": "XL",
+        "label": "10",
         "inStock": false
       }
     ],
@@ -2945,10 +2865,10 @@ export const INGESTED_PRODUCTS: Product[] = [
     "id": "p-footwear-women-block-mary-janes-with-buckles",
     "name": "Women Block Mary Janes with Buckles",
     "brand": "BERSHKA",
-    "category": "Women",
-    "subcategory": "Tops",
-    "price": 576,
-    "mrp": 1130,
+    "category": "Footwear",
+    "subcategory": "Footwear",
+    "price": 527,
+    "mrp": 1030,
     "discountPercent": 49,
     "rating": 3.9,
     "reviewCount": 143,
@@ -2960,23 +2880,23 @@ export const INGESTED_PRODUCTS: Product[] = [
     ],
     "sizes": [
       {
-        "label": "XS",
+        "label": "6",
         "inStock": true
       },
       {
-        "label": "S",
+        "label": "7",
         "inStock": true
       },
       {
-        "label": "M",
+        "label": "8",
         "inStock": true
       },
       {
-        "label": "L",
+        "label": "9",
         "inStock": true
       },
       {
-        "label": "XL",
+        "label": "10",
         "inStock": false
       }
     ],

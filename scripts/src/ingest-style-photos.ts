@@ -104,16 +104,18 @@ interface ClassifyRule {
 const CLASSIFY_RULES: ClassifyRule[] = [
   { words: ["belt"], category: "Accessories", subcategory: "Belts" },
   { words: ["clip"], category: "Accessories", subcategory: "Hair Accessories" },
-  { words: ["earring", "necklace", "jewellery", "jewelry"], category: "Accessories", subcategory: "Jewellery" },
-  { words: ["bag", "handbag"], category: "Accessories", subcategory: "Bags" },
-  { words: ["hat", "sunglasses", "headwear", "scarf", "clutch"], category: "Accessories", subcategory: "Accessories" },
-  { words: ["shoe", "sneaker", "boot", "sandal", "flat", "heel", "trainer"], category: "Footwear", subcategory: "Footwear" },
+  { words: ["earring", "necklace", "jewellery", "jewelry", "bracelet", "ring", "pendant"], category: "Accessories", subcategory: "Jewellery" },
+  { words: ["bag", "handbag", "purse", "tote"], category: "Accessories", subcategory: "Bags" },
+  { words: ["hat", "sunglasses", "headwear", "scarf", "clutch", "cap", "beanie", "headband"], category: "Accessories", subcategory: "Accessories" },
+  { words: ["shoe", "sneaker", "boot", "sandal", "flat", "heel", "trainer", "pump", "loafer", "wedge", "stiletto", "mule", "clog"], category: "Footwear", subcategory: "Footwear" },
   { words: ["jean", "jort"], category: "Women", subcategory: "Jeans" },
   { words: ["short"], category: "Women", subcategory: "Shorts" },
   { words: ["skirt"], category: "Women", subcategory: "Skirts" },
   { words: ["jumpsuit"], category: "Women", subcategory: "Jumpsuits" },
   { words: ["trouser", "pant"], category: "Women", subcategory: "Trousers" },
   { words: ["sweater", "cardigan", "sweatshirt", "hoodie"], category: "Women", subcategory: "Sweaters" },
+  { words: ["dress", "gown"], category: "Women", subcategory: "Dresses" },
+  { words: ["jacket", "blazer", "coat"], category: "Women", subcategory: "Jackets" },
 ];
 const COLOR_WORDS: Record<string, string> = {
   black: "black", white: "white", pink: "pink", red: "red", green: "green",
@@ -174,7 +176,13 @@ function buildProduct(
   destImagePath: string,
 ): GeneratedProduct {
   const name = cleanName(rawFileName);
-  const { category, subcategory } = classify(name);
+  // Every photo dropped in the "footwear" folder is unambiguously footwear,
+  // even when its filename has no recognizable shoe keyword at all (e.g. a
+  // model name like "New Balance 5Series30") — the folder itself is a more
+  // reliable signal than keyword classification for this one folder.
+  const { category, subcategory } = config.folder === "footwear"
+    ? { category: "Footwear" as const, subcategory: "Footwear" }
+    : classify(name);
   const h = hashString(config.folder + ":" + name);
 
   const basePrice =
