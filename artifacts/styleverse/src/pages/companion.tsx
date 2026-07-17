@@ -9,6 +9,8 @@ import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Responsi
 import { useState, useMemo, useEffect, useCallback } from 'react';
 import { Spinner } from '@/components/ui/spinner';
 
+const PRESET_MOODS = ['confident', 'relaxed', 'bold', 'romantic'];
+
 export default function Companion() {
   const [, setLocation] = useLocation();
   const searchParams = new URLSearchParams(window.location.search);
@@ -22,6 +24,7 @@ export default function Companion() {
   const { looks, isLoading: looksLoading } = useLooks(identity?.userId);
 
   const [mood, setMood] = useState(state.prefs.mood);
+  const [customMood, setCustomMood] = useState(() => (PRESET_MOODS.includes(state.prefs.mood) ? '' : state.prefs.mood));
   const [weather, setWeather] = useState(state.prefs.weather);
   const [skinTone, setSkinTone] = useState(state.prefs.skinTone);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -188,17 +191,32 @@ export default function Companion() {
               <div className="space-y-5 text-sm">
                 <div>
                   <label className="block text-gray-500 text-xs font-bold uppercase tracking-wider mb-2">Vibe / Mood</label>
-                  <div className="flex flex-wrap gap-2">
-                    {['confident', 'relaxed', 'bold', 'romantic'].map(m => (
-                      <button 
-                        key={m} 
-                        onClick={() => setMood(m)}
+                  <div className="flex flex-wrap gap-2 mb-3">
+                    {PRESET_MOODS.map(m => (
+                      <button
+                        key={m}
+                        onClick={() => { setMood(m); setCustomMood(''); }}
                         className={`px-3 py-1.5 rounded-full border text-xs font-bold capitalize transition-colors ${mood === m ? 'bg-indigo-50 border-indigo-500 text-indigo-700' : 'bg-white text-gray-600 hover:bg-gray-50'}`}
                       >
                         {m}
                       </button>
                     ))}
                   </div>
+                  <input
+                    type="text"
+                    value={customMood}
+                    onChange={(e) => setCustomMood(e.target.value)}
+                    onBlur={() => { if (customMood.trim()) setMood(customMood.trim()); }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && customMood.trim()) {
+                        e.preventDefault();
+                        setMood(customMood.trim());
+                        (e.target as HTMLInputElement).blur();
+                      }
+                    }}
+                    placeholder="Or describe your own mood..."
+                    className="w-full px-3 py-1.5 rounded-md border text-xs font-medium text-gray-700 placeholder-gray-400 focus:outline-none focus:border-indigo-500"
+                  />
                 </div>
 
                 <div>
