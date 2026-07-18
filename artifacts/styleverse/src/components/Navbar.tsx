@@ -84,15 +84,26 @@ export function Navbar() {
                 <Link href="/my-looks" className="block px-4 py-3 hover:bg-gray-50 rounded-md transition-colors text-sm font-bold text-[#282C3F]">
                   My Looks
                 </Link>
+                <Link href="/try-on" className="block px-4 py-3 hover:bg-gray-50 rounded-md transition-colors text-sm font-bold text-[#282C3F]">
+                  Try It On
+                </Link>
               </div>
             </div>
           </div>
 
-          <Link 
+          <Link
             href="/canvas"
             className="px-3 xl:px-4 h-full flex items-center gap-1 text-sm font-bold text-[#282C3F] hover:border-b-4 hover:border-[#FF3F6C] border-b-4 border-transparent uppercase transition-colors relative"
           >
             STUDIO
+            <span className="absolute top-2.5 -right-1 bg-[#FF3F6C] text-white text-[9px] font-black px-1.5 py-0.5 rounded-sm leading-none">NEW</span>
+          </Link>
+
+          <Link
+            href="/try-on"
+            className="px-3 xl:px-4 h-full flex items-center gap-1 text-sm font-bold text-[#282C3F] hover:border-b-4 hover:border-[#FF3F6C] border-b-4 border-transparent uppercase transition-colors relative"
+          >
+            Try On
             <span className="absolute top-2.5 -right-1 bg-[#FF3F6C] text-white text-[9px] font-black px-1.5 py-0.5 rounded-sm leading-none">NEW</span>
           </Link>
         </nav>
@@ -210,9 +221,12 @@ export function Navbar() {
               </Link>
 
               <div className="border-t my-2"></div>
-              
+
               <Link href="/canvas" className="flex items-center gap-2 px-4 py-3 text-sm font-bold text-[#FF3F6C] hover:bg-gray-50" onClick={() => setMobileMenuOpen(false)}>
                 STUDIO <span className="bg-[#FF3F6C] text-white text-[9px] font-black px-1.5 py-0.5 rounded-sm leading-none">NEW</span>
+              </Link>
+              <Link href="/try-on" className="flex items-center gap-2 px-4 py-3 text-sm font-bold text-[#FF3F6C] hover:bg-gray-50" onClick={() => setMobileMenuOpen(false)}>
+                Try On <span className="bg-[#FF3F6C] text-white text-[9px] font-black px-1.5 py-0.5 rounded-sm leading-none">NEW</span>
               </Link>
             </div>
           </div>

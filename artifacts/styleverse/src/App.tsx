@@ -15,6 +15,7 @@ import Checkout from './pages/checkout';
 import Hubs from './pages/hubs';
 import HubDetail from './pages/hub-detail';
 import Canvas from './pages/canvas';
+import TryOn from './pages/try-on';
 import Companion from './pages/companion';
 import Challenges from './pages/challenges';
 import Collections from './pages/collections';
@@ -47,6 +48,7 @@ function Router() {
           <Route path="/hubs" component={Hubs} />
           <Route path="/hubs/:id" component={HubDetail} />
           <Route path="/canvas" component={Canvas} />
+          <Route path="/try-on" component={TryOn} />
           <Route path="/companion" component={Companion} />
           <Route path="/challenges" component={Challenges} />
           <Route path="/collections" component={Collections} />
