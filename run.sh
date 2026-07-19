@@ -53,7 +53,7 @@ if [ ! -d node_modules ]; then
 fi
 
 echo "Starting API server on port $PORT_API..."
-(cd artifacts/api-server && PORT="$PORT_API" MONGODB_URI="$MONGODB_URI" OPENROUTER_API_KEY="$OPENROUTER_API_KEY" pnpm run dev) &
+(cd artifacts/api-server && PORT="$PORT_API" MONGODB_URI="$MONGODB_URI" OPENROUTER_API_KEY="$OPENROUTER_API_KEY" FASHN_API_KEY="$FASHN_API_KEY" TRYON_ENGINE="$TRYON_ENGINE" pnpm run dev) &
 API_PID=$!
 
 cleanup() {
