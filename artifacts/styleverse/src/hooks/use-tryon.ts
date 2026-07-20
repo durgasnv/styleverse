@@ -8,6 +8,11 @@ export interface TryOnGarment {
   image: string;
 }
 
+// Keep in sync with MAX_GARMENTS in artifacts/api-server/src/routes/tryon.ts
+// — the server enforces the real cap, this just avoids a round trip for the
+// common case and lets the UI warn before submitting.
+export const MAX_TRYON_GARMENTS = 6;
+
 // Local, page-scoped state only — no persistence, no server calls. The base
 // photo (preset or uploaded) never leaves the browser. Garments come from
 // wherever the caller's outfit lives (e.g. Style Canvas items) rather than
@@ -42,13 +47,14 @@ export function useTryOn() {
   // rather than compounding edits across repeated calls.
   const generateTryOn = useCallback(
     async (garments: TryOnGarment[]) => {
-      if (!baseImage || garments.length === 0) return;
+      const capped = garments.slice(0, MAX_TRYON_GARMENTS);
+      if (!baseImage || capped.length === 0) return;
       setIsGenerating(true);
       setGenerateError(null);
       try {
         const [baseDataUrl, garmentDataUrls] = await Promise.all([
           toDataUrl(baseImage.src),
-          Promise.all(garments.map((g) => toDataUrl(g.image))),
+          Promise.all(capped.map((g) => toDataUrl(g.image))),
         ]);
 
         const res = await fetch('/api/tryon/generate', {
@@ -56,7 +62,7 @@ export function useTryOn() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             baseImage: baseDataUrl,
-            garments: garments.map((g, i) => ({ name: g.name, image: garmentDataUrls[i] })),
+            garments: capped.map((g, i) => ({ name: g.name, image: garmentDataUrls[i] })),
           }),
         });
 

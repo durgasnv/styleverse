@@ -3,8 +3,9 @@ import type { Product } from '../data/mock-data';
 import { useProducts } from '../hooks/use-catalog';
 import { useStore } from '../hooks/use-store';
 import { useLocation, useSearch } from 'wouter';
-import { useTryOn } from '../hooks/use-tryon';
+import { useTryOn, MAX_TRYON_GARMENTS } from '../hooks/use-tryon';
 import { PRESET_MODELS } from '../data/preset-models';
+import { fileToResizedDataUrl } from '../lib/image-utils';
 import { Button } from '@/components/ui/button';
 import {
   Trash2,
@@ -248,15 +249,16 @@ export default function Canvas() {
     });
   };
 
-  const handleTryOnFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTryOnFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      if (typeof reader.result === 'string') selectUploadedPhoto(reader.result);
-    };
-    reader.readAsDataURL(file);
     e.target.value = '';
+    if (!file) return;
+    try {
+      const resized = await fileToResizedDataUrl(file);
+      selectUploadedPhoto(resized);
+    } catch (err) {
+      toast({ title: "Could not use that photo", description: (err as Error).message, variant: "destructive" });
+    }
   };
 
   const handleTryOnImageLoad = () => {
@@ -271,6 +273,12 @@ export default function Canvas() {
   }, [baseImage?.src]);
 
   const handleGenerateTryOn = () => {
+    if (uniqueProducts.length > MAX_TRYON_GARMENTS) {
+      toast({
+        title: `Only the first ${MAX_TRYON_GARMENTS} items will be used`,
+        description: "Remove some items from the canvas to try on the rest.",
+      });
+    }
     generateTryOn(uniqueProducts.map(p => ({ name: `${p.brand} ${p.name}`, image: p.images[0] })));
   };
 
@@ -492,6 +500,7 @@ export default function Canvas() {
                 <div className="border-t bg-white px-4 py-3 shrink-0">
                   <p className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">
                     Selected items {uniqueProducts.length > 0 && `(${uniqueProducts.length})`}
+                    {uniqueProducts.length > MAX_TRYON_GARMENTS && ` — only first ${MAX_TRYON_GARMENTS} used`}
                   </p>
                   {uniqueProducts.length === 0 ? (
                     <p className="text-sm text-gray-400">Drag items onto the canvas to try them on.</p>
