@@ -7,6 +7,7 @@ import companionRouter from "./companion";
 import votingRouter from "./voting";
 import usersRouter from "./users";
 import looksRouter from "./looks";
+import tryonRouter from "./tryon";
 
 const router: IRouter = Router();
 
@@ -18,5 +19,6 @@ router.use(companionRouter);
 router.use(votingRouter);
 router.use(usersRouter);
 router.use(looksRouter);
+router.use(tryonRouter);
 
 export default router;
