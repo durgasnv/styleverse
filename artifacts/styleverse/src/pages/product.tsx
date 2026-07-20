@@ -7,7 +7,6 @@ import { Star, Heart, ShoppingBag, Truck, Undo2, BadgePercent, Sparkles, FolderH
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { SaveToCollectionDialog } from '../components/SaveToCollectionDialog';
-import { TryOnDialog } from '../components/TryOnDialog';
 import { Spinner } from '@/components/ui/spinner';
 
 export default function ProductDetail() {
@@ -162,19 +161,6 @@ export default function ProductDetail() {
             </Button>
           </div>
 
-          {(product.category === 'Women' || product.category === 'Men') && (
-            <TryOnDialog productId={product.id} productName={product.name}>
-              <Button
-                variant="outline"
-                size="lg"
-                className="mt-4 w-full font-bold tracking-wider py-6 border-[#FF3F6C]/40 text-[#FF3F6C] hover:bg-pink-50 hover:text-[#d93059]"
-                data-testid="btn-try-on"
-              >
-                <Sparkles className="mr-2 h-5 w-5" /> VIRTUAL TRY-ON — SEE IT ON YOUR BODY TYPE
-              </Button>
-            </TryOnDialog>
-          )}
-
           <div className="mt-4 border border-[#FF3F6C]/20 bg-pink-50/50 rounded-md p-4">
             <div className="flex items-start justify-between">
               <div>
@@ -191,6 +177,9 @@ export default function ProductDetail() {
                 </SaveToCollectionDialog>
                 <Button size="sm" className="h-8 bg-[#282C3F] hover:bg-black" onClick={() => setLocation(`/canvas?add=${product.id}`)}>
                   Open in Canvas
+                </Button>
+                <Button size="sm" className="h-8 bg-[#FF3F6C] hover:bg-[#d93059]" onClick={() => setLocation(`/canvas?add=${product.id}&tryon=1`)}>
+                  Try It On
                 </Button>
               </div>
             </div>

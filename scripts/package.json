@@ -7,8 +7,6 @@
     "hello": "tsx ./src/hello.ts",
     "ingest-photos": "tsx ./src/ingest-style-photos.ts",
     "seed-mongo": "tsx ./src/seed-mongo.ts",
-    "generate-tryon-models": "tsx ./src/generate-tryon-models.ts",
-    "prewarm-tryon": "tsx ./src/prewarm-tryon.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
