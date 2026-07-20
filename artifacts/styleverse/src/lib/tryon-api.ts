@@ -1,18 +1,18 @@
 // Must match BODY_TYPES in artifacts/api-server/src/lib/tryon.ts and the base
 // model images in public/img/models/<id>.jpg.
 export interface BodyTypeOption {
-  id: 'xs' | 's' | 'm' | 'l' | 'plus';
+  id: 'inverted-triangle' | 'apple' | 'hourglass' | 'pear' | 'rectangle';
   label: string;
   description: string;
   modelImage: string;
 }
 
 export const BODY_TYPES: BodyTypeOption[] = [
-  { id: 'xs', label: 'XS', description: 'Petite', modelImage: '/img/models/xs.png' },
-  { id: 's', label: 'S', description: 'Slim', modelImage: '/img/models/s.png' },
-  { id: 'm', label: 'M', description: 'Regular', modelImage: '/img/models/m.png' },
-  { id: 'l', label: 'L', description: 'Curvy', modelImage: '/img/models/l.png' },
-  { id: 'plus', label: 'Plus', description: 'Plus size', modelImage: '/img/models/plus.png' },
+  { id: 'inverted-triangle', label: '▽ Triangle', description: 'Broad shoulders', modelImage: '/img/models/inverted-triangle.png' },
+  { id: 'apple', label: 'Apple', description: 'Fuller middle', modelImage: '/img/models/apple.png' },
+  { id: 'hourglass', label: 'Hourglass', description: 'Defined waist', modelImage: '/img/models/hourglass.png' },
+  { id: 'pear', label: 'Pear', description: 'Fuller hips', modelImage: '/img/models/pear.png' },
+  { id: 'rectangle', label: 'Rectangle', description: 'Straight frame', modelImage: '/img/models/rectangle.png' },
 ];
 
 export async function requestTryon(params: {

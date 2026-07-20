@@ -16,11 +16,31 @@ const OUT_DIR = path.resolve(
 
 // Must match BODY_TYPES in artifacts/api-server/src/lib/tryon.ts.
 const BODY_TYPES: { id: string; build: string }[] = [
-  { id: "xs", build: "a petite, very slim build (size XS)" },
-  { id: "s", build: "a slim build (size S)" },
-  { id: "m", build: "an average build (size M)" },
-  { id: "l", build: "a curvy build (size L)" },
-  { id: "plus", build: "a plus-size build (size XXL)" },
+  {
+    id: "inverted-triangle",
+    build:
+      "an inverted-triangle body shape: shoulders visibly broader than her hips, athletic upper body, narrower hips and slim legs",
+  },
+  {
+    id: "apple",
+    build:
+      "an apple body shape: fuller rounded midsection and torso, less defined waist, slimmer hips and legs",
+  },
+  {
+    id: "hourglass",
+    build:
+      "an hourglass body shape: balanced bust and hips with a clearly defined narrow waist",
+  },
+  {
+    id: "pear",
+    build:
+      "a pear body shape: narrower shoulders and bust, visibly wider hips and fuller thighs",
+  },
+  {
+    id: "rectangle",
+    build:
+      "a rectangle body shape: straight balanced silhouette with similar shoulder, waist and hip widths, minimal waist definition",
+  },
 ];
 
 const IMAGE_MODELS = [

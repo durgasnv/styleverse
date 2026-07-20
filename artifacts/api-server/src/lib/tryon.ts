@@ -4,7 +4,7 @@ import path from "node:path";
 // Body types must match the base model images shipped in
 // artifacts/styleverse/public/img/models/<id>.jpg and the frontend list in
 // artifacts/styleverse/src/lib/tryon-api.ts.
-export const BODY_TYPES = ["xs", "s", "m", "l", "plus"] as const;
+export const BODY_TYPES = ["inverted-triangle", "apple", "hourglass", "pear", "rectangle"] as const;
 export type BodyType = (typeof BODY_TYPES)[number];
 
 // The api-server always runs with cwd = artifacts/api-server (pnpm run dev /

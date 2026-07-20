@@ -9,7 +9,7 @@
 export {}; // top-level await requires this file to be a module
 
 const API_BASE = process.env.API_BASE ?? "http://localhost:8080";
-const BODY_TYPES = ["xs", "s", "m", "l", "plus"];
+const BODY_TYPES = ["inverted-triangle", "apple", "hourglass", "pear", "rectangle"];
 
 interface Product {
   id: string;

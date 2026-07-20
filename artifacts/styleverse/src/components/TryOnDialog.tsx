@@ -18,7 +18,7 @@ export function TryOnDialog({ productId, productName, children }: {
   children: React.ReactNode;
 }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [bodyType, setBodyType] = useState<BodyTypeOption['id']>('m');
+  const [bodyType, setBodyType] = useState<BodyTypeOption['id']>('hourglass');
   const [isLoading, setIsLoading] = useState(false);
   const [resultUrl, setResultUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -72,7 +72,7 @@ export function TryOnDialog({ productId, productName, children }: {
 
         <div className="flex flex-col gap-4">
           <div>
-            <h4 className="font-bold uppercase text-xs tracking-wider text-gray-500 mb-2">Choose a body type</h4>
+            <h4 className="font-bold uppercase text-xs tracking-wider text-gray-500 mb-2">Choose your body shape</h4>
             <div className="flex gap-2">
               {BODY_TYPES.map(type => {
                 const isSelected = bodyType === type.id;
@@ -88,7 +88,7 @@ export function TryOnDialog({ productId, productName, children }: {
                     )}
                     data-testid={`tryon-body-${type.id}`}
                   >
-                    <span className={cn('font-bold text-sm font-mono', isSelected ? 'text-[#FF3F6C]' : 'text-[#282C3F]')}>{type.label}</span>
+                    <span className={cn('font-bold text-xs', isSelected ? 'text-[#FF3F6C]' : 'text-[#282C3F]')}>{type.label}</span>
                     <span className="text-[10px] text-gray-500">{type.description}</span>
                   </button>
                 );
@@ -98,7 +98,7 @@ export function TryOnDialog({ productId, productName, children }: {
 
           <div className="aspect-[3/4] bg-gray-100 rounded-md overflow-hidden relative">
             {resultUrl ? (
-              <img src={resultUrl} alt={`${productName} on ${selected.description} body type`} className="w-full h-full object-cover" />
+              <img src={resultUrl} alt={`${productName} on ${selected.label} body shape`} className="w-full h-full object-cover" />
             ) : isLoading ? (
               <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-gradient-to-b from-gray-100 to-pink-50 animate-pulse">
                 <Sparkles className="h-8 w-8 text-[#FF3F6C] animate-bounce" />
@@ -114,7 +114,7 @@ export function TryOnDialog({ productId, productName, children }: {
                   onError={e => { e.currentTarget.style.display = 'none'; }}
                 />
                 <p className="relative text-sm text-gray-600">
-                  See <span className="font-bold">{productName}</span> on a {selected.description.toLowerCase()} body type.
+                  See <span className="font-bold">{productName}</span> on the {selected.label.replace('▽ ', 'inverted ').toLowerCase()} body shape.
                 </p>
                 <Button
                   className="relative bg-[#FF3F6C] hover:bg-[#d93059] text-white font-bold"
