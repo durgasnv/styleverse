@@ -9,11 +9,17 @@ const router: IRouter = Router();
 // the "-preview" alias is retired or renamed.
 const TRYON_MODELS = ["google/gemini-2.5-flash-image", "google/gemini-2.5-flash-image-preview"];
 
-// Every generate call is a live paid request with no caching, so cap how
-// much one request can compost (cost + prompt quality) and how often a
-// single caller can fire it.
+// Every generate call is a live paid request, so cap how much one request
+// can compose (cost + prompt quality) and how often a single caller can fire it.
 const MAX_GARMENTS = 6;
 const REQUEST_TIMEOUT_MS = 30_000;
+
+// Re-running the exact same outfit on the exact same model (a demo re-run, a
+// judge re-clicking, an accidental double submit after the dedup window
+// closes) shouldn't cost credits twice. Short TTL and a small cap are
+// deliberate — this is a live-demo safety net, not a real result store.
+const CACHE_TTL_MS = 20 * 60_000;
+const CACHE_MAX_ENTRIES = 50;
 
 interface TryOnGarment {
   name: string;
@@ -36,6 +42,29 @@ type TryOnResult = { ok: true; image: string } | { ok: false; status: number; er
 // for the *same* outfit on the *same* model reuses the in-flight call
 // instead of paying for it twice. Different content always gets its own call.
 const inFlight = new Map<string, Promise<TryOnResult>>();
+
+// Same hash key as inFlight, but for completed results — covers repeats that
+// arrive after the in-flight call already finished. Only successes are
+// cached; a failure might be transient and shouldn't be remembered.
+const resultCache = new Map<string, { result: Extract<TryOnResult, { ok: true }>; expiresAt: number }>();
+
+function getCachedResult(key: string): Extract<TryOnResult, { ok: true }> | undefined {
+  const entry = resultCache.get(key);
+  if (!entry) return undefined;
+  if (entry.expiresAt < Date.now()) {
+    resultCache.delete(key);
+    return undefined;
+  }
+  return entry.result;
+}
+
+function setCachedResult(key: string, result: Extract<TryOnResult, { ok: true }>) {
+  if (resultCache.size >= CACHE_MAX_ENTRIES) {
+    const oldestKey = resultCache.keys().next().value;
+    if (oldestKey !== undefined) resultCache.delete(oldestKey);
+  }
+  resultCache.set(key, { result, expiresAt: Date.now() + CACHE_TTL_MS });
+}
 
 async function runTryOn(apiKey: string, baseImage: string, garments: TryOnGarment[]): Promise<TryOnResult> {
   const garmentNames = garments.map((g) => g.name).join(", ");
@@ -121,9 +150,20 @@ router.post("/tryon/generate", createRateLimiter({ windowMs: 5 * 60_000, max: 8 
 
   const key = crypto.createHash("sha256").update(JSON.stringify({ baseImage, garments })).digest("hex");
 
+  const cached = getCachedResult(key);
+  if (cached) {
+    res.json({ image: cached.image });
+    return;
+  }
+
   let pending = inFlight.get(key);
   if (!pending) {
-    pending = runTryOn(apiKey, baseImage, garments).finally(() => inFlight.delete(key));
+    pending = runTryOn(apiKey, baseImage, garments)
+      .then((result) => {
+        if (result.ok) setCachedResult(key, result);
+        return result;
+      })
+      .finally(() => inFlight.delete(key));
     inFlight.set(key, pending);
   }
 
