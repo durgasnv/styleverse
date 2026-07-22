@@ -19,6 +19,7 @@ import {
   Upload,
   Download,
   RotateCcw,
+  ChevronsLeftRight,
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
@@ -47,8 +48,10 @@ export default function Canvas() {
   const {
     baseImage,
     resultImage,
+    fitNote,
     isGenerating,
     generateError,
+    recentResults,
     imgRef: tryOnImgRef,
     selectPresetModel,
     selectUploadedPhoto,
@@ -272,6 +275,30 @@ export default function Canvas() {
     setTryOnImgAspect(null);
   }, [baseImage?.src]);
 
+  const [comparePos, setComparePos] = useState(50);
+  const compareContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setComparePos(50);
+  }, [resultImage]);
+
+  const updateComparePos = (clientX: number) => {
+    const rect = compareContainerRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const pct = ((clientX - rect.left) / rect.width) * 100;
+    setComparePos(Math.min(100, Math.max(0, pct)));
+  };
+
+  const handleComparePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    e.currentTarget.setPointerCapture(e.pointerId);
+    updateComparePos(e.clientX);
+  };
+
+  const handleComparePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.buttons !== 1) return;
+    updateComparePos(e.clientX);
+  };
+
   const handleGenerateTryOn = () => {
     if (uniqueProducts.length > MAX_TRYON_GARMENTS) {
       toast({
@@ -477,15 +504,58 @@ export default function Canvas() {
                 )}
 
                 <div className="flex-1 relative overflow-hidden flex items-center justify-center p-4">
-                  <div className="relative h-full max-h-full bg-white shadow-sm" style={{ aspectRatio: tryOnImgAspect ?? 3 / 4 }}>
-                    <img
-                      ref={tryOnImgRef}
-                      src={resultImage ?? baseImage.src}
-                      alt={resultImage ? 'AI-generated try-on result' : ''}
-                      className="w-full h-full object-contain"
-                      crossOrigin={resultImage ? undefined : 'anonymous'}
-                      onLoad={handleTryOnImageLoad}
-                    />
+                  <div
+                    ref={compareContainerRef}
+                    className="relative h-full max-h-full bg-white shadow-sm select-none"
+                    style={{ aspectRatio: tryOnImgAspect ?? 3 / 4 }}
+                  >
+                    {resultImage ? (
+                      <>
+                        <img
+                          ref={tryOnImgRef}
+                          src={resultImage}
+                          alt="AI-generated try-on result"
+                          className="absolute inset-0 w-full h-full object-contain"
+                          onLoad={handleTryOnImageLoad}
+                        />
+                        <div
+                          className="absolute inset-0 overflow-hidden"
+                          style={{ clipPath: `inset(0 ${100 - comparePos}% 0 0)` }}
+                        >
+                          <img
+                            src={baseImage.src}
+                            alt="Original photo"
+                            className="absolute inset-0 w-full h-full object-contain"
+                          />
+                        </div>
+                        <div
+                          onPointerDown={handleComparePointerDown}
+                          onPointerMove={handleComparePointerMove}
+                          className="absolute inset-y-0 w-6 -ml-3 flex items-center justify-center cursor-ew-resize touch-none z-10"
+                          style={{ left: `${comparePos}%` }}
+                        >
+                          <div className="absolute inset-y-0 w-0.5 bg-white shadow" />
+                          <div className="w-9 h-9 rounded-full bg-white shadow-md flex items-center justify-center">
+                            <ChevronsLeftRight className="w-4 h-4 text-[#282C3F]" />
+                          </div>
+                        </div>
+                        <span className="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wide bg-black/60 text-white px-2 py-0.5 rounded">
+                          Before
+                        </span>
+                        <span className="absolute top-2 right-2 text-[10px] font-bold uppercase tracking-wide bg-black/60 text-white px-2 py-0.5 rounded">
+                          After
+                        </span>
+                      </>
+                    ) : (
+                      <img
+                        ref={tryOnImgRef}
+                        src={baseImage.src}
+                        alt=""
+                        className="w-full h-full object-contain"
+                        crossOrigin="anonymous"
+                        onLoad={handleTryOnImageLoad}
+                      />
+                    )}
 
                     {isGenerating && (
                       <div className="absolute inset-0 bg-white/70 flex flex-col items-center justify-center gap-2 z-20">
@@ -495,6 +565,41 @@ export default function Canvas() {
                     )}
                   </div>
                 </div>
+
+                {!isGenerating && resultImage && fitNote && (
+                  <div className="border-t bg-pink-50 px-4 py-3 shrink-0">
+                    <p className="text-xs font-bold text-[#FF3F6C] uppercase tracking-wide mb-1">AI Fit Note</p>
+                    <p className="text-sm text-[#282C3F]">{fitNote}</p>
+                    <button
+                      onClick={checkWithCompanion}
+                      className="text-xs font-bold text-indigo-600 hover:underline mt-2 inline-flex items-center gap-1"
+                    >
+                      <Wand2 className="w-3 h-3" /> Ask the Style Companion for more advice
+                    </button>
+                  </div>
+                )}
+
+                {recentResults.length > 0 && (
+                  <div className="border-t bg-white px-4 py-3 shrink-0">
+                    <p className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Recently tried on</p>
+                    <div className="flex gap-3 overflow-x-auto pb-1">
+                      {recentResults.map((r) => (
+                        <a
+                          key={r.timestamp}
+                          href={r.image}
+                          download="try-on.png"
+                          title="Download this look"
+                          className="relative shrink-0 w-16 h-20 rounded border bg-gray-100 overflow-hidden block group"
+                        >
+                          <img src={r.image} alt="Past try-on result" className="w-full h-full object-cover" />
+                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
+                            <Download className="w-4 h-4 text-white opacity-0 group-hover:opacity-100" />
+                          </div>
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 {/* Selected garments tray */}
                 <div className="border-t bg-white px-4 py-3 shrink-0">

@@ -36,7 +36,9 @@ interface OpenRouterImageContent {
   image_url: { url: string };
 }
 
-type TryOnResult = { ok: true; image: string } | { ok: false; status: number; error: string; details?: string };
+type TryOnResult =
+  | { ok: true; image: string; fitNote?: string }
+  | { ok: false; status: number; error: string; details?: string };
 
 // Keyed by a hash of the exact request payload, so a double-fired request
 // for the *same* outfit on the *same* model reuses the in-flight call
@@ -68,7 +70,7 @@ function setCachedResult(key: string, result: Extract<TryOnResult, { ok: true }>
 
 async function runTryOn(apiKey: string, baseImage: string, garments: TryOnGarment[]): Promise<TryOnResult> {
   const garmentNames = garments.map((g) => g.name).join(", ");
-  const instructions = `You are a virtual try-on image generator. The first image is a photo of a person. The following image(s) are product photos of clothing/accessory items: ${garmentNames}. Generate a single photorealistic image of the same person wearing all of these items together, combined naturally into one outfit. Preserve the person's face, body shape, pose, and the original background exactly. Match lighting and perspective so the garments look naturally worn, not pasted on.`;
+  const instructions = `You are a virtual try-on image generator. The first image is a photo of a person. The following image(s) are product photos of clothing/accessory items: ${garmentNames}. Generate a single photorealistic image of the same person wearing all of these items together, combined naturally into one outfit. Preserve the person's face, body shape, pose, and the original background exactly. Match lighting and perspective so the garments look naturally worn, not pasted on. Alongside the image, write a short (2-3 sentence) fit note in plain text: say whether the fit looks true-to-size, loose, or snug on this body shape, and if it's not a great fit, suggest one concrete alternative (a different size, cut, or style) that would work better. Be constructive, never body-shaming.`;
 
   const content: (OpenRouterImageContent | { type: "text"; text: string })[] = [
     { type: "text", text: instructions },
@@ -103,15 +105,17 @@ async function runTryOn(apiKey: string, baseImage: string, garments: TryOnGarmen
       }
 
       const data = (await openRouterResponse.json()) as {
-        choices?: { message?: { images?: { image_url?: { url?: string } }[] } }[];
+        choices?: { message?: { content?: string | null; images?: { image_url?: { url?: string } }[] } }[];
       };
-      const image = data.choices?.[0]?.message?.images?.[0]?.image_url?.url;
+      const message = data.choices?.[0]?.message;
+      const image = message?.images?.[0]?.image_url?.url;
       if (!image) {
         failures.push(`${model}: no image in response`);
         continue;
       }
+      const fitNote = message?.content?.trim() || undefined;
 
-      return { ok: true, image };
+      return { ok: true, image, fitNote };
     } catch (err) {
       const isTimeout = err instanceof Error && (err.name === "AbortError" || err.name === "TimeoutError");
       failures.push(`${model}: ${isTimeout ? `timed out after ${REQUEST_TIMEOUT_MS / 1000}s` : (err as Error).message}`);
@@ -152,7 +156,7 @@ router.post("/tryon/generate", createRateLimiter({ windowMs: 5 * 60_000, max: 8 
 
   const cached = getCachedResult(key);
   if (cached) {
-    res.json({ image: cached.image });
+    res.json({ image: cached.image, fitNote: cached.fitNote });
     return;
   }
 
@@ -169,7 +173,7 @@ router.post("/tryon/generate", createRateLimiter({ windowMs: 5 * 60_000, max: 8 
 
   const result = await pending;
   if (result.ok) {
-    res.json({ image: result.image });
+    res.json({ image: result.image, fitNote: result.fitNote });
   } else {
     res.status(result.status).json({ error: result.error, details: result.details });
   }
