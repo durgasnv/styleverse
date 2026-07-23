@@ -83,7 +83,7 @@ export default function Home() {
               <Sparkles className="h-5 w-5" />
             </div>
             <div>
-              <h3 className="font-heading font-bold text-sm tracking-wide">Enter StyleVerse Studio</h3>
+              <h3 className="font-heading font-bold text-sm tracking-wide">Enter Style Hubs</h3>
               <p className="text-xs text-indigo-200 hidden sm:block">Curate looks, join challenges, explore hubs.</p>
             </div>
           </div>
