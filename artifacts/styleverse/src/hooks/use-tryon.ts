@@ -1,11 +1,13 @@
 import { useCallback, useRef, useState } from 'react';
 import { toDataUrl } from '@/lib/image-utils';
+import type { GarmentRegion } from '@/lib/garment-region';
 
 export type BaseImage = { type: 'preset'; id: string; src: string } | { type: 'upload'; src: string };
 
 export interface TryOnGarment {
   name: string;
   image: string;
+  region?: GarmentRegion;
 }
 
 // Keep in sync with MAX_GARMENTS in artifacts/api-server/src/routes/tryon.ts
@@ -96,7 +98,7 @@ export function useTryOn() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             baseImage: baseDataUrl,
-            garments: capped.map((g, i) => ({ name: g.name, image: garmentDataUrls[i] })),
+            garments: capped.map((g, i) => ({ name: g.name, image: garmentDataUrls[i], region: g.region })),
           }),
         });
 

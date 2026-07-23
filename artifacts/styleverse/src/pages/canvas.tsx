@@ -4,6 +4,7 @@ import { useProducts } from '../hooks/use-catalog';
 import { useStore } from '../hooks/use-store';
 import { useLocation, useSearch } from 'wouter';
 import { useTryOn, MAX_TRYON_GARMENTS } from '../hooks/use-tryon';
+import { subcategoryToRegion } from '../lib/garment-region';
 import { PRESET_MODELS } from '../data/preset-models';
 import { fileToResizedDataUrl } from '../lib/image-utils';
 import { Button } from '@/components/ui/button';
@@ -185,6 +186,31 @@ export default function Canvas() {
     setItems(items.filter(i => i.id !== id));
   };
 
+  // Lets you drag a new catalog item straight onto the try-on stage (image
+  // area or the selected-items tray) to add it to the outfit without leaving
+  // try-on mode — unlike handleDrop, there's no canvas position to compute,
+  // items here aren't placed, just added to the outfit set.
+  const handleDropOnTryOnStage = (e: React.DragEvent) => {
+    e.preventDefault();
+    if (!draggedItem?.isFromCatalog) {
+      setDraggedItem(null);
+      return;
+    }
+    const product = allProducts.find(p => p.id === draggedItem.id);
+    if (product) {
+      const newItem: CanvasItem = {
+        id: `canvas_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
+        product,
+        x: 60,
+        y: 60,
+        z: highestZ + 1,
+      };
+      setHighestZ(highestZ + 1);
+      setItems(prev => [...prev, newItem]);
+    }
+    setDraggedItem(null);
+  };
+
   const handleSaveLook = async () => {
     if (items.length === 0) {
       toast({ title: "Canvas is empty", description: "Add some items before saving.", variant: "destructive" });
@@ -306,7 +332,7 @@ export default function Canvas() {
         description: "Remove some items from the canvas to try on the rest.",
       });
     }
-    generateTryOn(uniqueProducts.map(p => ({ name: `${p.brand} ${p.name}`, image: p.images[0] })));
+    generateTryOn(uniqueProducts.map(p => ({ name: `${p.brand} ${p.name}`, image: p.images[0], region: subcategoryToRegion(p.subcategory) })));
   };
 
   const handleDownloadTryOn = () => {
@@ -375,8 +401,8 @@ export default function Canvas() {
       </div>
 
       <div className="flex flex-1 overflow-hidden relative">
-        {/* Left Catalog Panel */}
-        <div className="w-1/3 md:w-80 border-r bg-gray-50 flex flex-col shrink-0">
+        {/* Left Catalog Panel — narrower in try-on mode so the result image gets more room */}
+        <div className={`${mode === 'tryon' ? 'w-1/4 md:w-56' : 'w-1/3 md:w-80'} border-r bg-gray-50 flex flex-col shrink-0 transition-[width]`}>
           <div className="p-3 border-b bg-white space-y-3 shrink-0">
             <div className="relative">
               <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -404,9 +430,9 @@ export default function Canvas() {
             {filteredProducts.map(product => (
               <div
                 key={product.id}
-                draggable={mode === 'canvas'}
+                draggable
                 onDragStart={(e) => handleDragStartCatalog(e, product)}
-                className={`bg-white rounded border border-transparent hover:border-[#FF3F6C] p-1 group aspect-[3/4] flex flex-col ${mode === 'canvas' ? 'cursor-grab active:cursor-grabbing' : ''}`}
+                className="bg-white rounded border border-transparent hover:border-[#FF3F6C] p-1 group aspect-[3/4] flex flex-col cursor-grab active:cursor-grabbing"
               >
                 <div className="flex-1 bg-gray-100 rounded-sm overflow-hidden pointer-events-none">
                   <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover" draggable={false} />
@@ -471,7 +497,11 @@ export default function Canvas() {
           </div>
         ) : (
           /* Try On stage — replaces the canvas area while active */
-          <div className="flex-1 bg-[#FAFAFA] relative overflow-hidden flex flex-col">
+          <div
+            className="flex-1 bg-[#FAFAFA] relative overflow-hidden flex flex-col"
+            onDragOver={handleDragOver}
+            onDrop={handleDropOnTryOnStage}
+          >
             {!baseImage ? (
               <div className="flex-1 overflow-y-auto p-6 flex flex-col items-center justify-center text-center">
                 <h2 className="font-heading font-black text-lg text-[#282C3F] mb-2">Choose a model</h2>
@@ -503,10 +533,10 @@ export default function Canvas() {
                   </div>
                 )}
 
-                <div className="flex-1 relative overflow-hidden flex items-center justify-center p-4">
+                <div className="flex-1 relative overflow-hidden flex items-center justify-center p-2">
                   <div
                     ref={compareContainerRef}
-                    className="relative h-full max-h-full bg-white shadow-sm select-none"
+                    className="relative h-full max-h-full max-w-full bg-white shadow-sm select-none"
                     style={{ aspectRatio: tryOnImgAspect ?? 3 / 4 }}
                   >
                     {resultImage ? (
@@ -566,71 +596,78 @@ export default function Canvas() {
                   </div>
                 </div>
 
-                {!isGenerating && resultImage && fitNote && (
-                  <div className="border-t bg-pink-50 px-4 py-3 shrink-0">
-                    <p className="text-xs font-bold text-[#FF3F6C] uppercase tracking-wide mb-1">AI Fit Note</p>
-                    <p className="text-sm text-[#282C3F]">{fitNote}</p>
-                    <button
-                      onClick={checkWithCompanion}
-                      className="text-xs font-bold text-indigo-600 hover:underline mt-2 inline-flex items-center gap-1"
-                    >
-                      <Wand2 className="w-3 h-3" /> Ask the Style Companion for more advice
-                    </button>
-                  </div>
-                )}
-
-                {recentResults.length > 0 && (
-                  <div className="border-t bg-white px-4 py-3 shrink-0">
-                    <p className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Recently tried on</p>
-                    <div className="flex gap-3 overflow-x-auto pb-1">
-                      {recentResults.map((r) => (
-                        <a
-                          key={r.timestamp}
-                          href={r.image}
-                          download="try-on.png"
-                          title="Download this look"
-                          className="relative shrink-0 w-16 h-20 rounded border bg-gray-100 overflow-hidden block group"
-                        >
-                          <img src={r.image} alt="Past try-on result" className="w-full h-full object-cover" />
-                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
-                            <Download className="w-4 h-4 text-white opacity-0 group-hover:opacity-100" />
-                          </div>
-                        </a>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Selected garments tray */}
-                <div className="border-t bg-white px-4 py-3 shrink-0">
-                  <p className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">
-                    Selected items {uniqueProducts.length > 0 && `(${uniqueProducts.length})`}
-                    {uniqueProducts.length > MAX_TRYON_GARMENTS && ` — only first ${MAX_TRYON_GARMENTS} used`}
-                  </p>
-                  {uniqueProducts.length === 0 ? (
-                    <p className="text-sm text-gray-400">Drag items onto the canvas to try them on.</p>
-                  ) : (
-                    <div className="flex gap-3 overflow-x-auto pb-1">
-                      {uniqueProducts.map(product => (
-                        <div key={product.id} className="relative shrink-0 w-16 group">
-                          <div className="w-16 h-20 rounded border bg-gray-100 overflow-hidden">
-                            <img
-                              src={product.images[0]}
-                              alt={product.name}
-                              className="w-full h-full object-cover"
-                              draggable={false}
-                            />
-                          </div>
-                          <button
-                            onClick={() => setItems(prev => prev.filter(i => i.product.id !== product.id))}
-                            className="absolute -top-1.5 -right-1.5 bg-white rounded-full p-1 shadow-md border text-gray-400 hover:text-red-500 transition-colors"
-                          >
-                            <Trash2 className="w-3 h-3" />
-                          </button>
-                        </div>
-                      ))}
+                {/* Capped so these panels can never crowd out the result image above —
+                    the image area keeps at least ~65% of the stage height regardless
+                    of how much fit-note/history/tray content stacks up. */}
+                <div className="shrink-0 max-h-[26vh] overflow-y-auto">
+                  {!isGenerating && resultImage && fitNote && (
+                    <div className="border-t bg-pink-50 px-4 py-3">
+                      <p className="text-xs font-bold text-[#FF3F6C] uppercase tracking-wide mb-1">AI Fit Note</p>
+                      <p className="text-sm text-[#282C3F]">{fitNote}</p>
+                      <button
+                        onClick={checkWithCompanion}
+                        className="text-xs font-bold text-indigo-600 hover:underline mt-2 inline-flex items-center gap-1"
+                      >
+                        <Wand2 className="w-3 h-3" /> Ask the Style Companion for more advice
+                      </button>
                     </div>
                   )}
+
+                  {recentResults.length > 0 && (
+                    <div className="border-t bg-white px-4 py-3">
+                      <p className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Recently tried on</p>
+                      <div className="flex gap-3 overflow-x-auto pb-1">
+                        {recentResults.map((r) => (
+                          <a
+                            key={r.timestamp}
+                            href={r.image}
+                            download="try-on.png"
+                            title="Download this look"
+                            className="relative shrink-0 w-16 h-20 rounded border bg-gray-100 overflow-hidden block group"
+                          >
+                            <img src={r.image} alt="Past try-on result" className="w-full h-full object-cover" />
+                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
+                              <Download className="w-4 h-4 text-white opacity-0 group-hover:opacity-100" />
+                            </div>
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Selected garments tray — also a drop target (see the stage's
+                      onDrop above) so dragging a new item here adds it to the
+                      outfit without leaving try-on mode. */}
+                  <div className="border-t bg-white px-4 py-3">
+                    <p className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">
+                      Selected items {uniqueProducts.length > 0 && `(${uniqueProducts.length})`}
+                      {uniqueProducts.length > MAX_TRYON_GARMENTS && ` — only first ${MAX_TRYON_GARMENTS} used`}
+                    </p>
+                    {uniqueProducts.length === 0 ? (
+                      <p className="text-sm text-gray-400">Drag items here to try them on.</p>
+                    ) : (
+                      <div className="flex gap-3 overflow-x-auto pb-1">
+                        {uniqueProducts.map(product => (
+                          <div key={product.id} className="relative shrink-0 w-16 group">
+                            <div className="w-16 h-20 rounded border bg-gray-100 overflow-hidden">
+                              <img
+                                src={product.images[0]}
+                                alt={product.name}
+                                className="w-full h-full object-cover"
+                                draggable={false}
+                              />
+                            </div>
+                            <button
+                              onClick={() => setItems(prev => prev.filter(i => i.product.id !== product.id))}
+                              className="absolute -top-1.5 -right-1.5 bg-white rounded-full p-1 shadow-md border text-gray-400 hover:text-red-500 transition-colors"
+                            >
+                              <Trash2 className="w-3 h-3" />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </>
             )}
