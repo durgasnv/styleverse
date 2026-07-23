@@ -175,6 +175,9 @@ export default function ProductDetail() {
                 <Button size="sm" className="h-8 bg-[#282C3F] hover:bg-black" onClick={() => setLocation(`/canvas?add=${product.id}`)}>
                   Open in Canvas
                 </Button>
+                <Button size="sm" className="h-8 bg-[#FF3F6C] hover:bg-[#d93059]" onClick={() => setLocation(`/canvas?add=${product.id}&tryon=1`)}>
+                  Try It On
+                </Button>
               </div>
             </div>
           </div>
