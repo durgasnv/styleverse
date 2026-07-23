@@ -3,7 +3,7 @@ import { useRoute, Link, useLocation } from 'wouter';
 import { useProducts } from '../hooks/use-catalog';
 import { useStore } from '../hooks/use-store';
 import { Button } from '@/components/ui/button';
-import { Star, Heart, ShoppingBag, Truck, Undo2, BadgePercent, Sparkles, FolderHeart } from 'lucide-react';
+import { Star, Heart, ShoppingBag, Truck, Undo2, BadgePercent, FolderHeart } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { SaveToCollectionDialog } from '../components/SaveToCollectionDialog';
@@ -164,9 +164,6 @@ export default function ProductDetail() {
           <div className="mt-4 border border-[#FF3F6C]/20 bg-pink-50/50 rounded-md p-4">
             <div className="flex items-start justify-between">
               <div>
-                <h4 className="font-bold text-sm text-[#282C3F] flex items-center gap-1">
-                  <Sparkles className="h-4 w-4 text-[#FF3F6C]" /> StyleVerse Integration
-                </h4>
                 <p className="text-xs text-gray-600 mt-1">Design an outfit with this item or save it for later.</p>
               </div>
               <div className="flex gap-2">
