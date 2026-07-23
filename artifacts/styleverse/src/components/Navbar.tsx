@@ -92,7 +92,7 @@ export function Navbar() {
             href="/canvas"
             className="px-3 xl:px-4 h-full flex items-center gap-1 text-sm font-bold text-[#282C3F] hover:border-b-4 hover:border-[#FF3F6C] border-b-4 border-transparent uppercase transition-colors relative"
           >
-            STUDIO
+            STYLE CANVAS
             <span className="absolute top-2.5 -right-1 bg-[#FF3F6C] text-white text-[9px] font-black px-1.5 py-0.5 rounded-sm leading-none">NEW</span>
           </Link>
         </nav>
