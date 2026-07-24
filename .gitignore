@@ -50,3 +50,6 @@ Thumbs.db
 
 # Local secrets — see .env.example
 .env
+
+# Brainstorming visual companion
+.superpowers/
