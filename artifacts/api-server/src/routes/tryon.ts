@@ -195,7 +195,7 @@ The following items should be added: ${garmentNames}, each described below with 
   }
   content.push({
     type: "text",
-    text: `Final reminder before you generate: the output's face, hairstyle, skin tone, and body must exactly match the attached photo, not any model shown in a garment reference photo above (if any). Do not output the identity of any such model. If a dress is among the items above, double-check that none of the person's original leggings, tights, or trousers remain visible below the dress hem — this is a common failure mode to avoid.`,
+    text: `Final reminder before you generate: the output's face, hairstyle, skin tone, and body must exactly match the attached photo, not any model shown in a garment reference photo above (if any). Do not output the identity of any such model. Body size and proportions specifically must stay exactly as in the attached photo — do not slim down, bulk up, or otherwise resize the body toward a more "average" build; this is a common failure mode to avoid, and the whole point of this tool is to preview fit on THIS body, unchanged. If a dress is among the items above, double-check that none of the person's original leggings, tights, or trousers remain visible below the dress hem — this is also a common failure mode to avoid.`,
   });
 
   const failures: string[] = [];
