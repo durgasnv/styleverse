@@ -59,19 +59,20 @@ interface ChallengeEntry {
 
 ## API endpoints (`api-server/src/routes/challenges.ts`)
 
-- `GET /challenges` — existing, unchanged.
-- `GET /challenges/:id` — NEW. Single challenge with entries, `votedBy` stripped.
+- `GET /challenges` — existing, extended (schema only — see Data model changes above). Hardened during final review to `safeParse` each document individually and skip/log any that fail validation, rather than one legacy un-reseeded document 500ing the whole endpoint.
 - `POST /challenges/:id/entries` — NEW. Body `{ productIds: string[], creatorName: string, creatorId: string }`. Looks up each product's current price from the `Product` collection to compute `totalPrice` server-side (never trusts a client-sent total). Appends the new entry, returns it.
-- `POST /challenges/:id/entries/:entryId/vote` — NEW. Body `{ voterId: string }`. If `voterId` is already in that entry's `votedBy`, returns 409. Otherwise atomically `$inc`s `voteCount` and `$addToSet`s into `votedBy`, returns the updated `voteCount`.
+- `POST /challenges/:id/entries/:entryId/vote` — NEW. Body `{ voterId: string }`. If `voterId` is already in that entry's `votedBy`, returns 409. Otherwise atomically `$inc`s `voteCount` and `$addToSet`s into `votedBy` — scoped to the same array element via `$elemMatch` in the filter and `arrayFilters` in the update, so this is correct per-entry (not per-challenge) voting — and returns the updated `voteCount`.
 
-All three follow the existing OpenAPI-first pattern: schemas added to `lib/api-spec/openapi.yaml`, codegen run, responses validated through the generated Zod schemas server-side (same as the current `GET /challenges` handler).
+**Deviation from the original plan:** no dedicated `GET /challenges/:id` was built. `GET /challenges` already returns full entries for every challenge, so the detail page instead reuses the existing list query and derives the single challenge client-side (`useChallenge(id)` in `use-catalog.ts`, filtering `useChallenges()`'s result by id). This was a deliberate simplification made during implementation — at this challenge count, a second endpoint bought nothing — not an oversight; flagged as worth documenting here so a future reader doesn't go looking for the missing route.
+
+The list endpoint follows the existing OpenAPI-first pattern (schema in `lib/api-spec/openapi.yaml`, codegen run, response validated server-side through the generated Zod schema). The two mutations do not — see Frontend below.
 
 ## Frontend
 
 **Routing** (`App.tsx`): add `<Route path="/challenges/:id" component={ChallengeDetail} />`. Submission detail is a modal (component state), not a route — matches the approved mockup.
 
 **API client split** (deliberate inconsistency, matching existing precedent):
-- `GET /challenges` and `GET /challenges/:id` go through the generated OpenAPI client (`useListChallenges`, new `useGetChallenge`), same as today.
+- `GET /challenges` goes through the generated OpenAPI client (`useListChallenges`), same as today. The detail page reuses this same query rather than a second `useGetChallenge` hook (see the deviation noted above).
 - The two mutations (`POST .../entries`, `POST .../vote`) are hand-written fetch wrappers in a new `lib/challenges-api.ts`, plus mutation hooks in a new `hooks/use-challenge-actions.ts` using `useMutation` + `queryClient.invalidateQueries`. This mirrors the existing `lib/looks-api.ts` / `hooks/use-looks.ts` pattern used for looks and voting-room mutations, rather than re-running the OpenAPI codegen pipeline (which needs the Node 24 / pinned-pnpm dance documented in the backend migration notes) for two endpoints.
 
 **Components**:
@@ -87,3 +88,5 @@ All three follow the existing OpenAPI-first pattern: schemas added to `lib/api-s
 ## Testing
 
 No automated test infra exists in this repo. Verification is manual: launch the app via the `run` skill, submit a look to a challenge, vote on an entry, refresh to confirm the vote and submission persisted server-side (not just in local state), and confirm a second vote from the same identity is rejected.
+
+**Not yet done, required before this serves real traffic:** the live MongoDB `.env` was unreachable in the implementation environment (a OneDrive cloud-only placeholder file), so the manual verification above was never actually run, and the database was never reseeded with the new schema fields. This is a hard release-order dependency, not just a nice-to-have check: the `GET /challenges` handler (hardened during final review to `safeParse` per-document) will silently drop any still-un-reseeded challenge document rather than crash, but the app won't show real data until the reseed runs. **Before merging or deploying:** run `pnpm --filter @workspace/scripts run seed-mongo` against the real `MONGODB_URI`, then complete the manual verification pass described above.
