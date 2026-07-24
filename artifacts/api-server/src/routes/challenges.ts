@@ -76,14 +76,16 @@ router.post("/challenges/:id/entries/:entryId/vote", async (req, res) => {
   const updated = await ChallengeModel.findOneAndUpdate(
     {
       id: req.params.id,
-      "entries.id": req.params.entryId,
-      "entries.votedBy": { $ne: voterId },
+      entries: { $elemMatch: { id: req.params.entryId, votedBy: { $ne: voterId } } },
     },
     {
-      $inc: { "entries.$.voteCount": 1 },
-      $addToSet: { "entries.$.votedBy": voterId },
+      $inc: { "entries.$[entry].voteCount": 1 },
+      $addToSet: { "entries.$[entry].votedBy": voterId },
     },
-    { new: true },
+    {
+      arrayFilters: [{ "entry.id": req.params.entryId }],
+      new: true,
+    },
   ).lean();
 
   if (!updated) {
