@@ -21,6 +21,7 @@ import {
   Download,
   RotateCcw,
   ChevronsLeftRight,
+  ChevronLeft,
   Maximize2,
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -350,6 +351,7 @@ export default function Canvas() {
   };
 
   const [lightboxResult, setLightboxResult] = useState<RecentTryOnResult | null>(null);
+  const [lightboxFromGallery, setLightboxFromGallery] = useState(false);
   const [showAllResults, setShowAllResults] = useState(false);
 
   return (
@@ -641,7 +643,10 @@ export default function Canvas() {
                           <button
                             key={r.timestamp}
                             type="button"
-                            onClick={() => setLightboxResult(r)}
+                            onClick={() => {
+                              setLightboxFromGallery(false);
+                              setLightboxResult(r);
+                            }}
                             title="View this look"
                             className="relative shrink-0 w-16 h-24 rounded border bg-gray-100 overflow-hidden block group"
                           >
@@ -708,6 +713,7 @@ export default function Canvas() {
                 type="button"
                 onClick={() => {
                   setShowAllResults(false);
+                  setLightboxFromGallery(true);
                   setLightboxResult(r);
                 }}
                 title="View this look"
@@ -733,13 +739,27 @@ export default function Canvas() {
                 alt="Past try-on result, full size"
                 className="max-h-[75vh] w-auto rounded object-contain"
               />
-              <Button
-                size="sm"
-                className="bg-white text-[#282C3F] hover:bg-gray-200"
-                onClick={() => downloadImage(lightboxResult.image)}
-              >
-                <Download className="w-4 h-4 mr-2" /> Download
-              </Button>
+              <div className="flex gap-2">
+                {lightboxFromGallery && (
+                  <Button
+                    size="sm"
+                    className="w-32 justify-center bg-white text-[#282C3F] hover:bg-gray-200"
+                    onClick={() => {
+                      setLightboxResult(null);
+                      setShowAllResults(true);
+                    }}
+                  >
+                    <ChevronLeft className="w-4 h-4 mr-2" /> Back
+                  </Button>
+                )}
+                <Button
+                  size="sm"
+                  className="w-32 justify-center bg-white text-[#282C3F] hover:bg-gray-200"
+                  onClick={() => downloadImage(lightboxResult.image)}
+                >
+                  <Download className="w-4 h-4 mr-2" /> Download
+                </Button>
+              </div>
             </div>
           )}
         </DialogContent>
