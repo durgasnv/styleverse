@@ -3,7 +3,7 @@ import type { Product } from '../data/mock-data';
 import { useProducts } from '../hooks/use-catalog';
 import { useStore } from '../hooks/use-store';
 import { useLocation, useSearch } from 'wouter';
-import { useTryOn, MAX_TRYON_GARMENTS } from '../hooks/use-tryon';
+import { useTryOn, MAX_TRYON_GARMENTS, type RecentTryOnResult } from '../hooks/use-tryon';
 import { subcategoryToRegion } from '../lib/garment-region';
 import { PRESET_MODELS } from '../data/preset-models';
 import { fileToResizedDataUrl } from '../lib/image-utils';
@@ -21,8 +21,10 @@ import {
   Download,
   RotateCcw,
   ChevronsLeftRight,
+  Maximize2,
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/hooks/use-toast';
 import { createVotingRoom } from '../lib/voting-api';
 import { useIdentity } from '../hooks/use-identity';
@@ -37,6 +39,13 @@ interface CanvasItem {
 }
 
 type StudioMode = 'canvas' | 'tryon';
+
+function downloadImage(dataUrl: string) {
+  const a = document.createElement('a');
+  a.href = dataUrl;
+  a.download = 'try-on.png';
+  a.click();
+}
 
 export default function Canvas() {
   const { addToBag } = useStore();
@@ -337,11 +346,11 @@ export default function Canvas() {
 
   const handleDownloadTryOn = () => {
     if (!resultImage) return;
-    const a = document.createElement('a');
-    a.href = resultImage;
-    a.download = 'try-on.png';
-    a.click();
+    downloadImage(resultImage);
   };
+
+  const [lightboxResult, setLightboxResult] = useState<RecentTryOnResult | null>(null);
+  const [showAllResults, setShowAllResults] = useState(false);
 
   return (
     <div className="flex flex-col h-[calc(100vh-64px)] overflow-hidden">
@@ -615,21 +624,32 @@ export default function Canvas() {
 
                   {recentResults.length > 0 && (
                     <div className="border-t bg-white px-4 py-3">
-                      <p className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Recently tried on</p>
+                      <div className="flex items-center justify-between mb-2">
+                        <p className="text-xs font-bold text-gray-500 uppercase tracking-wide">Recently tried on</p>
+                        {recentResults.length > 1 && (
+                          <button
+                            type="button"
+                            onClick={() => setShowAllResults(true)}
+                            className="text-xs font-bold text-[#FF3F6C] hover:underline"
+                          >
+                            View all
+                          </button>
+                        )}
+                      </div>
                       <div className="flex gap-3 overflow-x-auto pb-1">
                         {recentResults.map((r) => (
-                          <a
+                          <button
                             key={r.timestamp}
-                            href={r.image}
-                            download="try-on.png"
-                            title="Download this look"
-                            className="relative shrink-0 w-16 h-20 rounded border bg-gray-100 overflow-hidden block group"
+                            type="button"
+                            onClick={() => setLightboxResult(r)}
+                            title="View this look"
+                            className="relative shrink-0 w-16 h-24 rounded border bg-gray-100 overflow-hidden block group"
                           >
                             <img src={r.image} alt="Past try-on result" className="w-full h-full object-cover" />
                             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
-                              <Download className="w-4 h-4 text-white opacity-0 group-hover:opacity-100" />
+                              <Maximize2 className="w-4 h-4 text-white opacity-0 group-hover:opacity-100" />
                             </div>
-                          </a>
+                          </button>
                         ))}
                       </div>
                     </div>
@@ -674,6 +694,56 @@ export default function Canvas() {
           </div>
         )}
       </div>
+
+      <Dialog open={showAllResults} onOpenChange={setShowAllResults}>
+        <DialogContent className="max-w-3xl max-h-[85vh] overflow-y-auto">
+          <DialogTitle>All your try-ons</DialogTitle>
+          <div
+            className="grid gap-3 pt-1"
+            style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))' }}
+          >
+            {recentResults.map((r) => (
+              <button
+                key={r.timestamp}
+                type="button"
+                onClick={() => {
+                  setShowAllResults(false);
+                  setLightboxResult(r);
+                }}
+                title="View this look"
+                className="relative aspect-[2/3] rounded border bg-gray-100 overflow-hidden block group"
+              >
+                <img src={r.image} alt="Past try-on result" className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
+                  <Maximize2 className="w-5 h-5 text-white opacity-0 group-hover:opacity-100" />
+                </div>
+              </button>
+            ))}
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={!!lightboxResult} onOpenChange={(open) => !open && setLightboxResult(null)}>
+        <DialogContent className="max-w-2xl p-2 bg-black/95 border-none">
+          {lightboxResult && (
+            <div className="flex flex-col items-center gap-3">
+              <DialogTitle className="sr-only">Try-on result, full size</DialogTitle>
+              <img
+                src={lightboxResult.image}
+                alt="Past try-on result, full size"
+                className="max-h-[75vh] w-auto rounded object-contain"
+              />
+              <Button
+                size="sm"
+                className="bg-white text-[#282C3F] hover:bg-gray-200"
+                onClick={() => downloadImage(lightboxResult.image)}
+              >
+                <Download className="w-4 h-4 mr-2" /> Download
+              </Button>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
