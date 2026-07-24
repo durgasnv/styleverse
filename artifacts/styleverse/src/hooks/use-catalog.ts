@@ -15,3 +15,9 @@ export function useChallenges() {
   const { data, isLoading, error } = useListChallenges();
   return { challenges: (data ?? []) as Challenge[], isLoading, error };
 }
+
+export function useChallenge(id: string | undefined) {
+  const { challenges, isLoading, error } = useChallenges();
+  const challenge = challenges.find((c) => c.id === id);
+  return { challenge, isLoading, error };
+}
