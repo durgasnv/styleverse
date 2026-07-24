@@ -51,7 +51,7 @@ async function describeGarment(apiKey: string, garment: TryOnGarment): Promise<s
           content: [
             {
               type: "text",
-              text: "Describe ONLY the garment/accessory itself in this photo: its color(s), fabric/material look, cut, silhouette, pattern, and any notable design details (buttons, straps, hardware, prints, logos). This is catalog photography that may show a model wearing it — completely ignore and omit that person; do not describe their face, hair, skin, body, pose, or background, and do not mention that a person is present at all. Answer in 1-2 dense sentences, no preamble.",
+              text: "Describe ONLY the garment/accessory itself in this photo, precisely enough that someone could redraw it without seeing the photo. Cover, in order: (1) exact neckline/collar and strap style (e.g. strapless, halter, one-shoulder, crew neck, collared) — for tops/dresses always state this explicitly; (2) sleeve length if any (sleeveless, cap, short, 3/4, long); (3) garment length/hem (e.g. mini, above-knee, midi, maxi, ankle, cropped, full-length) — for dresses/skirts/bottoms always state this explicitly; (4) fit/silhouette (fitted, A-line, straight, flared, oversized, bodycon, wide-leg, etc.); (5) every distinct color present and roughly where each appears (e.g. 'white base with pink and green floral print scattered throughout', not just 'floral'); (6) fabric/material look; (7) any notable design details (buttons, straps, hardware, ruffles, prints, logos). This is catalog photography that may show a model wearing it — completely ignore and omit that person; do not describe their face, hair, skin, body, pose, or background, and do not mention that a person is present at all. Answer in 3-4 dense sentences covering all points above, no preamble.",
             },
             { type: "image_url", image_url: { url: garment.image } },
           ],
@@ -105,7 +105,7 @@ interface TryOnRequestBody {
 const REGION_INSTRUCTIONS: Record<GarmentRegion, string> = {
   top: "This is a top (shirt/tee/blouse/sweater). Completely remove and replace whatever the person is currently wearing on their upper body — no original collar, sleeves, or hem should remain visible underneath.",
   bottom: "This is a bottom (pants/jeans/skirt/shorts). Completely remove and replace whatever the person is currently wearing on their lower body — no original waistband or hem should remain visible underneath or peeking out.",
-  dress: "This is a dress. Completely remove and replace the person's entire current outfit (top and bottom) with this dress.",
+  dress: "This is a dress. Completely remove and replace the person's entire current outfit (top and bottom) with this dress — this includes any leggings, tights, trousers, or other legwear the person currently has on. Their legs below the dress hem must be bare skin (or hosiery this dress itself comes with), never the original pants poking out underneath.",
   outerwear: "This is an outerwear layer (jacket/blazer). Add it OVER the person's existing top rather than replacing it — the layer underneath should still be visible wherever the outerwear is open.",
   footwear: "This is footwear. Completely remove and replace whatever shoes the person is currently wearing.",
   accessory: "This is an accessory (bag/eyewear/headwear/jewellery). Add it naturally without removing or altering any existing clothing.",
@@ -195,7 +195,7 @@ The following items should be added: ${garmentNames}, each described below with 
   }
   content.push({
     type: "text",
-    text: `Final reminder before you generate: the output's face, hairstyle, skin tone, and body must exactly match the attached photo, not any model shown in a garment reference photo above (if any). Do not output the identity of any such model.`,
+    text: `Final reminder before you generate: the output's face, hairstyle, skin tone, and body must exactly match the attached photo, not any model shown in a garment reference photo above (if any). Do not output the identity of any such model. If a dress is among the items above, double-check that none of the person's original leggings, tights, or trousers remain visible below the dress hem — this is a common failure mode to avoid.`,
   });
 
   const failures: string[] = [];
