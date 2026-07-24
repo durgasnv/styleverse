@@ -22,6 +22,7 @@ import {
   RotateCcw,
   ChevronsLeftRight,
   ChevronLeft,
+  ChevronRight,
   Maximize2,
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -352,6 +353,9 @@ export default function Canvas() {
 
   const [lightboxResult, setLightboxResult] = useState<RecentTryOnResult | null>(null);
   const [lightboxFromGallery, setLightboxFromGallery] = useState(false);
+  const lightboxIndex = lightboxResult
+    ? recentResults.findIndex((r) => r.timestamp === lightboxResult.timestamp)
+    : -1;
   const [showAllResults, setShowAllResults] = useState(false);
 
   return (
@@ -638,7 +642,7 @@ export default function Canvas() {
                           </button>
                         )}
                       </div>
-                      <div className="flex gap-3 overflow-x-auto pb-1">
+                      <div className="flex gap-2">
                         {recentResults.map((r) => (
                           <button
                             key={r.timestamp}
@@ -648,7 +652,7 @@ export default function Canvas() {
                               setLightboxResult(r);
                             }}
                             title="View this look"
-                            className="relative shrink-0 w-16 h-24 rounded border bg-gray-100 overflow-hidden block group"
+                            className="relative flex-1 max-w-16 aspect-[2/3] rounded border bg-gray-100 overflow-hidden block group"
                           >
                             <img src={r.image} alt="Past try-on result" className="w-full h-full object-cover" />
                             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
@@ -734,11 +738,36 @@ export default function Canvas() {
           {lightboxResult && (
             <div className="flex flex-col items-center gap-3">
               <DialogTitle className="sr-only">Try-on result, full size</DialogTitle>
-              <img
-                src={lightboxResult.image}
-                alt="Past try-on result, full size"
-                className="max-h-[75vh] w-auto rounded object-contain"
-              />
+              <div className="relative w-full flex items-center justify-center">
+                {lightboxIndex > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => setLightboxResult(recentResults[lightboxIndex - 1])}
+                    title="Previous try-on"
+                    className="absolute left-1 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white rounded-full p-1.5"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+                )}
+                <img
+                  src={lightboxResult.image}
+                  alt="Past try-on result, full size"
+                  className="max-h-[75vh] w-auto rounded object-contain"
+                />
+                {lightboxIndex >= 0 && lightboxIndex < recentResults.length - 1 && (
+                  <button
+                    type="button"
+                    onClick={() => setLightboxResult(recentResults[lightboxIndex + 1])}
+                    title="Next try-on"
+                    className="absolute right-1 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white rounded-full p-1.5"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+                )}
+              </div>
+              {lightboxResult.fitNote && (
+                <p className="text-sm text-white/90 text-center max-w-md px-2">{lightboxResult.fitNote}</p>
+              )}
               <div className="flex gap-2">
                 {lightboxFromGallery && (
                   <Button
