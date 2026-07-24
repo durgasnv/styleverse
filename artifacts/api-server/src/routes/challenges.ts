@@ -1,13 +1,26 @@
 import { Router, type IRouter } from "express";
 import { randomUUID } from "node:crypto";
 import { ChallengeModel, ProductModel } from "@workspace/db";
-import { ListChallengesResponse } from "@workspace/api-zod";
+import { ListChallengesResponse, ListChallengesResponseItem } from "@workspace/api-zod";
+import { logger } from "../lib/logger";
 
 const router: IRouter = Router();
 
 router.get("/challenges", async (_req, res) => {
   const challenges = await ChallengeModel.find().select("-_id -entries.votedBy").lean();
-  res.json(ListChallengesResponse.parse(challenges));
+  // .lean() skips Mongoose schema defaults, so a document saved under an older
+  // schema version (missing a field this schema later made required) fails
+  // Zod validation. Parse per-document and skip/log any that don't validate,
+  // so one legacy document can't 500 the whole list.
+  const valid = challenges.flatMap((challenge) => {
+    const result = ListChallengesResponseItem.safeParse(challenge);
+    if (!result.success) {
+      logger.warn({ challengeId: (challenge as { id?: string }).id, issues: result.error.issues }, "Skipping malformed challenge document");
+      return [];
+    }
+    return [result.data];
+  });
+  res.json(ListChallengesResponse.parse(valid));
 });
 
 interface SubmitEntryBody {
