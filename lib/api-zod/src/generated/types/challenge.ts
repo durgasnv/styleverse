@@ -12,6 +12,7 @@ export interface Challenge {
   title: string;
   description: string;
   prizeText: string;
+  rules: string;
   endsAt: string;
   entries: ChallengeEntry[];
 }

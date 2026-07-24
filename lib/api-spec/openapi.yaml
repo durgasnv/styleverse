@@ -250,9 +250,15 @@ components:
             type: string
         creatorName:
           type: string
-        baseVoteCount:
+        creatorId:
+          type: string
+        voteCount:
           type: number
-      required: [id, productIds, creatorName, baseVoteCount]
+        totalPrice:
+          type: number
+        submittedAt:
+          type: string
+      required: [id, productIds, creatorName, creatorId, voteCount, totalPrice, submittedAt]
     Challenge:
       type: object
       properties:
@@ -263,6 +269,8 @@ components:
         description:
           type: string
         prizeText:
+          type: string
+        rules:
           type: string
         endsAt:
           type: string
@@ -275,5 +283,6 @@ components:
         - title
         - description
         - prizeText
+        - rules
         - endsAt
         - entries

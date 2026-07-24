@@ -128,13 +128,17 @@ export const ListChallengesResponseItem = zod.object({
   "title": zod.string(),
   "description": zod.string(),
   "prizeText": zod.string(),
+  "rules": zod.string(),
   "endsAt": zod.string(),
   "entries": zod.array(zod.object({
   "id": zod.string(),
   "outfitId": zod.string().optional(),
   "productIds": zod.array(zod.string()),
   "creatorName": zod.string(),
-  "baseVoteCount": zod.number()
+  "creatorId": zod.string(),
+  "voteCount": zod.number(),
+  "totalPrice": zod.number(),
+  "submittedAt": zod.string()
 }))
 })
 export const ListChallengesResponse = zod.array(ListChallengesResponseItem)
