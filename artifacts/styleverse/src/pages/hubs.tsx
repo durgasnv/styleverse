@@ -1,6 +1,6 @@
 import { useHubs } from '../hooks/use-catalog';
 import { Link } from 'wouter';
-import { Users, TrendingUp, Sparkles, Plus } from 'lucide-react';
+import { Users, TrendingUp, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 
@@ -18,7 +18,6 @@ export default function Hubs() {
         </div>
         <div className="flex gap-3">
           <Button variant="outline" className="font-bold">My Communities</Button>
-          <Button className="bg-[#FF3F6C] hover:bg-[#d93059] text-white font-bold"><Plus className="w-4 h-4 mr-1"/> Create Hub</Button>
         </div>
       </div>
 
