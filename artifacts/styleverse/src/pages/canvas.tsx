@@ -21,6 +21,8 @@ import {
   Download,
   RotateCcw,
   ChevronsLeftRight,
+  ChevronLeft,
+  ChevronRight,
   Maximize2,
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -350,6 +352,10 @@ export default function Canvas() {
   };
 
   const [lightboxResult, setLightboxResult] = useState<RecentTryOnResult | null>(null);
+  const [lightboxFromGallery, setLightboxFromGallery] = useState(false);
+  const lightboxIndex = lightboxResult
+    ? recentResults.findIndex((r) => r.timestamp === lightboxResult.timestamp)
+    : -1;
   const [showAllResults, setShowAllResults] = useState(false);
 
   return (
@@ -636,14 +642,17 @@ export default function Canvas() {
                           </button>
                         )}
                       </div>
-                      <div className="flex gap-3 overflow-x-auto pb-1">
+                      <div className="flex gap-2">
                         {recentResults.map((r) => (
                           <button
                             key={r.timestamp}
                             type="button"
-                            onClick={() => setLightboxResult(r)}
+                            onClick={() => {
+                              setLightboxFromGallery(false);
+                              setLightboxResult(r);
+                            }}
                             title="View this look"
-                            className="relative shrink-0 w-16 h-24 rounded border bg-gray-100 overflow-hidden block group"
+                            className="relative flex-1 max-w-16 aspect-[2/3] rounded border bg-gray-100 overflow-hidden block group"
                           >
                             <img src={r.image} alt="Past try-on result" className="w-full h-full object-cover" />
                             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
@@ -655,41 +664,51 @@ export default function Canvas() {
                     </div>
                   )}
 
-                  {/* Selected garments tray — also a drop target (see the stage's
-                      onDrop above) so dragging a new item here adds it to the
-                      outfit without leaving try-on mode. */}
-                  <div className="border-t bg-white px-4 py-3">
-                    <p className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">
-                      Selected items {uniqueProducts.length > 0 && `(${uniqueProducts.length})`}
-                      {uniqueProducts.length > MAX_TRYON_GARMENTS && ` — only first ${MAX_TRYON_GARMENTS} used`}
-                    </p>
-                    {uniqueProducts.length === 0 ? (
-                      <p className="text-sm text-gray-400">Drag items here to try them on.</p>
-                    ) : (
-                      <div className="flex gap-3 overflow-x-auto pb-1">
-                        {uniqueProducts.map(product => (
-                          <div key={product.id} className="relative shrink-0 w-16 group">
-                            <div className="w-16 h-20 rounded border bg-gray-100 overflow-hidden">
-                              <img
-                                src={product.images[0]}
-                                alt={product.name}
-                                className="w-full h-full object-cover"
-                                draggable={false}
-                              />
-                            </div>
-                            <button
-                              onClick={() => setItems(prev => prev.filter(i => i.product.id !== product.id))}
-                              className="absolute -top-1.5 -right-1.5 bg-white rounded-full p-1 shadow-md border text-gray-400 hover:text-red-500 transition-colors"
-                            >
-                              <Trash2 className="w-3 h-3" />
-                            </button>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
                 </div>
               </>
+            )}
+          </div>
+        )}
+
+        {mode === 'tryon' && baseImage && (
+          /* Selected garments rail — also a drop target so dragging a new
+             item here adds it to the outfit without leaving try-on mode. */
+          <div
+            className="w-1/4 md:w-56 border-l bg-gray-50 flex flex-col shrink-0 overflow-y-auto"
+            onDragOver={handleDragOver}
+            onDrop={handleDropOnTryOnStage}
+          >
+            <p className="text-xs font-bold text-gray-500 uppercase tracking-wide px-3 pt-3 pb-2">
+              Selected items {uniqueProducts.length > 0 && `(${uniqueProducts.length})`}
+              {uniqueProducts.length > MAX_TRYON_GARMENTS && ` — only first ${MAX_TRYON_GARMENTS} used`}
+            </p>
+            {uniqueProducts.length === 0 ? (
+              <p className="text-sm text-gray-400 px-3">Drag items here to try them on.</p>
+            ) : (
+              <div className="flex flex-col gap-2 px-3 pb-3">
+                {uniqueProducts.map(product => (
+                  <div key={product.id} className="relative flex items-center gap-2 group bg-white rounded border p-1.5">
+                    <div className="w-12 h-16 shrink-0 rounded border bg-gray-100 overflow-hidden">
+                      <img
+                        src={product.images[0]}
+                        alt={product.name}
+                        className="w-full h-full object-cover"
+                        draggable={false}
+                      />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-[11px] font-bold text-[#282C3F] truncate">{product.brand}</p>
+                      <p className="text-[11px] text-gray-500 truncate">{product.name}</p>
+                    </div>
+                    <button
+                      onClick={() => setItems(prev => prev.filter(i => i.product.id !== product.id))}
+                      className="shrink-0 bg-white rounded-full p-1 shadow-sm border text-gray-400 hover:text-red-500 transition-colors"
+                    >
+                      <Trash2 className="w-3 h-3" />
+                    </button>
+                  </div>
+                ))}
+              </div>
             )}
           </div>
         )}
@@ -708,6 +727,7 @@ export default function Canvas() {
                 type="button"
                 onClick={() => {
                   setShowAllResults(false);
+                  setLightboxFromGallery(true);
                   setLightboxResult(r);
                 }}
                 title="View this look"
@@ -728,18 +748,57 @@ export default function Canvas() {
           {lightboxResult && (
             <div className="flex flex-col items-center gap-3">
               <DialogTitle className="sr-only">Try-on result, full size</DialogTitle>
-              <img
-                src={lightboxResult.image}
-                alt="Past try-on result, full size"
-                className="max-h-[75vh] w-auto rounded object-contain"
-              />
-              <Button
-                size="sm"
-                className="bg-white text-[#282C3F] hover:bg-gray-200"
-                onClick={() => downloadImage(lightboxResult.image)}
-              >
-                <Download className="w-4 h-4 mr-2" /> Download
-              </Button>
+              <div className="relative w-full flex items-center justify-center">
+                {lightboxIndex > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => setLightboxResult(recentResults[lightboxIndex - 1])}
+                    title="Previous try-on"
+                    className="absolute left-1 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white rounded-full p-1.5"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+                )}
+                <img
+                  src={lightboxResult.image}
+                  alt="Past try-on result, full size"
+                  className="max-h-[75vh] w-auto rounded object-contain"
+                />
+                {lightboxIndex >= 0 && lightboxIndex < recentResults.length - 1 && (
+                  <button
+                    type="button"
+                    onClick={() => setLightboxResult(recentResults[lightboxIndex + 1])}
+                    title="Next try-on"
+                    className="absolute right-1 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white rounded-full p-1.5"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+                )}
+              </div>
+              {lightboxResult.fitNote && (
+                <p className="text-sm text-white/90 text-center max-w-md px-2">{lightboxResult.fitNote}</p>
+              )}
+              <div className="flex gap-2">
+                {lightboxFromGallery && (
+                  <Button
+                    size="sm"
+                    className="w-32 justify-center bg-white text-[#282C3F] hover:bg-gray-200"
+                    onClick={() => {
+                      setLightboxResult(null);
+                      setShowAllResults(true);
+                    }}
+                  >
+                    <ChevronLeft className="w-4 h-4 mr-2" /> Back
+                  </Button>
+                )}
+                <Button
+                  size="sm"
+                  className="w-32 justify-center bg-white text-[#282C3F] hover:bg-gray-200"
+                  onClick={() => downloadImage(lightboxResult.image)}
+                >
+                  <Download className="w-4 h-4 mr-2" /> Download
+                </Button>
+              </div>
             </div>
           )}
         </DialogContent>
