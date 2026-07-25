@@ -8,11 +8,11 @@ const router: IRouter = Router();
 // so this is a fallback chain, not a single hardcoded model. On a 429 (or
 // any other failure) from one model, we immediately retry the next.
 const MENTOR_TIP_MODELS = [
-  "tencent/hy3:free",
+  "inclusionai/ling-3.0-flash:free",
   "openai/gpt-oss-20b:free",
   "nvidia/nemotron-3-nano-30b-a3b:free",
   "google/gemma-4-26b-a4b-it:free",
-  "meta-llama/llama-3.3-70b-instruct:free",
+  "nvidia/nemotron-3-super-120b-a12b:free",
 ];
 
 interface MentorTipItem {
@@ -31,9 +31,12 @@ interface MentorTipRequestBody {
 }
 
 router.post("/companion/mentor-tip", async (req, res) => {
-  const apiKey = process.env.OPENROUTER_API_KEY;
+  // Separate key from the one tryon.ts uses, so the two OpenRouter
+  // integrations can be rate-limited/rotated/revoked independently. Falls
+  // back to OPENROUTER_API_KEY for setups that haven't split it out yet.
+  const apiKey = process.env.MENTOR_TIP_OPENROUTER_API_KEY || process.env.OPENROUTER_API_KEY;
   if (!apiKey) {
-    res.status(500).json({ error: "OPENROUTER_API_KEY must be set. Did you forget to provision it?" });
+    res.status(500).json({ error: "MENTOR_TIP_OPENROUTER_API_KEY (or OPENROUTER_API_KEY) must be set. Did you forget to provision it?" });
     return;
   }
 
