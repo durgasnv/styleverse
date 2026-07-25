@@ -1,0 +1,1 @@
+- [StyleVerse app architecture](styleverse-app.md) — Myntra-replica e-commerce app is frontend-only, no backend/DB; "AI" scoring is a deterministic client heuristic, not an LLM call.
