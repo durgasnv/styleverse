@@ -264,7 +264,13 @@ export default function Canvas() {
     const uniqueProductIds = uniqueProducts.map(p => p.id);
     setIsSharing(true);
     try {
-      const room = await createVotingRoom({ productIds: uniqueProductIds, creatorVoterId: identity.userId });
+      const room = await createVotingRoom({
+        productIds: uniqueProductIds,
+        // Include the AI try-on render when one's been generated for this
+        // outfit, so voters see the look on a person, not just flat items.
+        tryOnImage: mode === 'tryon' ? resultImage ?? undefined : undefined,
+        creatorVoterId: identity.userId,
+      });
       setLocation(`/vote/${room.id}`);
     } catch (err) {
       toast({ title: "Could not create voting room", description: (err as Error).message, variant: "destructive" });

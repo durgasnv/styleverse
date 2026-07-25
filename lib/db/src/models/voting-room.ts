@@ -14,6 +14,7 @@ const votingRoomSchema = new Schema(
     id: { type: String, required: true, unique: true },
     productIds: { type: [String], required: true },
     outfitId: { type: String, required: false },
+    tryOnImage: { type: String, required: false },
     creatorLabel: { type: String, required: true },
     creatorVoterId: { type: String, required: true },
     createdAt: { type: String, required: true },
