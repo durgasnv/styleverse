@@ -8,6 +8,9 @@ import { Sparkles, ArrowRight, Wand2, Search, SlidersHorizontal, CheckCircle } f
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
 import { useState, useMemo, useEffect, useCallback } from 'react';
 import { Spinner } from '@/components/ui/spinner';
+import { useToast } from '@/hooks/use-toast';
+import { FindAlternativesModal } from '../components/FindAlternativesModal';
+import type { Product } from '../data/mock-data';
 
 const PRESET_MOODS = ['confident', 'relaxed', 'bold', 'romantic'];
 
@@ -22,6 +25,7 @@ export default function Companion() {
   const { products: allProducts, isLoading } = useProducts();
   const identity = useIdentity();
   const { looks, isLoading: looksLoading } = useLooks(identity?.userId);
+  const { toast } = useToast();
 
   const [mood, setMood] = useState(state.prefs.mood);
   const [customMood, setCustomMood] = useState(() => (PRESET_MOODS.includes(state.prefs.mood) ? '' : state.prefs.mood));
@@ -33,17 +37,37 @@ export default function Companion() {
   const [mentorTipLoading, setMentorTipLoading] = useState(false);
   const [mentorTipError, setMentorTipError] = useState<string | null>(null);
   const [mentorTipRetryToken, setMentorTipRetryToken] = useState(0);
+  // originalProductId -> replacementProductId. Session-only: never persisted
+  // to the saved Look or the Canvas draft. Reset whenever the look/draft
+  // being analyzed changes, so a stale swap can't bleed into a new outfit.
+  const [swaps, setSwaps] = useState<Record<string, string>>({});
+  const [alternativesModalOpen, setAlternativesModalOpen] = useState(false);
 
   // If no look/items are provided, we can either prompt them to select one or just use a dummy one for the demo
   const look = lookId ? looks.find(l => l.id === lookId) : (!itemsParam ? looks[0] : undefined);
 
-  const products = itemsParam
+  const rawProducts = itemsParam
     ? itemsParam.split(',').filter(Boolean).map(id => allProducts.find(p => p.id === id)).filter(Boolean) as typeof allProducts
     : look
     ? look.productIds.map(id => allProducts.find(p => p.id === id)).filter(Boolean) as typeof allProducts
     : [];
 
+  const products = rawProducts.map((p) => {
+    const replacementId = swaps[p.id];
+    if (!replacementId) return p;
+    return allProducts.find((candidate) => candidate.id === replacementId) ?? p;
+  });
+
   const lookName = look?.name ?? 'Your Canvas Look';
+
+  const handleSwap = useCallback(
+    (originalId: string, replacement: Product) => {
+      setSwaps((prev) => ({ ...prev, [originalId]: replacement.id }));
+      setAlternativesModalOpen(false);
+      toast({ title: 'Look updated', description: `Swapped in ${replacement.name} — outfit re-scored.` });
+    },
+    [toast],
+  );
 
   const handleAnalyze = () => {
     updatePrefs({ mood, weather, skinTone });
@@ -54,6 +78,11 @@ export default function Companion() {
       setShowResults(true);
     }, 1500);
   };
+
+  useEffect(() => {
+    setSwaps({});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lookId, itemsParam]);
 
   useEffect(() => {
     if (products.length === 0) return;
@@ -353,7 +382,14 @@ export default function Companion() {
                         <div>
                           <p className="text-sm font-bold text-[#282C3F]">Upgrade Opportunity</p>
                           <p className="text-xs text-gray-600 mt-1 mb-2">Swapping in a better-matching piece will make this outfit look even better.</p>
-                          <Button variant="outline" size="sm" className="h-7 text-xs border-green-200 text-green-600">Find better alternatives</Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="h-7 text-xs border-green-200 text-green-600"
+                            onClick={() => setAlternativesModalOpen(true)}
+                          >
+                            Find better alternatives
+                          </Button>
                         </div>
                       </div>
                     )}
@@ -373,6 +409,14 @@ export default function Companion() {
           </div>
         </div>
       </div>
+
+      <FindAlternativesModal
+        priciest={alternativesModalOpen ? (analysisData?.priciest ?? null) : null}
+        allProducts={allProducts}
+        currentOutfitIds={products.map((p) => p.id)}
+        onSwap={handleSwap}
+        onOpenChange={setAlternativesModalOpen}
+      />
     </div>
   );
 }
