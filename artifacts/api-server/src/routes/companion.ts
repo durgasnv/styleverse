@@ -8,11 +8,11 @@ const router: IRouter = Router();
 // so this is a fallback chain, not a single hardcoded model. On a 429 (or
 // any other failure) from one model, we immediately retry the next.
 const MENTOR_TIP_MODELS = [
-  "tencent/hy3:free",
+  "inclusionai/ling-3.0-flash:free",
   "openai/gpt-oss-20b:free",
   "nvidia/nemotron-3-nano-30b-a3b:free",
   "google/gemma-4-26b-a4b-it:free",
-  "meta-llama/llama-3.3-70b-instruct:free",
+  "nvidia/nemotron-3-super-120b-a12b:free",
 ];
 
 interface MentorTipItem {
