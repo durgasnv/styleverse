@@ -42,7 +42,9 @@ export function findAlternatives(
   const scored = candidates.map((p) => {
     const sharedColors = p.colors.filter((c) => priciest.colors.includes(c)).length;
     const sharedOccasions = p.occasionTags.filter((t) => priciest.occasionTags.includes(t)).length;
-    return { product: p, score: sharedColors * 2 + sharedOccasions * 3 };
+    const sameBrand = p.brand === priciest.brand ? 4 : 0;
+    const score = sharedColors * 2 + sharedOccasions * 3 + sameBrand + p.rating;
+    return { product: p, score };
   });
 
   scored.sort((a, b) => b.score - a.score || a.product.price - b.product.price);
@@ -54,8 +56,11 @@ export function findAlternatives(
 Rules, decided explicitly during brainstorming (not defaults):
 
 - **Price is a hard filter, not just a tiebreaker**: only candidates strictly cheaper than the priciest item are considered at all. This keeps the "Upgrade Opportunity" framing honest — every suggestion genuinely saves money.
-- Within that cheaper set, ranking is by style match: `+2` per shared color, `+3` per shared occasion tag (weighted higher since occasion mismatches are more visually jarring than color mismatches).
-- Price ascending breaks ties between equally-matched candidates.
+- Within that cheaper set, ranking is a combined match score:
+  - `+2` per shared color, `+3` per shared occasion tag (weighted higher since occasion mismatches are more visually jarring than color mismatches).
+  - `+4` flat bonus if the candidate is the same brand as the priciest item (same brand is a reasonable proxy for matching aesthetic and sizing).
+  - `+candidate.rating` (0–5) added directly, so a well-reviewed item outranks an otherwise-equal but poorly-rated one, without letting rating alone dominate over actual style match (a perfect color+occasion+brand match with a mediocre rating still beats a highly-rated item with no style overlap).
+- Price ascending breaks ties between equally-scored candidates.
 - Items already in the current outfit are excluded (no suggesting something the user already has).
 - If no candidates exist (e.g. the priciest item's subcategory has nothing cheaper in the catalog), the function returns `[]` — the modal renders an empty state, not an error.
 
