@@ -109,9 +109,11 @@ export default function VoteRoom() {
   const products = room.productIds.map((id) => allProducts.find((p) => p.id === id)).filter(Boolean) as typeof allProducts;
   const totalReactions = tally.fire + tally.yes + tally.nah;
 
+  const hasTryOnImage = Boolean(room.tryOnImage);
+
   return (
-    <div className="h-screen bg-gray-50 flex flex-col overflow-hidden">
-      <div className="bg-gradient-to-r from-purple-900 to-indigo-900 text-white pt-6 pb-6 px-4 shrink-0">
+    <div className={hasTryOnImage ? 'h-screen bg-gray-50 flex flex-col overflow-hidden' : 'min-h-screen bg-gray-50 pb-20'}>
+      <div className={`bg-gradient-to-r from-purple-900 to-indigo-900 text-white px-4 ${hasTryOnImage ? 'pt-6 pb-6 shrink-0' : 'pt-10 pb-16'}`}>
         <div className="container mx-auto max-w-3xl">
           <h1 className="font-heading font-black text-2xl md:text-3xl mb-1">{room.creatorLabel}</h1>
           <div className="flex items-center gap-4 text-indigo-200 text-sm">
@@ -121,8 +123,8 @@ export default function VoteRoom() {
         </div>
       </div>
 
-      <div className="container mx-auto max-w-3xl px-4 relative z-10 flex-1 min-h-0 pb-4 pt-4">
-        <div className="bg-white rounded-xl shadow-sm border p-4 md:p-6 h-full overflow-y-auto flex flex-col items-center">
+      <div className={`container mx-auto max-w-3xl px-4 relative z-10 ${hasTryOnImage ? 'flex-1 min-h-0 flex items-center justify-center py-4' : 'mt-4'}`}>
+        <div className={`bg-white rounded-xl shadow-sm border p-4 md:p-6 flex flex-col items-center ${hasTryOnImage ? 'max-h-full overflow-y-auto' : ''}`}>
           {room.tryOnImage && (
             <div className="flex justify-between items-start mb-4 w-full">
               <div className="w-52 shrink-0 mx-auto rounded-xl overflow-hidden border bg-gray-100 max-h-[min(42vh,24rem)]">
