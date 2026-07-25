@@ -664,41 +664,51 @@ export default function Canvas() {
                     </div>
                   )}
 
-                  {/* Selected garments tray — also a drop target (see the stage's
-                      onDrop above) so dragging a new item here adds it to the
-                      outfit without leaving try-on mode. */}
-                  <div className="border-t bg-white px-4 py-3">
-                    <p className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">
-                      Selected items {uniqueProducts.length > 0 && `(${uniqueProducts.length})`}
-                      {uniqueProducts.length > MAX_TRYON_GARMENTS && ` — only first ${MAX_TRYON_GARMENTS} used`}
-                    </p>
-                    {uniqueProducts.length === 0 ? (
-                      <p className="text-sm text-gray-400">Drag items here to try them on.</p>
-                    ) : (
-                      <div className="flex gap-3 overflow-x-auto pb-1">
-                        {uniqueProducts.map(product => (
-                          <div key={product.id} className="relative shrink-0 w-16 group">
-                            <div className="w-16 h-20 rounded border bg-gray-100 overflow-hidden">
-                              <img
-                                src={product.images[0]}
-                                alt={product.name}
-                                className="w-full h-full object-cover"
-                                draggable={false}
-                              />
-                            </div>
-                            <button
-                              onClick={() => setItems(prev => prev.filter(i => i.product.id !== product.id))}
-                              className="absolute -top-1.5 -right-1.5 bg-white rounded-full p-1 shadow-md border text-gray-400 hover:text-red-500 transition-colors"
-                            >
-                              <Trash2 className="w-3 h-3" />
-                            </button>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
                 </div>
               </>
+            )}
+          </div>
+        )}
+
+        {mode === 'tryon' && baseImage && (
+          /* Selected garments rail — also a drop target so dragging a new
+             item here adds it to the outfit without leaving try-on mode. */
+          <div
+            className="w-1/4 md:w-56 border-l bg-gray-50 flex flex-col shrink-0 overflow-y-auto"
+            onDragOver={handleDragOver}
+            onDrop={handleDropOnTryOnStage}
+          >
+            <p className="text-xs font-bold text-gray-500 uppercase tracking-wide px-3 pt-3 pb-2">
+              Selected items {uniqueProducts.length > 0 && `(${uniqueProducts.length})`}
+              {uniqueProducts.length > MAX_TRYON_GARMENTS && ` — only first ${MAX_TRYON_GARMENTS} used`}
+            </p>
+            {uniqueProducts.length === 0 ? (
+              <p className="text-sm text-gray-400 px-3">Drag items here to try them on.</p>
+            ) : (
+              <div className="flex flex-col gap-2 px-3 pb-3">
+                {uniqueProducts.map(product => (
+                  <div key={product.id} className="relative flex items-center gap-2 group bg-white rounded border p-1.5">
+                    <div className="w-12 h-16 shrink-0 rounded border bg-gray-100 overflow-hidden">
+                      <img
+                        src={product.images[0]}
+                        alt={product.name}
+                        className="w-full h-full object-cover"
+                        draggable={false}
+                      />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-[11px] font-bold text-[#282C3F] truncate">{product.brand}</p>
+                      <p className="text-[11px] text-gray-500 truncate">{product.name}</p>
+                    </div>
+                    <button
+                      onClick={() => setItems(prev => prev.filter(i => i.product.id !== product.id))}
+                      className="shrink-0 bg-white rounded-full p-1 shadow-sm border text-gray-400 hover:text-red-500 transition-colors"
+                    >
+                      <Trash2 className="w-3 h-3" />
+                    </button>
+                  </div>
+                ))}
+              </div>
             )}
           </div>
         )}
