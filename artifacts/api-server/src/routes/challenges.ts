@@ -45,6 +45,10 @@ router.post("/challenges/:id/entries", async (req, res) => {
   }
 
   const products = await ProductModel.find({ id: { $in: productIds } }).lean();
+  if (products.length !== new Set(productIds).size) {
+    res.status(400).json({ error: "One or more productIds do not exist" });
+    return;
+  }
   const totalPrice = productIds.reduce((sum, id) => {
     const product = products.find((p) => p.id === id);
     return sum + (product?.price ?? 0);

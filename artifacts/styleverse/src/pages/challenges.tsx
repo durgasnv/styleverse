@@ -46,18 +46,23 @@ export default function Challenges() {
                       Ending soon
                     </span>
                   )}
-                  {topEntries.length === 0 ? (
-                    <div className="flex-1 flex items-center justify-center text-sm text-gray-400">No entries yet</div>
-                  ) : (
-                    topEntries.map((entry) => (
-                      <img
-                        key={entry.id}
-                        src={productImage(entry.productIds[0])}
-                        alt=""
-                        className="flex-1 w-full h-full object-contain bg-gray-100 border-l first:border-l-0 border-gray-200"
-                      />
-                    ))
-                  )}
+                  {(() => {
+                    const previewImages = topEntries
+                      .map((entry) => ({ entry, image: productImage(entry.productIds[0]) }))
+                      .filter((p): p is { entry: (typeof topEntries)[number]; image: string } => Boolean(p.image));
+                    return previewImages.length === 0 ? (
+                      <div className="flex-1 flex items-center justify-center text-sm text-gray-400">No entries yet</div>
+                    ) : (
+                      previewImages.map(({ entry, image }) => (
+                        <img
+                          key={entry.id}
+                          src={image}
+                          alt=""
+                          className="flex-1 w-full h-full object-contain bg-gray-100 border-l first:border-l-0 border-gray-200"
+                        />
+                      ))
+                    );
+                  })()}
                   {extraCount > 0 && (
                     <span className="absolute bottom-2 right-2 bg-black/55 text-white text-[11px] font-bold px-2 py-1 rounded-full backdrop-blur-sm">
                       +{extraCount} more

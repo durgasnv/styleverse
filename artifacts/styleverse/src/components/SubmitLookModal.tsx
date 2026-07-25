@@ -70,14 +70,18 @@ export function SubmitLookModal({
                 )}
               >
                 <div className="flex gap-1 mb-2">
-                  {look.productIds.slice(0, 2).map((pid) => (
-                    <img
-                      key={pid}
-                      src={products.find((p) => p.id === pid)?.images[0]}
-                      alt=""
-                      className="flex-1 aspect-square object-cover rounded bg-gray-100"
-                    />
-                  ))}
+                  {look.productIds
+                    .map((pid) => products.find((p) => p.id === pid))
+                    .filter((p): p is NonNullable<typeof p> => Boolean(p))
+                    .slice(0, 2)
+                    .map((product) => (
+                      <img
+                        key={product.id}
+                        src={product.images[0]}
+                        alt=""
+                        className="flex-1 aspect-square object-cover rounded bg-gray-100"
+                      />
+                    ))}
                 </div>
                 <p className="text-xs font-bold text-[#282C3F] truncate">{look.name}</p>
               </button>

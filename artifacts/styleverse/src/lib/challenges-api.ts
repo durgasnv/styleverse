@@ -1,7 +1,17 @@
+export interface SubmittedChallengeEntry {
+  id: string;
+  productIds: string[];
+  creatorName: string;
+  creatorId: string;
+  voteCount: number;
+  totalPrice: number;
+  submittedAt: string;
+}
+
 export async function submitChallengeEntry(
   challengeId: string,
   params: { productIds: string[]; creatorName: string; creatorId: string },
-) {
+): Promise<SubmittedChallengeEntry> {
   const res = await fetch(`/api/challenges/${challengeId}/entries`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

@@ -25,7 +25,7 @@ export default function ChallengeDetail() {
 
   const [submitOpen, setSubmitOpen] = useState(false);
   const [rulesOpen, setRulesOpen] = useState(false);
-  const [selectedEntry, setSelectedEntry] = useState<ChallengeEntry | null>(null);
+  const [selectedEntryId, setSelectedEntryId] = useState<string | null>(null);
 
   if (isLoading) {
     return (
@@ -47,6 +47,7 @@ export default function ChallengeDetail() {
   const endDate = new Date(challenge.endsAt);
   const isEndingSoon = endDate.getTime() - Date.now() < 86400000;
   const sortedEntries = [...challenge.entries].sort((a, b) => b.voteCount - a.voteCount);
+  const selectedEntry = challenge.entries.find((e) => e.id === selectedEntryId) ?? null;
 
   const handleVote = (entry: ChallengeEntry) => {
     if (!identity || hasVoted(entry.id)) return;
@@ -125,7 +126,7 @@ export default function ChallengeDetail() {
               <div
                 key={entry.id}
                 className="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer"
-                onClick={() => setSelectedEntry(entry)}
+                onClick={() => setSelectedEntryId(entry.id)}
               >
                 <div className="flex aspect-[3/4] bg-gray-100 relative">
                   {rankColor && (
@@ -133,14 +134,18 @@ export default function ChallengeDetail() {
                       #{index + 1}
                     </span>
                   )}
-                  {entry.productIds.slice(0, 2).map((pid) => (
-                    <img
-                      key={pid}
-                      src={products.find((p) => p.id === pid)?.images[0]}
-                      alt=""
-                      className="flex-1 w-full h-full object-contain border-l first:border-l-0 border-gray-200"
-                    />
-                  ))}
+                  {entry.productIds
+                    .map((pid) => products.find((p) => p.id === pid))
+                    .filter((p): p is NonNullable<typeof p> => Boolean(p))
+                    .slice(0, 2)
+                    .map((product) => (
+                      <img
+                        key={product.id}
+                        src={product.images[0]}
+                        alt=""
+                        className="flex-1 w-full h-full object-contain border-l first:border-l-0 border-gray-200"
+                      />
+                    ))}
                 </div>
                 <div className="p-3">
                   <p className="font-bold text-sm text-[#282C3F] truncate">{entry.creatorName}</p>
@@ -171,7 +176,7 @@ export default function ChallengeDetail() {
       )}
 
       <SubmitLookModal challengeId={submitOpen ? challenge.id : null} onOpenChange={(open) => setSubmitOpen(open)} />
-      <SubmissionDetailModal entry={selectedEntry} challengeId={challenge.id} onOpenChange={(open) => !open && setSelectedEntry(null)} />
+      <SubmissionDetailModal entry={selectedEntry} challengeId={challenge.id} onOpenChange={(open) => !open && setSelectedEntryId(null)} />
     </div>
   );
 }
