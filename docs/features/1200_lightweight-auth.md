@@ -60,4 +60,4 @@ One subtlety worth calling out because it caused a real bug during development: 
 
 - No password, no session expiry, no way to "log out" and re-identify as someone else on the same browser (the only way to change identity is to clear the `styleverse_identity` localStorage key).
 - No verification that a username actually belongs to the person typing it — anyone can type any existing username and immediately act as that user, since there's no password gate. Acceptable for a hackathon demo; would need real auth to close this gap.
-- Fashion Challenges (submissions, challenge-entry voting) still isn't wired to any backend at all, real identity or otherwise — that UI predates this feature and remains a separate, unstarted piece of work.
+- [Fashion Challenges](1400_fashion-challenges.md) (submissions, challenge-entry voting) now uses this same identity system for real, server-enforced voting — that gap has since been closed.

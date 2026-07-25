@@ -11,5 +11,8 @@ export interface ChallengeEntry {
   outfitId?: string;
   productIds: string[];
   creatorName: string;
-  baseVoteCount: number;
+  creatorId: string;
+  voteCount: number;
+  totalPrice: number;
+  submittedAt: string;
 }

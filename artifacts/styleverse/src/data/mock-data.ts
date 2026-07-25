@@ -42,19 +42,25 @@ export interface Outfit {
   companionScore?: number;
 }
 
+export interface ChallengeEntry {
+  id: string;
+  outfitId?: string;
+  productIds: string[];
+  creatorName: string;
+  creatorId: string;
+  voteCount: number;
+  totalPrice: number;
+  submittedAt: string;
+}
+
 export interface Challenge {
   id: string;
   title: string;
   description: string;
   prizeText: string;
+  rules: string;
   endsAt: string;
-  entries: {
-    id: string;
-    outfitId?: string;
-    productIds: string[];
-    creatorName: string;
-    baseVoteCount: number;
-  }[];
+  entries: ChallengeEntry[];
 }
 
 export const MOCK_PRODUCTS: Product[] = [
@@ -645,20 +651,46 @@ export const MOCK_CHALLENGES: Challenge[] = [
     title: "Outfit Under ₹1500",
     description: "Put together a full cohesive look without breaking the bank. Shoes included!",
     prizeText: "Win ₹5000 Myntra Credit",
+    rules: "One entry per person. All items must be currently available on StyleVerse. Judged on cost, cohesion, and creativity — winner announced when the challenge ends.",
     endsAt: new Date(Date.now() + 86400000 * 2).toISOString(),
     entries: [
-      { id: "e1", productIds: ["p1", "p3", "p6"], creatorName: "@budget_king", baseVoteCount: 124 },
-      { id: "e2", productIds: ["p2", "p5"], creatorName: "@deal_hunter", baseVoteCount: 89 }
-    ]
+      {
+        id: "e1",
+        productIds: ["p1", "p3", "p6"],
+        creatorName: "@budget_king",
+        creatorId: "seed-budget-king",
+        voteCount: 124,
+        totalPrice: 2497,
+        submittedAt: new Date(Date.now() - 86400000 * 2).toISOString(),
+      },
+      {
+        id: "e2",
+        productIds: ["p2", "p5"],
+        creatorName: "@deal_hunter",
+        creatorId: "seed-deal-hunter",
+        voteCount: 89,
+        totalPrice: 2198,
+        submittedAt: new Date(Date.now() - 86400000 * 1).toISOString(),
+      },
+    ],
   },
   {
     id: "c2",
     title: "Monsoon Ready",
     description: "Stylish but practical outfits for the rainy season. No white pants allowed!",
     prizeText: "Win a Premium Raincoat + ₹2000 Credit",
+    rules: "Outfits should be weather-appropriate for monsoon season. No white bottoms. One entry per person.",
     endsAt: new Date(Date.now() + 86400000 * 5).toISOString(),
     entries: [
-      { id: "e3", productIds: ["p4", "p1", "p3"], creatorName: "@monsoon_child", baseVoteCount: 312 }
-    ]
-  }
+      {
+        id: "e3",
+        productIds: ["p4", "p1", "p3"],
+        creatorName: "@monsoon_child",
+        creatorId: "seed-monsoon-child",
+        voteCount: 312,
+        totalPrice: 3497,
+        submittedAt: new Date(Date.now() - 86400000 * 3).toISOString(),
+      },
+    ],
+  },
 ];

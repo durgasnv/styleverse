@@ -25,7 +25,6 @@ export interface AppState {
   wishlist: string[]; // product IDs
   collections: Collection[];
   prefs: UserPrefs;
-  challengeVotes: Record<string, boolean>; // entryId -> voted
 }
 
 const DEFAULT_STATE: AppState = {
@@ -39,8 +38,7 @@ const DEFAULT_STATE: AppState = {
     mood: 'confident',
     skinTone: 'medium',
     weather: 'sunny'
-  },
-  challengeVotes: {}
+  }
 };
 
 // Simple event emitter for syncing state across components
@@ -143,12 +141,6 @@ export const useStore = () => {
     saveState({ ...current });
   }, []);
 
-  const voteChallenge = useCallback((entryId: string) => {
-    const current = loadState();
-    current.challengeVotes[entryId] = true;
-    saveState({ ...current });
-  }, []);
-
   const toggleCollectionProduct = useCallback((collectionId: string, productId: string) => {
     const current = loadState();
     const col = current.collections.find(c => c.id === collectionId);
@@ -191,7 +183,6 @@ export const useStore = () => {
     clearBag,
     toggleWishlist,
     updatePrefs,
-    voteChallenge,
     toggleCollectionProduct,
     createCollection,
     deleteCollection,

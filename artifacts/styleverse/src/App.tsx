@@ -17,6 +17,7 @@ import HubDetail from './pages/hub-detail';
 import Canvas from './pages/canvas';
 import Companion from './pages/companion';
 import Challenges from './pages/challenges';
+import ChallengeDetail from './pages/challenge-detail';
 import Collections from './pages/collections';
 import MyLooks from './pages/my-looks';
 import Profile from './pages/profile';
@@ -49,6 +50,7 @@ function Router() {
           <Route path="/canvas" component={Canvas} />
           <Route path="/companion" component={Companion} />
           <Route path="/challenges" component={Challenges} />
+          <Route path="/challenges/:id" component={ChallengeDetail} />
           <Route path="/collections" component={Collections} />
           <Route path="/my-looks" component={MyLooks} />
           <Route path="/profile" component={Profile} />
