@@ -31,9 +31,12 @@ interface MentorTipRequestBody {
 }
 
 router.post("/companion/mentor-tip", async (req, res) => {
-  const apiKey = process.env.OPENROUTER_API_KEY;
+  // Separate key from the one tryon.ts uses, so the two OpenRouter
+  // integrations can be rate-limited/rotated/revoked independently. Falls
+  // back to OPENROUTER_API_KEY for setups that haven't split it out yet.
+  const apiKey = process.env.MENTOR_TIP_OPENROUTER_API_KEY || process.env.OPENROUTER_API_KEY;
   if (!apiKey) {
-    res.status(500).json({ error: "OPENROUTER_API_KEY must be set. Did you forget to provision it?" });
+    res.status(500).json({ error: "MENTOR_TIP_OPENROUTER_API_KEY (or OPENROUTER_API_KEY) must be set. Did you forget to provision it?" });
     return;
   }
 
