@@ -11,6 +11,7 @@ import { Spinner } from '@/components/ui/spinner';
 import { useToast } from '@/hooks/use-toast';
 import { FindAlternativesModal } from '../components/FindAlternativesModal';
 import { computeColorHarmonyScore } from '../lib/color-theory';
+import { computeMoodMatchScore } from '../lib/mood-match';
 import type { Product } from '../data/mock-data';
 
 const PRESET_MOODS = ['confident', 'relaxed', 'bold', 'romantic'];
@@ -148,9 +149,7 @@ export default function Companion() {
     if (weather === 'rainy' && !occasions.includes('monsoon')) occasionScore -= 20;
     if (weather === 'sunny' && occasions.includes('summer')) occasionScore += 20;
     
-    let moodScore = 60;
-    if (mood === 'bold' && colors.some(c => !['neutral', 'black', 'white'].includes(c))) moodScore += 30;
-    if (mood === 'relaxed' && occasions.includes('casual')) moodScore += 30;
+    let moodScore = computeMoodMatchScore(products.map(p => p.occasionTags), products.map(p => p.colors), mood);
 
     // Cap at 100
     colorScore = Math.min(100, colorScore);
