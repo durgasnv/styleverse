@@ -8,12 +8,13 @@ const router: IRouter = Router();
 interface CreateRoomBody {
   productIds: string[];
   outfitId?: string;
+  tryOnImage?: string;
   creatorLabel?: string;
   creatorVoterId: string;
 }
 
 router.post("/voting/rooms", async (req, res) => {
-  const { productIds, outfitId, creatorLabel, creatorVoterId } = req.body as CreateRoomBody;
+  const { productIds, outfitId, tryOnImage, creatorLabel, creatorVoterId } = req.body as CreateRoomBody;
   if (!Array.isArray(productIds) || productIds.length === 0) {
     res.status(400).json({ error: "productIds must be a non-empty array" });
     return;
@@ -22,18 +23,23 @@ router.post("/voting/rooms", async (req, res) => {
     res.status(400).json({ error: "creatorVoterId is required" });
     return;
   }
+  if (tryOnImage !== undefined && !tryOnImage.startsWith("data:image/")) {
+    res.status(400).json({ error: "tryOnImage must be a data URL" });
+    return;
+  }
 
   const room = await VotingRoomModel.create({
     id: randomUUID(),
     productIds,
     outfitId,
+    tryOnImage,
     creatorLabel: creatorLabel || "A StyleVerse look",
     creatorVoterId,
     createdAt: new Date().toISOString(),
     voters: [],
   });
 
-  res.status(201).json({ id: room.id, productIds: room.productIds, outfitId: room.outfitId, creatorLabel: room.creatorLabel, createdAt: room.createdAt });
+  res.status(201).json({ id: room.id, productIds: room.productIds, outfitId: room.outfitId, tryOnImage: room.tryOnImage, creatorLabel: room.creatorLabel, createdAt: room.createdAt });
 });
 
 router.get("/voting/rooms/:id", async (req, res) => {
@@ -52,6 +58,7 @@ router.get("/voting/rooms/:id", async (req, res) => {
       id: room.id,
       productIds: room.productIds,
       outfitId: room.outfitId,
+      tryOnImage: room.tryOnImage,
       creatorLabel: room.creatorLabel,
       createdAt: room.createdAt,
     },

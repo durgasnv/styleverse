@@ -110,10 +110,10 @@ export default function VoteRoom() {
   const totalReactions = tally.fire + tally.yes + tally.nah;
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20">
-      <div className="bg-gradient-to-r from-purple-900 to-indigo-900 text-white pt-10 pb-16 px-4">
+    <div className="h-screen bg-gray-50 flex flex-col overflow-hidden">
+      <div className="bg-gradient-to-r from-purple-900 to-indigo-900 text-white pt-6 pb-6 px-4 shrink-0">
         <div className="container mx-auto max-w-3xl">
-          <h1 className="font-heading font-black text-3xl md:text-4xl mb-2">{room.creatorLabel}</h1>
+          <h1 className="font-heading font-black text-2xl md:text-3xl mb-1">{room.creatorLabel}</h1>
           <div className="flex items-center gap-4 text-indigo-200 text-sm">
             <span className="flex items-center gap-1"><Users className="h-4 w-4" /> {presence} watching live</span>
             <span>{totalReactions} reaction{totalReactions === 1 ? '' : 's'}</span>
@@ -121,29 +121,53 @@ export default function VoteRoom() {
         </div>
       </div>
 
-      <div className="container mx-auto max-w-3xl px-4 -mt-10 relative z-10">
-        <div className="bg-white rounded-xl shadow-sm border p-6">
-          <div className="flex flex-wrap gap-3 justify-center mb-8">
-            {products.map((p) => (
-              <div key={p.id} className="w-24 rounded overflow-hidden border bg-gray-100">
-                <img src={p.images[0]} className="w-full aspect-[3/4] object-cover" alt={p.name} title={p.name} />
+      <div className="container mx-auto max-w-3xl px-4 relative z-10 flex-1 min-h-0 pb-4 pt-4">
+        <div className="bg-white rounded-xl shadow-sm border p-4 md:p-6 h-full overflow-y-auto flex flex-col items-center">
+          {room.tryOnImage && (
+            <div className="flex justify-between items-start mb-4 w-full">
+              <div className="w-52 shrink-0 mx-auto rounded-xl overflow-hidden border bg-gray-100 max-h-[min(42vh,24rem)]">
+                <img src={room.tryOnImage} className="w-full h-full object-cover" alt="AI try-on preview" />
               </div>
-            ))}
-          </div>
+
+              <div className="w-40 shrink-0 flex flex-col gap-2 overflow-y-auto max-h-[min(42vh,24rem)]">
+                {products.map((p) => (
+                  <div key={p.id} className="flex items-center gap-2 bg-white rounded border p-1.5">
+                    <div className="w-12 h-16 shrink-0 rounded border bg-gray-100 overflow-hidden">
+                      <img src={p.images[0]} className="w-full h-full object-cover" alt={p.name} title={p.name} />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-[11px] font-bold text-[#282C3F] truncate">{p.brand}</p>
+                      <p className="text-[11px] text-gray-500 truncate">{p.name}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {!room.tryOnImage && (
+            <div className="flex flex-wrap gap-2 justify-center mb-4">
+              {products.map((p) => (
+                <div key={p.id} className="w-16 rounded overflow-hidden border bg-gray-100">
+                  <img src={p.images[0]} className="w-full aspect-[3/4] object-cover" alt={p.name} title={p.name} />
+                </div>
+              ))}
+            </div>
+          )}
 
           {isCreator && (
-            <p className="text-center text-sm text-gray-500 mb-4">
+            <p className="text-center text-sm text-gray-500 mb-3">
               This is your look — share the link so others can react. You can't vote on your own look.
             </p>
           )}
 
-          <div className="grid grid-cols-3 gap-3 mb-6">
+          <div className="grid grid-cols-3 gap-3 mb-4 w-full max-w-sm">
             {REACTIONS.map(({ key, emoji, label }) => (
               <button
                 key={key}
                 onClick={() => castVote(key)}
                 disabled={isCreator}
-                className={`flex flex-col items-center gap-1 py-4 rounded-xl border-2 transition-all ${
+                className={`flex flex-col items-center gap-1 py-3 rounded-xl border-2 transition-all ${
                   isCreator
                     ? 'border-gray-100 opacity-50 cursor-not-allowed'
                     : myReaction === key
@@ -151,14 +175,14 @@ export default function VoteRoom() {
                       : 'border-gray-200 hover:border-gray-300'
                 }`}
               >
-                <span className="text-3xl">{emoji}</span>
+                <span className="text-2xl">{emoji}</span>
                 <span className="text-xs font-bold text-gray-600">{label}</span>
                 <span className="font-mono font-bold text-lg text-[#282C3F]">{tally[key]}</span>
               </button>
             ))}
           </div>
 
-          <Button variant="outline" size="sm" onClick={copyLink} className="w-full">
+          <Button variant="outline" size="sm" onClick={copyLink} className="w-full max-w-sm">
             {copied ? <><Check className="w-4 h-4 mr-2" /> Copied!</> : <><LinkIcon className="w-4 h-4 mr-2" /> Copy Link to Share</>}
           </Button>
         </div>

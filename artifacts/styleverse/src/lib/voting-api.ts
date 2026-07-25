@@ -2,6 +2,7 @@ export interface VotingRoom {
   id: string;
   productIds: string[];
   outfitId?: string;
+  tryOnImage?: string;
   creatorLabel: string;
   createdAt: string;
 }
@@ -17,6 +18,7 @@ export interface Tally {
 export async function createVotingRoom(params: {
   productIds: string[];
   outfitId?: string;
+  tryOnImage?: string;
   creatorLabel?: string;
   creatorVoterId: string;
 }): Promise<VotingRoom> {
