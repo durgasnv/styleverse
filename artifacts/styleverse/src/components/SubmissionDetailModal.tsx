@@ -75,9 +75,9 @@ export function SubmissionDetailModal({
   return (
     <Dialog open={entry !== null} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl grid grid-cols-1 sm:grid-cols-2 gap-0 p-0 overflow-hidden">
-        <div className="bg-gray-100 flex items-center justify-center p-5 gap-2 h-[420px] sm:h-auto">
+        <div className="bg-gray-100 flex items-center justify-center p-5 gap-2 h-[420px] sm:h-auto overflow-hidden">
           {items.slice(0, 2).map((item) => (
-            <img key={item.id} src={item.images[0]} alt={item.name} className="flex-1 max-h-full object-contain rounded bg-white" />
+            <img key={item.id} src={item.images[0]} alt={item.name} className="flex-1 min-w-0 max-h-full object-contain rounded bg-white" />
           ))}
         </div>
 
