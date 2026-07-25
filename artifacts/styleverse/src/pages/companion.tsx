@@ -10,6 +10,7 @@ import { useState, useMemo, useEffect, useCallback } from 'react';
 import { Spinner } from '@/components/ui/spinner';
 import { useToast } from '@/hooks/use-toast';
 import { FindAlternativesModal } from '../components/FindAlternativesModal';
+import { computeColorHarmonyScore } from '../lib/color-theory';
 import type { Product } from '../data/mock-data';
 
 const PRESET_MOODS = ['confident', 'relaxed', 'bold', 'romantic'];
@@ -134,12 +135,11 @@ export default function Companion() {
     const occasions = products.flatMap(p => p.occasionTags);
     const totalPrice = products.reduce((sum, p) => sum + p.price, 0);
     
-    // Heuristics
-    let colorScore = 60;
-    if (colors.includes('neutral') || colors.includes('black') || colors.includes('white')) colorScore += 20;
-    if (colors.includes('warm') && skinTone === 'warm') colorScore += 15;
-    if (colors.includes('cool') && skinTone === 'cool') colorScore += 15;
-    
+    // Color Harmony uses real color-wheel relationships (analogous/complementary
+    // vs. clashing hues) plus a seasonal-color-analysis undertone bonus — see
+    // lib/color-theory.ts. The other three axes are still simple heuristics.
+    let colorScore = computeColorHarmonyScore(products.map(p => p.colors), skinTone);
+
     let styleScore = 50 + (categories.size * 10); // More categories = better put together
     if (categories.has('Footwear')) styleScore += 10;
     if (categories.has('Accessories')) styleScore += 5;
