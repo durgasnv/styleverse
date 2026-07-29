@@ -1,7 +1,7 @@
 import { Router, type IRouter } from "express";
 import { randomUUID } from "node:crypto";
 import { VotingRoomModel } from "@workspace/db";
-import { computeTally } from "../lib/voting-tally";
+import { computeTally, extractComments } from "../lib/voting-tally";
 
 const router: IRouter = Router();
 
@@ -50,7 +50,7 @@ router.get("/voting/rooms/:id", async (req, res) => {
   }
 
   const voterId = typeof req.query.voterId === "string" ? req.query.voterId : undefined;
-  const myReaction = voterId ? room.voters.find((v: { voterId: string }) => v.voterId === voterId)?.reaction ?? null : null;
+  const myVote = voterId ? room.voters.find((v: { voterId: string }) => v.voterId === voterId) : undefined;
   const isCreator = voterId !== undefined && voterId === room.creatorVoterId;
 
   res.json({
@@ -64,7 +64,9 @@ router.get("/voting/rooms/:id", async (req, res) => {
     },
     tally: computeTally(room.voters),
     totalVoters: room.voters.length,
-    myReaction,
+    comments: extractComments(room.voters),
+    myReaction: myVote?.reaction ?? null,
+    myComment: myVote?.comment ?? null,
     isCreator,
   });
 });

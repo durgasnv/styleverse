@@ -74,6 +74,7 @@ export default function Canvas() {
   const [items, setItems] = useState<CanvasItem[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
+  const [activeSubcategory, setActiveSubcategory] = useState('All');
   // Driven by the URL (not local state) so the page's existing Back button
   // (plain browser history) naturally exits try-on mode back to the canvas —
   // entering try-on pushes a history entry instead of a separate toggle.
@@ -121,10 +122,23 @@ export default function Canvas() {
 
   const categories = ['All', ...Array.from(new Set(allProducts.map(p => p.category)))];
 
+  // Second-level filter shown once a top-level category (e.g. Women) is picked,
+  // so the grid doesn't dump every subcategory (tops, dresses, trousers...)
+  // into one confusing list — this is the actual item type within that category.
+  const subcategories = activeCategory === 'All'
+    ? []
+    : ['All', ...Array.from(new Set(allProducts.filter(p => p.category === activeCategory).map(p => p.subcategory)))];
+
+  const handleSelectCategory = (cat: string) => {
+    setActiveCategory(cat);
+    setActiveSubcategory('All');
+  };
+
   const filteredProducts = allProducts.filter(p => {
     const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || p.brand.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCat = activeCategory === 'All' || p.category === activeCategory;
-    return matchesSearch && matchesCat;
+    const matchesSubcat = activeSubcategory === 'All' || p.subcategory === activeSubcategory;
+    return matchesSearch && matchesCat && matchesSubcat;
   });
 
   // Drag handlers for catalog items
@@ -439,12 +453,25 @@ export default function Canvas() {
                 <button
                   key={cat}
                   className={`whitespace-nowrap px-3 py-1 rounded-full text-xs font-bold transition-colors ${activeCategory === cat ? 'bg-[#282C3F] text-white' : 'bg-white border text-gray-600 hover:border-gray-400'}`}
-                  onClick={() => setActiveCategory(cat)}
+                  onClick={() => handleSelectCategory(cat)}
                 >
                   {cat}
                 </button>
               ))}
             </div>
+            {subcategories.length > 0 && (
+              <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar hide-scrollbar">
+                {subcategories.map(subcat => (
+                  <button
+                    key={subcat}
+                    className={`whitespace-nowrap px-2.5 py-1 rounded-full text-[11px] font-bold border transition-colors ${activeSubcategory === subcat ? 'border-[#FF3F6C] text-[#FF3F6C] bg-pink-50' : 'border-gray-200 text-gray-500 hover:border-gray-400'}`}
+                    onClick={() => setActiveSubcategory(subcat)}
+                  >
+                    {subcat}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           <div className="flex-1 overflow-y-auto p-3 grid grid-cols-2 gap-2 content-start">
@@ -460,6 +487,7 @@ export default function Canvas() {
                 </div>
                 <div className="p-1 mt-1 shrink-0 pointer-events-none">
                   <div className="text-[10px] font-bold truncate text-[#282C3F]">{product.brand}</div>
+                  <div className="text-[10px] text-gray-500 truncate">{product.name}</div>
                   <div className="text-[10px] font-mono text-gray-500">₹{product.price}</div>
                 </div>
               </div>
