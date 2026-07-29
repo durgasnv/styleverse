@@ -3,7 +3,9 @@ import { Schema, model, type InferSchemaType } from "mongoose";
 const voterReactionSchema = new Schema(
   {
     voterId: { type: String, required: true },
+    voterName: { type: String, required: false },
     reaction: { type: String, required: true },
+    comment: { type: String, required: false },
     updatedAt: { type: String, required: true },
   },
   { _id: false },

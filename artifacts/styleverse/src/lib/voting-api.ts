@@ -15,6 +15,14 @@ export interface Tally {
   nah: number;
 }
 
+export interface Comment {
+  voterId: string;
+  voterName: string;
+  reaction: Reaction;
+  comment: string;
+  updatedAt: string;
+}
+
 export async function createVotingRoom(params: {
   productIds: string[];
   outfitId?: string;
@@ -35,7 +43,9 @@ export async function fetchVotingRoom(roomId: string, voterId: string): Promise<
   room: VotingRoom;
   tally: Tally;
   totalVoters: number;
+  comments: Comment[];
   myReaction: Reaction | null;
+  myComment: string | null;
   isCreator: boolean;
 }> {
   const res = await fetch(`/api/voting/rooms/${roomId}?voterId=${encodeURIComponent(voterId)}`);

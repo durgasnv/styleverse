@@ -3,16 +3,30 @@ import { useRoute } from 'wouter';
 import { io, type Socket } from 'socket.io-client';
 import { useProducts } from '../hooks/use-catalog';
 import { useIdentity } from '../hooks/use-identity';
-import { fetchVotingRoom, type Reaction, type Tally, type VotingRoom } from '../lib/voting-api';
+import { fetchVotingRoom, type Comment, type Reaction, type Tally, type VotingRoom } from '../lib/voting-api';
+import { AgeGate, hasAgeAck } from '../components/AgeGate';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
-import { Users, Link as LinkIcon, Check } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea';
+import { Users, Link as LinkIcon, Check, MessageCircle, Send } from 'lucide-react';
 
 const REACTIONS: { key: Reaction; emoji: string; label: string }[] = [
   { key: 'fire', emoji: '🔥', label: 'Fire' },
   { key: 'yes', emoji: '👍', label: 'Yes' },
   { key: 'nah', emoji: '👎', label: 'Nah' },
 ];
+
+const MAX_COMMENT_LENGTH = 280;
+
+function timeAgo(iso: string): string {
+  const diffMs = Date.now() - new Date(iso).getTime();
+  const mins = Math.round(diffMs / 60000);
+  if (mins < 1) return 'just now';
+  if (mins < 60) return `${mins}m ago`;
+  const hours = Math.round(mins / 60);
+  if (hours < 24) return `${hours}h ago`;
+  return new Date(iso).toLocaleDateString();
+}
 
 export default function VoteRoom() {
   const [, params] = useRoute('/vote/:roomId');
@@ -24,12 +38,17 @@ export default function VoteRoom() {
   const [room, setRoom] = useState<VotingRoom | null>(null);
   const [tally, setTally] = useState<Tally>({ fire: 0, yes: 0, nah: 0 });
   const [totalVoters, setTotalVoters] = useState(0);
+  const [comments, setComments] = useState<Comment[]>([]);
   const [myReaction, setMyReaction] = useState<Reaction | null>(null);
+  const [commentDraft, setCommentDraft] = useState('');
+  const [commentSent, setCommentSent] = useState(false);
+  const [commentError, setCommentError] = useState<string | null>(null);
   const [isCreator, setIsCreator] = useState(false);
   const [presence, setPresence] = useState(1);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [ageConfirmed, setAgeConfirmed] = useState(hasAgeAck);
 
   const socketRef = useRef<Socket | null>(null);
 
@@ -45,7 +64,9 @@ export default function VoteRoom() {
         setRoom(data.room);
         setTally(data.tally);
         setTotalVoters(data.totalVoters);
+        setComments(data.comments);
         setMyReaction(data.myReaction);
+        setCommentDraft(data.myComment ?? '');
         setIsCreator(data.isCreator);
       })
       .catch(() => {
@@ -67,9 +88,10 @@ export default function VoteRoom() {
     socketRef.current = socket;
 
     socket.emit('voting:join', { roomId });
-    socket.on('voting:tally', (data: { tally: Tally; totalVoters: number }) => {
+    socket.on('voting:tally', (data: { tally: Tally; totalVoters: number; comments: Comment[] }) => {
       setTally(data.tally);
       setTotalVoters(data.totalVoters);
+      setComments(data.comments);
     });
     socket.on('voting:presence', (data: { count: number }) => {
       setPresence(Math.max(1, data.count));
@@ -81,10 +103,32 @@ export default function VoteRoom() {
     };
   }, [roomId]);
 
-  const castVote = (reaction: Reaction) => {
+  const castVote = (reaction: Reaction, comment?: string) => {
     if (!roomId || !userId || isCreator) return;
     setMyReaction(reaction);
-    socketRef.current?.emit('voting:cast', { roomId, voterId: userId, reaction });
+    socketRef.current?.emit(
+      'voting:cast',
+      {
+        roomId,
+        voterId: userId,
+        voterName: identity?.username,
+        reaction,
+        comment: comment ?? commentDraft,
+      },
+      (response: { ok: boolean; commentRejected?: boolean }) => {
+        if (response?.commentRejected) {
+          setCommentError("That comment wasn't posted — please keep feedback respectful.");
+        }
+      },
+    );
+  };
+
+  const sendComment = () => {
+    if (!myReaction || !commentDraft.trim()) return;
+    setCommentError(null);
+    castVote(myReaction, commentDraft.trim());
+    setCommentSent(true);
+    setTimeout(() => setCommentSent(false), 1500);
   };
 
   const copyLink = () => {
@@ -108,87 +152,146 @@ export default function VoteRoom() {
 
   const products = room.productIds.map((id) => allProducts.find((p) => p.id === id)).filter(Boolean) as typeof allProducts;
   const totalReactions = tally.fire + tally.yes + tally.nah;
-
   const hasTryOnImage = Boolean(room.tryOnImage);
 
   return (
-    <div className={hasTryOnImage ? 'h-screen bg-gray-50 flex flex-col overflow-hidden' : 'min-h-screen bg-gray-50 pb-20'}>
-      <div className={`bg-gradient-to-r from-purple-900 to-indigo-900 text-white px-4 ${hasTryOnImage ? 'pt-6 pb-6 shrink-0' : 'pt-10 pb-16'}`}>
-        <div className="container mx-auto max-w-3xl">
-          <h1 className="font-heading font-black text-2xl md:text-3xl mb-1">{room.creatorLabel}</h1>
-          <div className="flex items-center gap-4 text-indigo-200 text-sm">
-            <span className="flex items-center gap-1"><Users className="h-4 w-4" /> {presence} watching live</span>
-            <span>{totalReactions} reaction{totalReactions === 1 ? '' : 's'}</span>
+    <>
+      {!ageConfirmed && <AgeGate onConfirm={() => setAgeConfirmed(true)} />}
+
+      <div className={hasTryOnImage ? 'h-screen bg-gray-50 flex flex-col overflow-hidden' : 'min-h-screen bg-gray-50 pb-20'}>
+        <div className={`bg-gradient-to-r from-purple-900 to-indigo-900 text-white px-4 ${hasTryOnImage ? 'pt-6 pb-6 shrink-0' : 'pt-10 pb-16'}`}>
+          <div className="container mx-auto max-w-3xl">
+            <h1 className="font-heading font-black text-2xl md:text-3xl mb-1">{room.creatorLabel}</h1>
+            <div className="flex items-center gap-4 text-indigo-200 text-sm flex-wrap">
+              <span className="flex items-center gap-1"><Users className="h-4 w-4" /> {presence} watching live</span>
+              <span>{totalReactions} reaction{totalReactions === 1 ? '' : 's'}</span>
+              <span className="flex items-center gap-1"><MessageCircle className="h-4 w-4" /> {comments.length} comment{comments.length === 1 ? '' : 's'}</span>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className={`container mx-auto max-w-3xl px-4 relative z-10 ${hasTryOnImage ? 'flex-1 min-h-0 flex items-center justify-center py-4' : 'mt-4'}`}>
-        <div className={`bg-white rounded-xl shadow-sm border p-4 md:p-6 flex flex-col items-center ${hasTryOnImage ? 'max-h-full overflow-y-auto' : ''}`}>
-          {room.tryOnImage && (
-            <div className="flex justify-between items-start mb-4 w-full">
-              <div className="w-52 shrink-0 mx-auto rounded-xl overflow-hidden border bg-gray-100 max-h-[min(42vh,24rem)]">
-                <img src={room.tryOnImage} className="w-full h-full object-cover" alt="AI try-on preview" />
+        <div className={`container mx-auto max-w-3xl px-4 relative z-10 ${hasTryOnImage ? 'flex-1 min-h-0 overflow-y-auto py-4' : 'mt-4'}`}>
+          <div className="bg-white rounded-xl shadow-sm border p-4 md:p-6 flex flex-col items-center">
+            {room.tryOnImage && (
+              <div className="flex justify-between items-start mb-4 w-full">
+                <div className="w-52 shrink-0 mx-auto rounded-xl overflow-hidden border bg-gray-100 max-h-[min(42vh,24rem)]">
+                  <img src={room.tryOnImage} className="w-full h-full object-cover" alt="AI try-on preview" />
+                </div>
+
+                <div className="w-40 shrink-0 flex flex-col gap-2 overflow-y-auto max-h-[min(42vh,24rem)]">
+                  {products.map((p) => (
+                    <div key={p.id} className="flex items-center gap-2 bg-white rounded border p-1.5">
+                      <div className="w-12 h-16 shrink-0 rounded border bg-gray-100 overflow-hidden">
+                        <img src={p.images[0]} className="w-full h-full object-cover" alt={p.name} title={p.name} />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-[11px] font-bold text-[#282C3F] truncate">{p.brand}</p>
+                        <p className="text-[11px] text-gray-500 truncate">{p.name}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
+            )}
 
-              <div className="w-40 shrink-0 flex flex-col gap-2 overflow-y-auto max-h-[min(42vh,24rem)]">
+            {!room.tryOnImage && (
+              <div className="flex flex-wrap gap-2 justify-center mb-4">
                 {products.map((p) => (
-                  <div key={p.id} className="flex items-center gap-2 bg-white rounded border p-1.5">
-                    <div className="w-12 h-16 shrink-0 rounded border bg-gray-100 overflow-hidden">
-                      <img src={p.images[0]} className="w-full h-full object-cover" alt={p.name} title={p.name} />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <p className="text-[11px] font-bold text-[#282C3F] truncate">{p.brand}</p>
-                      <p className="text-[11px] text-gray-500 truncate">{p.name}</p>
-                    </div>
+                  <div key={p.id} className="w-16 rounded overflow-hidden border bg-gray-100">
+                    <img src={p.images[0]} className="w-full aspect-[3/4] object-cover" alt={p.name} title={p.name} />
                   </div>
                 ))}
               </div>
-            </div>
-          )}
+            )}
 
-          {!room.tryOnImage && (
-            <div className="flex flex-wrap gap-2 justify-center mb-4">
-              {products.map((p) => (
-                <div key={p.id} className="w-16 rounded overflow-hidden border bg-gray-100">
-                  <img src={p.images[0]} className="w-full aspect-[3/4] object-cover" alt={p.name} title={p.name} />
-                </div>
+            {isCreator && (
+              <p className="text-center text-sm text-gray-500 mb-3">
+                This is your look — share the link so others can react. You can't vote on your own look.
+              </p>
+            )}
+
+            <div className="grid grid-cols-3 gap-3 mb-4 w-full max-w-sm">
+              {REACTIONS.map(({ key, emoji, label }) => (
+                <button
+                  key={key}
+                  onClick={() => castVote(key)}
+                  disabled={isCreator}
+                  className={`flex flex-col items-center gap-1 py-3 rounded-xl border-2 transition-all ${
+                    isCreator
+                      ? 'border-gray-100 opacity-50 cursor-not-allowed'
+                      : myReaction === key
+                        ? 'border-[#FF3F6C] bg-pink-50 scale-105 shadow-sm'
+                        : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                  }`}
+                >
+                  <span className="text-2xl">{emoji}</span>
+                  <span className="text-xs font-bold text-gray-600">{label}</span>
+                  <span className="font-mono font-bold text-lg text-[#282C3F]">{tally[key]}</span>
+                </button>
               ))}
             </div>
-          )}
 
-          {isCreator && (
-            <p className="text-center text-sm text-gray-500 mb-3">
-              This is your look — share the link so others can react. You can't vote on your own look.
-            </p>
-          )}
+            {!isCreator && (
+              <div className="w-full max-w-sm mb-4">
+                <Textarea
+                  value={commentDraft}
+                  onChange={(e) => {
+                    setCommentDraft(e.target.value.slice(0, MAX_COMMENT_LENGTH));
+                    setCommentError(null);
+                  }}
+                  placeholder={myReaction ? 'Add a quick comment — what do you think of this look?' : 'Pick a reaction above, then leave a comment'}
+                  disabled={!myReaction}
+                  rows={2}
+                  className="resize-none text-sm"
+                />
+                {commentError && <p className="text-xs text-red-500 mt-1">{commentError}</p>}
+                <div className="flex items-center justify-between mt-1.5">
+                  <span className="text-[11px] text-gray-400">{commentDraft.length}/{MAX_COMMENT_LENGTH}</span>
+                  <Button
+                    size="sm"
+                    onClick={sendComment}
+                    disabled={!myReaction || !commentDraft.trim()}
+                    className="bg-[#282C3F] hover:bg-black text-white h-7 px-3"
+                  >
+                    {commentSent ? <><Check className="w-3 h-3 mr-1" /> Sent</> : <><Send className="w-3 h-3 mr-1" /> Post</>}
+                  </Button>
+                </div>
+              </div>
+            )}
 
-          <div className="grid grid-cols-3 gap-3 mb-4 w-full max-w-sm">
-            {REACTIONS.map(({ key, emoji, label }) => (
-              <button
-                key={key}
-                onClick={() => castVote(key)}
-                disabled={isCreator}
-                className={`flex flex-col items-center gap-1 py-3 rounded-xl border-2 transition-all ${
-                  isCreator
-                    ? 'border-gray-100 opacity-50 cursor-not-allowed'
-                    : myReaction === key
-                      ? 'border-[#FF3F6C] bg-pink-50 scale-105'
-                      : 'border-gray-200 hover:border-gray-300'
-                }`}
-              >
-                <span className="text-2xl">{emoji}</span>
-                <span className="text-xs font-bold text-gray-600">{label}</span>
-                <span className="font-mono font-bold text-lg text-[#282C3F]">{tally[key]}</span>
-              </button>
-            ))}
+            <Button variant="outline" size="sm" onClick={copyLink} className="w-full max-w-sm">
+              {copied ? <><Check className="w-4 h-4 mr-2" /> Copied!</> : <><LinkIcon className="w-4 h-4 mr-2" /> Copy Link to Share</>}
+            </Button>
           </div>
 
-          <Button variant="outline" size="sm" onClick={copyLink} className="w-full max-w-sm">
-            {copied ? <><Check className="w-4 h-4 mr-2" /> Copied!</> : <><LinkIcon className="w-4 h-4 mr-2" /> Copy Link to Share</>}
-          </Button>
+          {comments.length > 0 && (
+            <div className="bg-white rounded-xl shadow-sm border p-4 md:p-6 mt-4">
+              <h2 className="font-heading font-bold text-sm text-[#282C3F] mb-3 flex items-center gap-1.5">
+                <MessageCircle className="h-4 w-4" /> Feedback
+              </h2>
+              <div className="space-y-3 max-h-80 overflow-y-auto">
+                {comments.map((c) => {
+                  const emoji = REACTIONS.find((r) => r.key === c.reaction)?.emoji ?? '';
+                  return (
+                    <div key={c.voterId} className="flex gap-2.5 items-start">
+                      <div className="w-8 h-8 shrink-0 rounded-full bg-gray-100 border flex items-center justify-center text-sm">
+                        {emoji}
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-baseline gap-2">
+                          <span className="text-xs font-bold text-[#282C3F] truncate">{c.voterName}</span>
+                          <span className="text-[10px] text-gray-400 shrink-0">{timeAgo(c.updatedAt)}</span>
+                        </div>
+                        <p className="text-sm text-gray-600 break-words">{c.comment}</p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
       </div>
-    </div>
+    </>
   );
 }
