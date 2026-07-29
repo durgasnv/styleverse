@@ -27,8 +27,8 @@ Rather than replacing the existing Myntra experience, StyleVerse extends it with
 | Feature | What it does | Problem it solves |
 |---|---|---|
 | **AI Virtual Try-On** | Upload a photo, pick up to 6 garments, get a real AI-generated image of you wearing the look (Gemini 2.5 Flash Image via OpenRouter) | Removes "will this look good on me?" uncertainty before purchase |
-| **Real-Time Group Voting** (Vote Room) | Share a look to a live room; friends vote/react instantly over WebSockets | Brings the WhatsApp-style outfit debate into the app instead of losing that traffic off-platform |
-| **Style Canvas** | Drag-and-drop outfit builder from catalog items | Lets users compose and preview a full look before deciding |
+| **Real-Time Group Voting** (Vote Room) | Share a look to a live room; friends vote/react and leave moderated feedback comments instantly over WebSockets, behind a one-time 18+ confirmation | Brings the WhatsApp-style outfit debate into the app instead of losing that traffic off-platform |
+| **Style Canvas** | Drag-and-drop outfit builder from catalog items, with category → subcategory browsing (e.g. Women → Tops) and item names shown on every card | Lets users compose and preview a full look before deciding |
 | **Style Hubs** | Curated style communities (Y2K, Cottagecore, Streetwear, etc.) | Community-driven fashion discovery |
 | **Fashion Challenges** | Themed styling challenges users can enter and get voted on | Creator-economy engagement, keeps users returning between purchases |
 | **AI Style Companion** | Instant outfit scoring plus an AI-generated mentor tip | Quick, personalized styling feedback |
