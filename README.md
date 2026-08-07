@@ -36,6 +36,10 @@ Rather than replacing the existing Myntra experience, StyleVerse extends it with
 
 ---
 
+Demo Video => https://drive.google.com/drive/folders/1-2bF7BWoxl1n1H0g_z8cVHZXXVswdweZ?usp=sharing
+
+---
+
 ## Tech Stack
 
 - **Frontend**: React + Vite (`artifacts/styleverse`)
